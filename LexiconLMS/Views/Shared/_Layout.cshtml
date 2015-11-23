@@ -17,19 +17,31 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Lexicon LMS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="~/"><img src="~/Content/Images/logo-lexicon.gif" class="navbar-brand"></a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
-                </ul>
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { Style = "color:lightgreen;" })</li>
+                        <li>@Html.ActionLink("About", "About", "Home", new { Style = "color:lightgreen;" })</li>
+                        <li>@Html.ActionLink("Kontakt", "Contact", "Home", new { Style = "color:lightgreen;" })</li>
+                    </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
+        <nav role="navigation" class="bottomnav">
+            <ul class="bgcol-nav">
+                <li>
+                    <a href="/">
+                        <strong>LEXICON</strong>
+                    </a>
+                </li>
+            </ul>
+            <ul class="bgcol2-nav">
+                <li>Du skulle bara veta</li>
+            </ul>
+        </nav>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" style="padding-top:200px;">
         @RenderBody()
         <hr />
         <footer>

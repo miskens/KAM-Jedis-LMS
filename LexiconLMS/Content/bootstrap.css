@@ -3784,6 +3784,44 @@ textarea.input-group-sm > .input-group-btn > .btn {
   z-index: 2;
 }
 
+
+.bottomnav {
+    height: 110px;
+    max-height: 340px;
+    float: left;
+    width: 100%;
+    padding: 10px 12px 20px 12px;
+    background-color: #f6f6f6;
+
+    box-sizing: border-box;
+    text-align:center;
+    margin-right: -20px;
+    position: relative;
+    display: block !important;
+}
+
+.bottomnav > ul.bgcol-nav {
+    padding-top:22px;
+    border-bottom: 4px solid #d60000 ;
+    margin-left:380px;
+    width:1140px;
+    font-size: large;
+    text-align:left;
+    font-weight:400;
+    list-style-type: none;
+    color: black;
+}
+
+.bottomnav > ul.bgcol2-nav {
+    margin-left:380px;
+    width:1140px;
+    font-size:small;
+    text-align:left;
+    font-weight:400;
+    list-style-type: none;
+    color: red;
+}
+
 .nav {
   padding-left: 0;
   margin-bottom: 0;
@@ -4092,6 +4130,10 @@ textarea.input-group-sm > .input-group-btn > .btn {
   -webkit-overflow-scrolling: touch;
 }
 
+a.navbar-link-font{
+    color:green;
+}
+
 .navbar-collapse:before,
 .navbar-collapse:after {
   display: table;
@@ -4192,10 +4234,13 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-brand {
+    background: url("~/Content/Images/logo-lexicon.gif");
   float: left;
   padding: 15px 15px;
   font-size: 18px;
   line-height: 20px;
+  border-color: white;
+  border-width:thick;
 }
 
 .navbar-brand:hover,
@@ -4246,6 +4291,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   padding-top: 10px;
   padding-bottom: 10px;
   line-height: 20px;
+  color:green;
 }
 
 @media (max-width: 767px) {
@@ -4280,7 +4326,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
     float: left;
   }
   .navbar-nav > li > a {
-    padding-top: 15px;
+    padding-top: 50px;
     padding-bottom: 15px;
   }
 }
@@ -4934,7 +4980,7 @@ a.list-group-item.active > .badge,
   font-weight: 200;
   line-height: 2.1428571435;
   color: inherit;
-  background-color: #eeeeee;
+  background-color: #f6f6f6;
 }
 
 .jumbotron h1 {
@@ -4947,6 +4993,7 @@ a.list-group-item.active > .badge,
 }
 
 .container .jumbotron {
+    width: 100%;
   border-radius: 6px;
 }
 
@@ -4956,6 +5003,7 @@ a.list-group-item.active > .badge,
     padding-bottom: 48px;
   }
   .container .jumbotron {
+      width:100%;
     padding-right: 60px;
     padding-left: 60px;
   }
