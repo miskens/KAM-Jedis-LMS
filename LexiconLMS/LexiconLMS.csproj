@@ -177,6 +177,7 @@
     <Content Include="Documents\Lexicon mockup.png" />
     <Content Include="Content\Images\logo-lexicon.gif" />
     <Content Include="Content\Layout.css" />
+    <Content Include="Documents\logincap1.PNG" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
