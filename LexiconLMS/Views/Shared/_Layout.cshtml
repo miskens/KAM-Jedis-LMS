@@ -24,24 +24,27 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { Style = "color:lightgreen;" })</li>
+                        <li>@Html.ActionLink("About", "About", "Home", new { Style = "color:lightgreen;" })</li>
+                        <li>@Html.ActionLink("Kontakt", "Contact", "Home", new { Style = "color:lightgreen;" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
-        <nav role="navigation" id="nav">
-            <ul class="navbottom">
-                <li class="navsub">
+        <nav role="navigation" class="bottomnav">
+            <ul class="bgcol-nav">
+                <li>
                     <a href="/">
-                        <strong>Home</strong>
+                        <strong>LEXICON</strong>
                     </a>
                 </li>
             </ul>
+            <ul class="bgcol2-nav">
+                <li>Du skulle bara veta</li>
+            </ul>
         </nav>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" style="padding-top:200px;">
         @RenderBody()
         <hr />
         <footer>
