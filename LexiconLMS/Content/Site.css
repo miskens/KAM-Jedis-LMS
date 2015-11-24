@@ -1,4 +1,8 @@
-﻿body {
+﻿head {
+    background-image: url("http://www.lexicon.se/Static/images/logo-lexicon.gif")
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -22,3 +26,28 @@ select,
 textarea {
     max-width: 280px;
 }
+/*
+.navBackgroundColor{background-color:#de0000 !important}
+.primaryBackgroundColor{background-color:#ff5a04 !important}
+.secondaryBackgroundColor{background-color:#de0000 !important}
+.navColor{color:#de0000 !important}
+.primaryColor{color:#ff5a04 !important}
+.secondaryColor{color:#de0000 !important}
+.upTopbarBackgroundColor{background:rgba(90,90,90,0.8);
+                        filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#80808080', EndColorStr='#80808080')}
+.navBorderColor{border-color:#de0000 !important}.primaryBorderColor {
+                                                    border-color:#ff5a04 !important
+                                                }.secondaryBorderColor {
+                                                     border-color:#de0000 !important
+                                                 }table.dataTable thead .sorting {
+                                                      background:url("../img/dataTables/sort_both.png") no-repeat center right
+                                                  }table.dataTable thead .sorting_asc {
+                                                       background:url("../img/dataTables/sort_asc.png") no-repeat center right
+                                                   }table.dataTable thead .sorting_desc {
+                                                        background:url("../img/dataTables/sort_desc.png") no-repeat center right
+                                                    }table.dataTable thead .sorting_asc_disabled {
+                                                         background:url("../img/dataTables/sort_asc_disabled.png") no-repeat center right
+                                                     }table.dataTable thead .sorting_desc_disabled {
+                                                          background:url("../img/dataTables/sort_desc_disabled.png") no-repeat center right
+                                                      }
+    */
