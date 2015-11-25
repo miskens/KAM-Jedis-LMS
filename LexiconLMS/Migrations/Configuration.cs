@@ -96,6 +96,7 @@ namespace LexiconLMS.Migrations
             if (!context.Users.Any(u => u.UserName == email))
             {
                 manager.Create(user, "secret");
+                manager.UpdateSecurityStamp(user.Id);
             }
         }
     }
