@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,6 +17,11 @@ namespace LexiconLMS.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public int GroupId { get; set; }
+
+        [ForeignKey("GroupId")]
+        public virtual Group Group { get; set; } 
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -29,5 +35,6 @@ namespace LexiconLMS.Models
         {
             return new ApplicationDbContext();
         }
+        public DbSet<Group> Groups { get; set; }
     }
 }

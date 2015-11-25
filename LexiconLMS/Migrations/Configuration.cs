@@ -1,3 +1,5 @@
+using LexiconLMS.Models;
+
 namespace LexiconLMS.Migrations
 {
     using System;
@@ -9,7 +11,7 @@ namespace LexiconLMS.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(LexiconLMS.Models.ApplicationDbContext context)
@@ -26,6 +28,14 @@ namespace LexiconLMS.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            var group = new Group();
+
+            group.Name = "C#";
+            group.Description = "blah blah";
+            group.StartDate = DateTime.Now;
+            group.EndDate = DateTime.Now.AddDays(1);
+            context.Groups.AddOrUpdate(group);
         }
     }
 }
