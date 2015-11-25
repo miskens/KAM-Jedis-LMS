@@ -17,9 +17,8 @@ namespace LexiconLMS.Models
         [Display(Name= "Aktiv")]
         public bool Active { get; set; }
 
-        [ForeignKey("GroupId")]
         [Display(Name="Gruppid")]
-        public int GroupId { get; set; }
+        public int? GroupId { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
