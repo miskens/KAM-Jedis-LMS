@@ -24,8 +24,11 @@ namespace LexiconLMS.Migrations
         {
 
             context.Groups.AddOrUpdate(g => g.Name,
-                new Group { Name = "Java", Description = "Händiga typer det där", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(60) },
-                            new Group { Name = "C#", Description = "Ny beskrivning", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(60) }
+                new Group { Name = "Java", Description = "Händiga typer det där", StartDate = new DateTime(2015, 09, 30), EndDate = new DateTime(2016, 02, 28) },
+                new Group { Name = "C#", Description = "Ny beskrivning", StartDate = new DateTime(2015, 08, 31), EndDate = new DateTime(2015, 12, 18) },
+                new Group { Name = "Sharepoint", Description = "Sharepoint förr och nu.", StartDate = new DateTime(2016, 01, 25), EndDate = new DateTime(2016, 04, 30) },
+                new Group { Name = "Dynamics", Description = "Bli mer dynamisk med Dynamics.", StartDate = new DateTime(2015, 10, 22), EndDate = new DateTime(2016, 01, 20) },
+                new Group { Name = "Pascal", Description = "Finns det nån som ännu använder Pascal?", StartDate = new DateTime(2014, 01, 10), EndDate = new DateTime(2014, 06, 18) }
             );
             context.SaveChanges();
 
