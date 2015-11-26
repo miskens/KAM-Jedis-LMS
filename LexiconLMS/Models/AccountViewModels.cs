@@ -64,6 +64,10 @@ namespace LexiconLMS.Models
 
     public class RegisterViewModel
     {
+        [Display(Name = "För- och efternamn")]
+        [StringLength(100, ErrorMessage = "{0} måste vara tillsammans vara minst {} tecken + blank!", MinimumLength = 5)]
+        public string FullName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "E-post")]
@@ -79,6 +83,7 @@ namespace LexiconLMS.Models
         [Display(Name = "Bekräfta lösenord")]
         [Compare("Password", ErrorMessage = "Lösenorden måste vara likadana.")]
         public string ConfirmPassword { get; set; }
+    
     }
 
     public class ResetPasswordViewModel
