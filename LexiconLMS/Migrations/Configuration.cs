@@ -32,7 +32,7 @@ namespace LexiconLMS.Migrations {
     new ApplicationUser { FullName = "Adrian Locano", UserName = "adrian@xenotype.com", Email = "adrian@xenotype.com", Active = true, GroupId = 2 },
     new ApplicationUser { FullName = "Kenneth Forsström", UserName = "kenneth.forsstrom@hotmail.com", Email = "kenneth.forsstrom@hotmail.com", Active = true, GroupId = 1 },
     new ApplicationUser { FullName = "Anna Eklund", UserName = "vitastjern@gmail.com", Email = "vitastjern@gmail.com", Active = true, GroupId = 2 },
-    new ApplicationUser { FullName = "Michael Puusaari", UserName = "miskens@hotmail.com", Email = "miskens@hotmail.com", Active = true, GroupId = 1 },
+    new ApplicationUser { FullName = "Mikael Puusaari", UserName = "miskens@hotmail.com", Email = "miskens@hotmail.com", Active = true, GroupId = 1 },
     new ApplicationUser { FullName = "Matti Boustedt", UserName = "matti.boustedt@gmail.com", Email = "matti.boustedt@gmail.com", Active = true },
     new ApplicationUser { FullName = "Anna-Karin Rönnegård", UserName = "a.ronnegard@gmail.com", Email = "a.ronnegard@gmail.com", Active = true },
     new ApplicationUser { FullName = "Jonas Jakobsson", UserName = "jonasjakobsson.sundbyberg@gmail.com", Email = "jonasjakobsson.sundbyberg@gmail.com", Active = true },

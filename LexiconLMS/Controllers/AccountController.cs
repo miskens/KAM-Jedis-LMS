@@ -1,6 +1,8 @@
 ﻿using System;
+using System.EnterpriseServices.CompensatingResourceManager;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -9,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LexiconLMS.Models;
+using System.Net.Mail;
 
 namespace LexiconLMS.Controllers
 {
@@ -202,19 +205,37 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
+                var user = UserManager.FindByEmail(model.Email);
 
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                SmtpClient client =  MailHandler.ConfigureSmtpClient();   
+                MailMessage mail = new MailMessage("admin@Lexicon.se", model.Email);
+                mail.Subject = "Lexicon: Återställning av lösenord.";
+
+                if (user != null)
+                {
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code },
+                                                protocol: Request.Url.Scheme);
+                    mail.Body = "Återställ ditt lösenord genom att klicka <a href=\"" + callbackUrl + "\">här</a>";
+
+                    try
+                    {
+                        client.Send(mail);
+                        return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                    }
+                    catch (Exception ex)
+                    {
+                        return View("ForgotPasswordMailFailed");
+                    }
+
+                }
+                else
+                {
+                    //return View(model);
+                    return View("ForgotPasswordFailed");
+                }
             }
 
             // If we got this far, something failed, redisplay form
