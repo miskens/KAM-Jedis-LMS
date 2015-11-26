@@ -159,14 +159,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511261413193_init.cs" />
-    <Compile Include="Migrations\201511261413193_init.Designer.cs">
-      <DependentUpon>201511261413193_init.cs</DependentUpon>
+    <Compile Include="Migrations\201511261831386_init.cs" />
+    <Compile Include="Migrations\201511261831386_init.Designer.cs">
+      <DependentUpon>201511261831386_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -243,6 +244,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\ForgotPasswordFailed.cshtml" />
     <Content Include="Views\Account\ForgotPasswordMailFailed.cshtml" />
+    <Content Include="Views\Group\CreateGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -256,8 +258,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511261413193_init.resx">
-      <DependentUpon>201511261413193_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511261831386_init.resx">
+      <DependentUpon>201511261831386_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
