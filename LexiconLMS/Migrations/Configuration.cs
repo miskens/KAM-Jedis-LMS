@@ -1,9 +1,17 @@
+using System.Data.Entity.Migrations.Model;
+using System.Security.Cryptography;
+using Newtonsoft.Json.Linq;
+
 namespace LexiconLMS.Migrations
 {
+    using Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Collections.Generic;
 
     internal sealed class Configuration : DbMigrationsConfiguration<LexiconLMS.Models.ApplicationDbContext>
     {
@@ -14,18 +22,121 @@ namespace LexiconLMS.Migrations
 
         protected override void Seed(LexiconLMS.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            context.Groups.AddOrUpdate(g => g.Name,
+                new Group { Name = "Java", Description = "Händiga typer det där", StartDate = new DateTime(2015, 09, 30), EndDate = new DateTime(2016, 02, 28) },
+                new Group { Name = "C#", Description = "Ny beskrivning", StartDate = new DateTime(2015, 08, 31), EndDate = new DateTime(2015, 12, 18) },
+                new Group { Name = "Sharepoint", Description = "Sharepoint förr och nu.", StartDate = new DateTime(2016, 01, 25), EndDate = new DateTime(2016, 04, 30) },
+                new Group { Name = "Dynamics", Description = "Bli mer dynamisk med Dynamics.", StartDate = new DateTime(2015, 10, 22), EndDate = new DateTime(2016, 01, 20) },
+                new Group { Name = "Pascal", Description = "Finns det nån som ännu använder Pascal?", StartDate = new DateTime(2014, 01, 10), EndDate = new DateTime(2014, 06, 18) }
+            );
+            context.SaveChanges();
+
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+            foreach (string role in new[] { "elev", "lärare" })      // seed roles to 
+            {
+                if (!roleManager.RoleExists(role))
+                {
+                    roleManager.Create(new IdentityRole { Name = role });
+                }
+            }
+            context.SaveChanges();
+
+            var store = new UserStore<ApplicationUser>(context);
+            var manager = new UserManager<ApplicationUser>(store);
+
+            var email = "oscar.jakobsson@lexicon.se";
+            var roles = new[] { "lärare", "elev" };
+
+            var users = new List<ApplicationUser>();
+
+            var user = new ApplicationUser { FullName = "Oscar Jakobsson", Email = email, UserName = email, Active = true, GroupId = 1 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+            users.Add(user);
+            email = "adrian@xenotype.com";
+            // same roles as previous
+            user = new ApplicationUser { FullName = "Adrian Locano", UserName = email, Email = email, Active = true, GroupId = 2 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "kenneth.forsstrom@hotmail.com";
+            roles = new[] { "elev" };
+            user = new ApplicationUser { FullName = "Kenneth Forsström", UserName = email, Email = email, Active = true, GroupId = 1 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "vitastjern@gmail.com";
+            // same as student above
+            user = new ApplicationUser { FullName = "Anna Eklund", UserName = email, Email = email, Active = true, GroupId = 2 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "miskens@hotmail.com";
+            user = new ApplicationUser { FullName = "Michael Puusaari", UserName = email, Email = email, Active = true, GroupId = 1 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "matti.boustedt@gmail.com";
+            user = new ApplicationUser { FullName = "Matti Boustedt", UserName = email, Email = email, Active = true };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "a.ronnegard@gmail.com";
+            user = new ApplicationUser { FullName = "Anna-Karin Rönnegård", UserName = email, Email = email, Active = true };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "jonasjakobsson.sundbyberg@gmail.com";
+            user = new ApplicationUser { FullName = "Jonas Jakobsson", UserName = email, Email = email, Active = true };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "staffan.ericsson2@gmail.com";
+            user = new ApplicationUser { FullName = "Staffan Ericsson", UserName = email, Email = email, Active = true };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "christinamkronblad@yahoo.se";
+            user = new ApplicationUser { FullName = "Christina Kronblad", UserName = email, Email = email, Active = true };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "olga.kagyrina@gmail.com";
+            user = new ApplicationUser { FullName = "Olga Kagyrina", UserName = email, Email = email, Active = false };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "nina@gmail.se";
+            user = new ApplicationUser { FullName = "Nina Oksa", UserName = email, Email = email, Active = false };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "adnansweden14@gmail.com";
+            user = new ApplicationUser { FullName = "Fredrik Hedlund", UserName = email, Email = email, Active = false };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "nisaw99@hotmail.com";
+            user = new ApplicationUser { FullName = "Niklas Säwensten", UserName = email, Email = email, Active = true };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles); 
+            //foreach (var user in users)
+            //{
+                
+            //}
+        }
+
+        private static void CreateUserSeedWithPasswordSecret(ApplicationDbContext context, UserManager<ApplicationUser> manager, string email, ApplicationUser user, RoleManager<IdentityRole> roleManager, string[] roles)
+        {
+
+
+            if (!context.Users.Any(u => u.UserName == email))
+            {
+                manager.Create(user, "secret");         // set user's password to "secret" (this is for dev purposes only)
+                manager.UpdateSecurityStamp(user.Id);   // set the user's security stamp to use when requesting new password
+
+                context.SaveChanges();
+            }
+
+
+            var databaseUser = context.Users.First(u => u.UserName == user.UserName);
+            foreach (string role in roles)  // go through and seed the user's roles (lärare and/or elev)
+            {
+                if (!databaseUser.Roles.Any(r => r.RoleId == roleManager.FindByName(role).Id))
+                {
+                    manager.AddToRoles(databaseUser.Id, role);
+                }
+            }
+
         }
     }
 }
