@@ -7,6 +7,17 @@ body {
     padding-bottom: 20px;
 }
 
+/* Changing color to Lexicon-standard */
+.navbar-inverse .navbar-nav > li > a {
+    color: lightgreen;
+}
+
+/*.navbar {
+    display: inline;
+    font-family: Garamond;
+    font-size: 1.5em;
+}*/
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
