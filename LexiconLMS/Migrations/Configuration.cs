@@ -49,9 +49,12 @@ namespace LexiconLMS.Migrations
 
             var email = "oscar.jakobsson@lexicon.se";
             var roles = new[] { "lärare", "elev" };
+
+            var users = new List<ApplicationUser>();
+
             var user = new ApplicationUser { FullName = "Oscar Jakobsson", Email = email, UserName = email, Active = true, GroupId = 1 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
-
+            users.Add(user);
             email = "adrian@xenotype.com";
             // same roles as previous
             user = new ApplicationUser { FullName = "Adrian Locano", UserName = email, Email = email, Active = true, GroupId = 2 };
@@ -105,11 +108,14 @@ namespace LexiconLMS.Migrations
 
             email = "nisaw99@hotmail.com";
             user = new ApplicationUser { FullName = "Niklas Säwensten", UserName = email, Email = email, Active = true };
-            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
-
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles); 
+            //foreach (var user in users)
+            //{
+                
+            //}
         }
 
-        private static void CreateUserSeedWithPasswordSecret(LexiconLMS.Models.ApplicationDbContext context, UserManager<ApplicationUser> manager, string email, ApplicationUser user, RoleManager<IdentityRole> roleManager, string[] roles)
+        private static void CreateUserSeedWithPasswordSecret(ApplicationDbContext context, UserManager<ApplicationUser> manager, string email, ApplicationUser user, RoleManager<IdentityRole> roleManager, string[] roles)
         {
 
 

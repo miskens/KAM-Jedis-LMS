@@ -209,6 +209,7 @@ namespace LexiconLMS.Controllers
 
                 SmtpClient client =  MailHandler.ConfigureSmtpClient();   
                 MailMessage mail = new MailMessage("admin@Lexicon.se", model.Email);
+                mail.IsBodyHtml = true;
                 mail.Subject = "Lexicon: Återställning av lösenord.";
 
                 if (user != null)
