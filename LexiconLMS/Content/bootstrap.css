@@ -3786,13 +3786,13 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 
 .bottomnav {
-    height: 110px;
+    height: 170px;
     max-height: 340px;
     float: left;
     width: 100%;
     padding: 10px 12px 20px 12px;
+    padding-top:70px;
     background-color: #f6f6f6;
-
     box-sizing: border-box;
     text-align:center;
     margin-right: -20px;
@@ -4288,10 +4288,11 @@ a.navbar-link-font{
 }
 
 .navbar-nav > li > a {
-  padding-top: 10px;
+  padding-top:40px;
   padding-bottom: 10px;
   line-height: 20px;
   color:green;
+  text-align:center;
 }
 
 @media (max-width: 767px) {

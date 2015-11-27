@@ -124,7 +124,7 @@ namespace LexiconLMS.Migrations
 
         }
 
-        private static void CreateUserSeedWithPasswordSecret(LexiconLMS.Models.ApplicationDbContext context, UserManager<ApplicationUser> manager, string email, ApplicationUser user, RoleManager<IdentityRole> roleManager, string[] roles)
+        private static void CreateUserSeedWithPasswordSecret(ApplicationDbContext context, UserManager<ApplicationUser> manager, string email, ApplicationUser user, RoleManager<IdentityRole> roleManager, string[] roles)
         {
 
 
