@@ -16,10 +16,10 @@ namespace LexiconLMS.Models
             FullName = "Förnamn Efternamn";
         }
 
-        [Display(Name= "Namn")]
+        [Display(Name= "Förnamn + efternamn")]
         public string FullName { get; set; }
                 
-        [Display(Name= "Aktiv")]
+        [Display(Name= "Aktiv/Inskriven")]
         public bool Active { get; set; }
 
         [Display(Name="Gruppid")]
@@ -45,6 +45,11 @@ namespace LexiconLMS.Models
         {
             return new ApplicationDbContext();
         }
+
         public DbSet<Group> Groups { get; set; }
+
+        public DbSet<Activity> Activities { get; set; }
+
+        public DbSet<Course> Courses { get; set; }
     }
 }

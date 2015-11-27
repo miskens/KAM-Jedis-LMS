@@ -1,11 +1,11 @@
 ﻿using System;
+using LexiconLMS.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
-using LexiconLMS.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -15,7 +15,33 @@ namespace LexiconLMS.Controllers
     {
         public ActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var context = new ApplicationDbContext();
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                
+                ApplicationUser user = manager.FindById(User.Identity.GetUserId());
+                ViewBag.FullName = user.FullName;
+                
+                if (user.GroupId.HasValue)
+                {
+                    var group = context.Groups.Find(user.GroupId); 
+                    ViewBag.Group = group.Name;
+                }
+
+                if (User.IsInRole("lärare")) 
+                {
+                    var groups = context.Groups.ToList();
+                    ViewBag.Groups = groups;
+
+                    var courses = context.Courses.ToList();
+                    ViewBag.Courses = courses;
+                }
+            }
+
             return View();
+
         }
 
         public ActionResult About()

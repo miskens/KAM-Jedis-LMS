@@ -17,17 +17,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img src="~/Content/Images/logo-lexicon.gif" style="padding-top: 15px; padding-bottom: 15px"/>
+                <img src="~/Content/Images/logo-lexicon.gif" style="padding-top: 15px; padding-bottom: 15px" />
                 @* Fixa onclick för bilden ovan
     @Html.ActionLink(" ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             *@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Startsida", "Index", "Home", null, new { Style = "color:lightgreen;" })</li>
-                    <li>@Html.ActionLink("Om", "About", "Home", null, new { Style = "color:lightgreen;" })</li>
-                    <li>@Html.ActionLink("Kontakt", "Contact", "Home", null, new {Style = "color:lightgreen;"})</li>
-                    <li>@Html.ActionLink("Grupper", "Index", "Group", null, new { Style = "color:lightgreen;" })</li>
+                    @* Color is changed in Site.css instead of here *@
+                    <li>@Html.ActionLink("Startsida", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Om", "About", "Home")</li>
+                    <li>@Html.ActionLink("Kontakt", "Contact")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

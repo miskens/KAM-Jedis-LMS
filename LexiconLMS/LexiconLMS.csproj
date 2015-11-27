@@ -159,22 +159,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511261831386_init.cs" />
-    <Compile Include="Migrations\201511261831386_init.Designer.cs">
-      <DependentUpon>201511261831386_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Group.cs" />
-    <Compile Include="Models\HomeUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -194,7 +188,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Documents\Lexicon LMS.pdf" />
     <Content Include="Documents\LexiconLMS WIREFRAME.pdf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -243,8 +236,15 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordFailed.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordMailFailed.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Users\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Views\Group\CreateGroup.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Group\LIndex.cshtml" />
@@ -263,11 +263,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511261831386_init.resx">
-      <DependentUpon>201511261831386_init.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
