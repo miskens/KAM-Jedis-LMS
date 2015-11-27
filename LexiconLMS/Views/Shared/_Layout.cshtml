@@ -24,9 +24,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Startsida", "Index", "Home", new { Style = "color:lightgreen;" })</li>
-                        <li>@Html.ActionLink("Om", "About", "Home", new { Style = "color:lightgreen;" })</li>
-                        <li>@Html.ActionLink("Kontakt", "Contact", "Home", new { Style = "color:lightgreen;" })</li>
+                    <li>@Html.ActionLink("Startsida", "Index", "Home", null, new { Style = "color:lightgreen;" })</li>
+                    <li>@Html.ActionLink("Om", "About", "Home", null, new { Style = "color:lightgreen;" })</li>
+                    <li>@Html.ActionLink("Kontakt", "Contact", "Home", null, new {Style = "color:lightgreen;"})</li>
+                    <li>@Html.ActionLink("Grupper", "Index", "Group", null, new { Style = "color:lightgreen;" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
