@@ -24,5 +24,7 @@ namespace LexiconLMS.Models
         public DateTime EndDate { get; set; }
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
+
+        
     }
 }

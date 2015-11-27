@@ -45,6 +45,11 @@ namespace LexiconLMS.Models
         {
             return new ApplicationDbContext();
         }
+
         public DbSet<Group> Groups { get; set; }
+
+        public DbSet<Activity> Activities { get; set; }
+
+        public DbSet<Course> Courses { get; set; }
     }
 }
