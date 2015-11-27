@@ -30,6 +30,7 @@ namespace LexiconLMS.Controllers
             {
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
+
                 var currentUserId = User.Identity.GetUserId();
                 var user = userManager.Users.FirstOrDefault(u => u.Id == currentUserId);
 
