@@ -162,6 +162,7 @@
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -174,7 +175,6 @@
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Group.cs" />
-    <Compile Include="Models\HomeUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -194,8 +194,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Documents\Lexicon LMS.pdf" />
     <Content Include="Documents\LexiconLMS WIREFRAME.pdf" />
+    <Content Include="Documents\Lexicon LMS Entitets.pdf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -246,11 +246,15 @@
     <Content Include="Views\Account\ForgotPasswordFailed.cshtml" />
     <Content Include="Views\Account\ForgotPasswordMailFailed.cshtml" />
     <Content Include="Views\Group\CreateGroup.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

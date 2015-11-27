@@ -46,5 +46,7 @@ namespace LexiconLMS.Models
             return new ApplicationDbContext();
         }
         public DbSet<Group> Groups { get; set; }
+
+  //      public System.Data.Entity.DbSet<LexiconLMS.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
