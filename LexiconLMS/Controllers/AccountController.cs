@@ -172,7 +172,7 @@ namespace LexiconLMS.Controllers
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
+            // By default, reshow model if any other general error occurs
             return View(model);
         }
 
