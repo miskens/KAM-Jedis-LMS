@@ -13,14 +13,20 @@ namespace LexiconLMS.Models
     {
         public ApplicationUser() {
             Active = true;
-            FullName = "Förnamn Efternamn";
+            FullName = "Namn";
         }
 
-        [Display(Name= "Förnamn + efternamn")]
+        [Display(Name= "Namn")]
         public string FullName { get; set; }
                 
         [Display(Name= "Aktiv/Inskriven")]
         public bool Active { get; set; }
+
+        [Display(Name = "E-postadress")]
+        public override string Email { get; set; }
+
+        [Display(Name = "Telefonnr")]
+        public override string PhoneNumber { get; set; }
 
         [Display(Name="Gruppid")]
         public int? GroupId { get; set; }
@@ -51,5 +57,7 @@ namespace LexiconLMS.Models
         public DbSet<Activity> Activities { get; set; }
 
         public DbSet<Course> Courses { get; set; }
+
+        //public System.Data.Entity.DbSet<LexiconLMS.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

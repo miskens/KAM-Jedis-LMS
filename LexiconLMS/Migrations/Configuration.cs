@@ -63,7 +63,7 @@ namespace LexiconLMS.Migrations
             var manager = new UserManager<ApplicationUser>(store);
 
             var email = "oscar.jakobsson@lexicon.se";
-            var roles = new[] { "lärare", "elev" };
+            var roles = new[] { "lärare" };
             var user = new ApplicationUser { FullName = "Oscar Jakobsson", Email = email, UserName = email, Active = true };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 

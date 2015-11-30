@@ -235,7 +235,7 @@ namespace LexiconLMS.Controllers
                 else
                 {
                     //return View(model);
-                    return View("ForgotPasswordFailed");
+                    return View("ForgotPasswordAccountNotFound");
                 }
             }
 
