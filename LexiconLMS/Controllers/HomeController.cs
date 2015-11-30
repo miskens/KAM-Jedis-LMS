@@ -18,10 +18,11 @@ namespace LexiconLMS.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var context = new ApplicationDbContext();
-                var store = new UserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser>(store);
-                
-                ApplicationUser user = manager.FindById(User.Identity.GetUserId());
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                var currentUserId = User.Identity.GetUserId();
+                var user = userManager.Users.FirstOrDefault(u => u.Id == currentUserId);
                 ViewBag.FullName = user.FullName;
                 
                 if (user.GroupId.HasValue)
