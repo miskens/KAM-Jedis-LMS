@@ -26,9 +26,12 @@ namespace LexiconLMS.Migrations
             context.Groups.AddOrUpdate(g => g.Name,
                 new Group { Name = "Java", Description = "Händiga typer det där", StartDate = new DateTime(2015, 09, 30), EndDate = new DateTime(2016, 02, 28) },
                 new Group { Name = "C#", Description = "Ny beskrivning", StartDate = new DateTime(2015, 08, 31), EndDate = new DateTime(2015, 12, 18) },
-                new Group { Name = "Sharepoint", Description = "Sharepoint förr och nu.", StartDate = new DateTime(2016, 01, 25), EndDate = new DateTime(2016, 04, 30) },
+                new Group { Name = "Sharepoint", Description = "Sharepoint förr och nu.", StartDate = new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) },
                 new Group { Name = "Dynamics", Description = "Bli mer dynamisk med Dynamics.", StartDate = new DateTime(2015, 10, 22), EndDate = new DateTime(2016, 01, 20) },
-                new Group { Name = "Pascal", Description = "Finns det nån som ännu använder Pascal?", StartDate = new DateTime(2014, 01, 10), EndDate = new DateTime(2014, 06, 18) }
+                new Group { Name = "Pascal", Description = "Finns det nån som ännu använder Pascal?", StartDate = new DateTime(2014, 01, 10), EndDate = new DateTime(2014, 06, 18) },
+                new Group { Name = "Python", Description ="En typ av orm, eller ett programmeringsspråk?", StartDate= new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) },
+                new Group { Name = "EMACS", Description = "En editor och ett fönstersystem och ett enprocessoperativsystem, allt i ett!", StartDate = new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) }
+
             );
             context.SaveChanges();
 
@@ -37,11 +40,17 @@ namespace LexiconLMS.Migrations
                 new Course { Name = "Java 102", Description = "Java fortsättning", StartDate = new DateTime(2015, 10, 25), EndDate = new DateTime(2015, 11, 10), GroupId = 1 },
                 new Course { Name = "C# 101", Description = "C# introduktion", StartDate = new DateTime(2015, 08, 31), EndDate = new DateTime(2015, 09, 30), GroupId = 2 },
                 new Course { Name = "C# 102", Description = "C# fortsättning", StartDate = new DateTime(2015, 10, 01), EndDate = new DateTime(2015, 12, 12), GroupId = 2 },
-                new Course { Name = "Sharepoint expert", Description = "Sharepoint för experter, övriga göre sig ej besvär!", StartDate = new DateTime(2016, 01, 26), EndDate = new DateTime(2016, 02, 28), GroupId = 3 }
+                new Course { Name = "Sharepoint expert", Description = "Sharepoint för experter, övriga göre sig ej besvär!", StartDate = new DateTime(2016, 03, 14), EndDate = new DateTime(2016, 04, 28), GroupId = 3 },
+                new Course { Name = "Sharepoint mellannivå", Description = "Inte nybörjare, inte expert?", StartDate = new DateTime(2016,02,10), EndDate=new DateTime(2016,03,12), GroupId=3 },
+                new Course {  Name = "Sharepoint newbie", Description="Färskingar!", StartDate=new DateTime(2016,01,20), EndDate = new DateTime(2016,02,06), GroupId = 3},
+                new Course { Name = "Pythonormars skötsel", Description = "Ormskräcken börjar här!", StartDate = new DateTime(2016, 01, 20), EndDate = new DateTime(2016, 02, 06), GroupId = 6 }
+
                 );
             context.SaveChanges();
 
             context.Activities.AddOrUpdate(a => a.Name,
+                new Activity { Name = "Laboration i Java 101",Description="Första labben i Java", Type="laboration", StartDate = new DateTime(2015,10,04), EndDate= new DateTime(2015,10,06), CourseId= 1 },
+                new Activity { Name = "Laboration 2 i Java 101", Description = "Andra labben i Java", Type = "laboration", StartDate = new DateTime(2015, 10, 14), EndDate = new DateTime(2015, 10, 18), CourseId = 1 },
                 new Activity { Name = "Dynamics från början", Description = "Börja från början", Type = "övning", StartDate = new DateTime(2015, 11, 30), EndDate = new DateTime(2015, 12, 12), CourseId = 1 },
                 new Activity { Name = "Pascal för den allvetande", Description = "Den allvetande skräphögen regerar", Type = "inlämningsuppgift", StartDate = new DateTime(2015, 10, 22), EndDate = new DateTime(2015, 10, 29), CourseId = 2 }
                 );
@@ -63,7 +72,7 @@ namespace LexiconLMS.Migrations
             var manager = new UserManager<ApplicationUser>(store);
 
             var email = "oscar.jakobsson@lexicon.se";
-            var roles = new[] { "lärare", "elev" };
+            var roles = new[] { "lärare" };
             var user = new ApplicationUser { FullName = "Oscar Jakobsson", Email = email, UserName = email, Active = true };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 

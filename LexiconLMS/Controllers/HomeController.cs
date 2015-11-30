@@ -25,17 +25,63 @@ namespace LexiconLMS.Controllers
                 var user = userManager.Users.FirstOrDefault(u => u.Id == currentUserId);
                 ViewBag.FullName = user.FullName;
                 
-                if (user.GroupId.HasValue)
+                if (User.IsInRole("elev"))
                 {
-                    var group = context.Groups.Find(user.GroupId); 
+                    Group group = context.Groups.Find(user.GroupId); 
                     ViewBag.Group = group.Name;
+
+                     List<Course> activeCourses = (from c in context.Courses
+                                                  where (c.GroupId == user.GroupId &&
+                                                  c.StartDate <= DateTime.Today &&
+                                                  c.EndDate >= DateTime.Today)
+                                                  orderby c.StartDate ascending
+                                                  select c).ToList();
+                    ViewBag.ActiveCourses = activeCourses;
+
+                    List<Course> finishedCourses = (from c in context.Courses
+                                                  where (c.GroupId == user.GroupId &&
+                                                  c.EndDate < DateTime.Today)
+                                                  orderby c.StartDate ascending
+                                                  select c).ToList();
+                    ViewBag.FinishedCourses = finishedCourses;
+
+                    List<Course> futureCourses = (from c in context.Courses
+                                                    where (c.GroupId == user.GroupId &&
+                                                    c.StartDate > DateTime.Today)
+                                                    orderby c.StartDate ascending
+                                                    select c).ToList();
+                    ViewBag.FutureCourses = futureCourses;
+
+                    ViewBag.HasActiveCourses = (activeCourses.Count() > 0);
+                    ViewBag.HasFinishedCourses = (finishedCourses.Count() > 0);
+                    ViewBag.HasFutureCourses = (futureCourses.Count() > 0);
                 }
 
                 if (User.IsInRole("lärare")) 
                 {
-                    var groups = context.Groups.ToList();
-                    ViewBag.Groups = groups;
+                    IEnumerable<Group> activeGroups = from g in context.Groups
+                                 where (g.StartDate <= DateTime.Today && 
+                                        g.EndDate >= DateTime.Today)
+                                 orderby g.StartDate descending
+                                 select g;
+                    ViewBag.ActiveGroups = activeGroups;
+                    ViewBag.HasActiveGroups = (activeGroups.Count() > 0);
 
+                    IEnumerable<Group> finishedGroups = from g in context.Groups
+                                                        where g.EndDate < DateTime.Today
+                                                        orderby g.EndDate descending
+                                                        select g;
+                    ViewBag.FinishedGroups = finishedGroups;
+                    ViewBag.HasFinishedGroups = (finishedGroups.Count() > 0);
+
+                    IEnumerable<Group> futureGroups = from g in context.Groups
+                                                      where g.StartDate > DateTime.Today
+                                                      orderby g.StartDate ascending
+                                                      select g;
+                    ViewBag.FutureGroups = futureGroups;
+                    ViewBag.HasFutureGroups = (futureGroups.Count() > 0);
+
+                    // make active/FUTURE AND FINISHED GROUPINGS TUESDAY
                     var courses = context.Courses.ToList();
                     ViewBag.Courses = courses;
                 }
