@@ -1,6 +1,14 @@
-﻿@model LexiconLMS.Models.Group
+﻿@using System.IdentityModel.Configuration
+@using LexiconLMS.Models
+@using Microsoft.AspNet.Identity
+@model LexiconLMS.Models.Group
 
 @{
+    var context = new ApplicationDbContext();
+    var currentUserId = User.Identity.GetUserId();
+    
+    var currentUser = context.Users.FirstOrDefault(u => u.Id == currentUserId);
+    var groupMembers = context.Users.Where(u => u.GroupId == currentUser.GroupId);
     ViewBag.Title = "EIndex";
 }
 
@@ -35,6 +43,7 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Tillbaka", "Index", "Home")
-</p>
+<br/><br/>
+<div>
+    @Html.Partial("_EGroupMembers", groupMembers)
+</div>

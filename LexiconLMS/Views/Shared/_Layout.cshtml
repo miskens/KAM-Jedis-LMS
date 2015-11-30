@@ -27,7 +27,15 @@
                     @* Color is changed in Site.css instead of here *@
                     <li>@Html.ActionLink("Startsida", "Index", "Home")</li>
                     <li>@Html.ActionLink("Om", "About", "Home")</li>
-                    <li>@Html.ActionLink("Kontakt", "Contact")</li>
+                    <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
+                    @if (User.IsInRole("lärare"))
+                    {
+                        <li>@Html.ActionLink("Grupper", "Index", "Group")</li>
+                    }
+                    @if (User.IsInRole("elev"))
+                    {
+                        <li>@Html.ActionLink("Din Grupp", "Index", "Group")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
