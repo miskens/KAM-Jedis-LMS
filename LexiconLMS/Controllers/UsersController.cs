@@ -10,6 +10,7 @@ using LexiconLMS.Models;
 
 namespace LexiconLMS.Controllers
 {
+    [Authorize(Roles = "lärare")]
     public class UsersController : Controller
     {
         private ApplicationDbContext context = new ApplicationDbContext();
@@ -21,6 +22,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Users/Details/5
+        [Authorize(Roles = "lärare,elev")]
         public ActionResult Details(string id)
         {
             if (id == null)
