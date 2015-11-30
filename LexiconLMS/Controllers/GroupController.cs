@@ -24,7 +24,7 @@ namespace LexiconLMS.Controllers
             if (User.IsInRole("lärare"))
             {
                 var groups = context.Groups.ToList();
-                return LIndex(groups);
+                return LGroups(groups);
             }
             else
             {
@@ -34,23 +34,23 @@ namespace LexiconLMS.Controllers
                 var currentUserId = User.Identity.GetUserId();
                 var user = userManager.Users.FirstOrDefault(u => u.Id == currentUserId);
 
-                return EIndex(user.GroupId.Value, user.GroupId.ToString());
+                return EGroups(user.GroupId.Value, user.GroupId.ToString());
             }
         }
 
         // GET: Show Groups for teachers
         [Authorize(Roles = "lärare")]
-        public ActionResult LIndex(List<Group> groups)
+        public ActionResult LGroups(List<Group> groups)
         {
-                return View("Lindex", groups);   
+            return View("LGroups", groups);   
         }
 
         // GET: Show Group students Group
         [Authorize(Roles = "elev")]
-        public ActionResult EIndex(int id, string userGroupId)
+        public ActionResult EGroups(int id, string userGroupId)
         {
             var group = context.Groups.FirstOrDefault(g => g.Id.ToString() == userGroupId);
-            return View("EIndex", group);
+            return View("EGroups", group);
         }
 
 
@@ -68,7 +68,7 @@ namespace LexiconLMS.Controllers
         // GET: Group/Create
         [Authorize(Roles = "lärare")]
         [HttpGet]
-        public ActionResult CreateGroup()
+        public ActionResult Create()
         {
             return View();
         }
@@ -76,7 +76,7 @@ namespace LexiconLMS.Controllers
         // POST: Group/Create
         [Authorize(Roles="lärare")]
         [HttpPost]
-        public ActionResult CreateGroup(Group model)
+        public ActionResult Create(Group model)
         {
             ApplicationDbContext context = new ApplicationDbContext();
             try
@@ -171,12 +171,25 @@ namespace LexiconLMS.Controllers
                 .Where(g => g.Id == id)
                 .FirstOrDefault();
 
+                context.Groups.Remove(group);
+                context.SaveChanges();
+
                 return RedirectToAction("Index", "Group");
             }
             catch
             {
                 return View();
             }
+        }
+
+        public ActionResult GroupmemberDetails(string id)
+        {
+            ApplicationUser applicationUser = context.Users.Find(id);
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+            return View(applicationUser);
         }
     }
 }
