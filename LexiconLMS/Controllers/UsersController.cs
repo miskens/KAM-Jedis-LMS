@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using LexiconLMS.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LexiconLMS.Controllers
 {
-    [Authorize(Roles = "lärare")]
+    [Authorize]
     public class UsersController : Controller
     {
         private ApplicationDbContext context = new ApplicationDbContext();
@@ -18,11 +22,21 @@ namespace LexiconLMS.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            return View(context.Users.ToList());
+            var users = context.Users.ToList();
+
+            foreach (var user in users)
+            {
+                if (user.Roles.Count > 0)
+                { 
+                    var roleId = user.Roles.FirstOrDefault().RoleId;
+                    user.Role = context.Roles.Where(r => r.Id == roleId).FirstOrDefault().Name;
+                }
+            }
+
+            return View(users);
         }
 
         // GET: Users/Details/5
-        [Authorize(Roles = "lärare,elev")]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -38,6 +52,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Users/Create
+        [Authorize(Roles = "lärare")]
         public ActionResult Create()
         {
             return View();
@@ -48,6 +63,7 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "lärare")]
         public ActionResult Create([Bind(Include = "Id,FullName,Active,GroupId,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
@@ -61,6 +77,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Users/Edit/5
+        [Authorize(Roles = "lärare")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -81,18 +98,29 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 //        public ActionResult Edit([Bind(Include = "Id,FullName,Active,GroupId,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
-        public ActionResult Edit([Bind(Include = "Id,FullName,Active,GroupId,Email,UserName")] ApplicationUser applicationUser)
+        [Authorize(Roles = "lärare")]
+        public ActionResult Edit(ApplicationUser appUser)
         {
             if (ModelState.IsValid)
             {
-                context.Entry(applicationUser).State = EntityState.Modified;
+                var user = context.Users.Find(appUser.Id);
+
+                user.FullName = appUser.FullName;
+                user.GroupId = appUser.GroupId;
+                user.Active = appUser.Active;
+                user.UserName = appUser.UserName;
+                user.Email = appUser.Email;
+
+                context.Users.AddOrUpdate(u => u.Id,
+                    user);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(applicationUser);
+            return RedirectToAction("Index", "Users");
         }
 
         // GET: Users/Delete/5
+        [Authorize(Roles = "lärare")]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -110,6 +138,7 @@ namespace LexiconLMS.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "lärare")]
         public ActionResult DeleteConfirmed(string id)
         {
             ApplicationUser applicationUser = context.Users.Find(id);

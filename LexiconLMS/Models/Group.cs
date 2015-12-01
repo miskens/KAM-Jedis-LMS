@@ -18,9 +18,11 @@ namespace LexiconLMS.Models
         public string Description{ get; set; } 
 
         [Display(Name = "Startdatum")]
+        [DataType(DataType.Date)]
         public DateTime StartDate{ get; set; }
 
         [Display(Name = "Slutdatum")]
+        [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
 
         public virtual ICollection<ApplicationUser> Users { get; set; }

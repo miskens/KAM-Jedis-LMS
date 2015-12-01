@@ -84,8 +84,11 @@ namespace LexiconLMS.Models
         [Compare("Password", ErrorMessage = "Lösenorden måste vara likadana.")]
         public string ConfirmPassword { get; set; }
 
-        [Display(Name = "Grupp id-nr")]
+        [Display(Name = "Grupp")]
         public int GroupId { get; set; }
+
+        [Display(Name = "Roll")]
+        public string Role { get; set; }
 
     }
 
