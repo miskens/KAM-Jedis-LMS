@@ -106,3 +106,9 @@ textarea {
 .grouplink {
     font-size:smaller;
 }
+
+.welcome {
+    font-size:xx-large;
+    
+     color: red;
+}

@@ -15,7 +15,9 @@ else
 {
     <div class="row">
 
-        <h2>Välkommen @Html.Raw(ViewBag.Fullname)</h2>
+        <div class="welcome">
+            Välkommen @Html.ActionLink((string)ViewBag.FullName, "Details", "Users", new { id = ViewBag.UserId }, null)
+        </div>
 
         @if (User.IsInRole("lärare"))
         {
@@ -164,80 +166,87 @@ else
         {
             // Group student is in, listed along with courses and activities
             <div class="col-md-4">
-                <h3>Grupp: @Html.Raw(ViewBag.Group)</h3>
-                <h4>Start: @Html.Raw(ViewBag.GroupStart.ToString("d"))</h4>
-                <h4>Slut: @Html.Raw(ViewBag.GroupStart.ToString("d"))</h4>
+                <div class="groupname">
+                    Grupp: @Html.Raw(ViewBag.Group)
+                </div>
+                <div class="groupdate">
+                    @Html.Raw(ViewBag.GroupStart.ToString("d") + " -- " + ViewBag.GroupStart.ToString("d"))
+                </div>
+                <br />
+                <div class="groupdetails">
+                    @Html.Raw(ViewBag.GroupDescription)
+                </div>
             </div>
 
 
             <div class="col-md-4">
                 @if (ViewBag.HasActiveCourses)
                 {
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Pågående kurser</th>
-                                <th>Start</th>
-                                <th>Slut</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var course in ViewBag.ActiveCourses)
+                    <div class="hascourses">
+                        <br />
+                        Pågående kurser:
+                    </div>
+
+                    foreach (var course in ViewBag.ActiveCourses)
+                    {
+
+                        <div class="coursename">
+                            @course.Name
+                        </div>
+
+                        <div class="coursedate">
+                            @course.StartDate.Date.ToString("d") + " -- " + course.EndDate.Date.ToString("d")
+                        </div>
+                        <br />
+
+                        if (ViewBag.HasActiveActivities)
+                        {
+                            foreach (var activity in ViewBag.ActiveActivities)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.Raw(course.Name)
-                                    </td>
-                                    <td>
-                                        @Html.Raw(course.StartDate.Date.ToString("d"))
-                                    </td>
-                                    <td>
-                                        @Html.Raw(course.EndDate.Date.ToString("d"))
-                                    </td>
-                                </tr>
+                                if (activity.CourseId == course.Id)
+                                {
+                                    <div class="activity">
+                                        @activity.Name
+                                        <br />
+                                        @activity.Description
+                                    </div>
 
-
-                                // Add activities here
-
+                                }
                             }
-
-                        </tbody>
-
-                    </table>
+                        }
+                    }
                 }
 
 
                 @if (ViewBag.HasFutureCourses)
                 {
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Framtida kurser</th>
-                                <th>Start</th>
-                                <th>Slut</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var course in ViewBag.FutureCourses)
+                    <div class="hascourses">
+                        Kommande kurser
+                    </div>
+                    foreach (var course in ViewBag.FutureCourses)
+                    {
+                        <div class="coursename">
+                            @course.Name
+                        </div>
+                        <div class="coursedate">
+                            @course.StartDate.Date.ToString("d") + " -- " + course.EndDate.Date.ToString("d")
+                        </div>
+                        <br />
+                        
+                        if (ViewBag.HasFutureActivities)
+                        {
+                            foreach (var activity in ViewBag.FutureActivities)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.Raw(course.Name)
-                                    </td>
-                                    <td>
-                                        @Html.Raw(course.StartDate.Date.ToString("d"))
-                                    </td>
-                                    <td>
-                                        @Html.Raw(course.EndDate.Date.ToString("d"))
-                                    </td>
-                                </tr>
-
-                                // Add activities here
-
+                                <div class="activity">
+                                    @activity.Name
+                                    <br />
+                                    @activity.Description
+                                </div>
                             }
-                        </tbody>
+                        }
 
-                    </table>
+                    }
+
                 }
             </div>
 
@@ -245,35 +254,36 @@ else
             <div class="col-md-4">
                 @if (ViewBag.HasFinishedCourses)
                 {
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Avslutade kurser</th>
-                                <th>Start</th>
-                                <th>Slut</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var course in ViewBag.FinishedCourses)
+                    <div class="hascourses">
+                        Avslutade kurser
+                    </div>
+
+                    foreach (var course in ViewBag.FinishedCourses)
+                    {
+                        <div class="coursename">
+                            @course.Name
+                        </div>
+                        <div class="coursedate">
+                            @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                        </div>
+                        <br />
+
+                        if (ViewBag.HasFinishedActivities)
+                        {
+                            foreach (var activity in ViewBag.FinishedActivities)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.Raw(course.Name)
-                                    </td>
-                                    <td>
-                                        @Html.Raw(course.StartDate.Date.ToString("d"))
-                                    </td>
-                                    <td>
-                                        @Html.Raw(course.EndDate.Date.ToString("d"))
-                                    </td>
-                                </tr>
+                                if (activity.CourseId == course.Id)
+                                {
+                                    <div class="activity">
+                                        @activity.Name
+                                        <br />
+                                        @activity.Description
+                                    </div>
 
-                                // Add activities here
-
+                                }
                             }
-                        </tbody>
-
-                    </table>
+                        }
+                    }
                 }
             </div>
         }
