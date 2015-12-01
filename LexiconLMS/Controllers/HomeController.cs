@@ -24,18 +24,20 @@ namespace LexiconLMS.Controllers
                 var currentUserId = User.Identity.GetUserId();
                 var user = userManager.Users.FirstOrDefault(u => u.Id == currentUserId);
                 ViewBag.FullName = user.FullName;
+                ViewBag.UserId = user.Id;
 
                 if (User.IsInRole("elev"))
                 {
                     Group group = context.Groups.Find(user.GroupId);
                     ViewBag.Group = group.Name;
+                    ViewBag.GroupDescription = group.Description;
                     ViewBag.GroupStart = group.StartDate;
                     ViewBag.GroupEnd = group.EndDate;
 
-                    IEnumerable<Course> courses = from c in context.Courses
+                    IEnumerable<Course> courses = (from c in context.Courses
                                                   where c.GroupId == user.GroupId
                                                   orderby c.StartDate ascending
-                                                  select c;
+                                                  select c).ToList();
 
                     ViewBag.ActiveCourses = courses.Where(c => c.StartDate <= DateTime.Today && c.EndDate >= DateTime.Today);
                     ViewBag.FutureCourses = courses.Where(c => c.StartDate > DateTime.Today);
@@ -45,19 +47,20 @@ namespace LexiconLMS.Controllers
                     ViewBag.HasFutureCourses = courses.Where(c => c.StartDate > DateTime.Today).Count() > 0;
                     ViewBag.HasFinishedCourses = courses.Where(c => c.EndDate < DateTime.Today).Count() > 0;
 
-                    //ViewBag.HasFinishedCourses = (finishedCourses.Count() > 0);
-                    //ViewBag.HasFutureCourses = (futureCourses.Count() > 0);
-
-
-                    IEnumerable<Activity> activities = from c in context.Courses
+                    
+                    IEnumerable<Activity> activities = (from c in context.Courses
                                                        from a in c.Activities
                                                        where (c.GroupId == user.GroupId)
                                                        orderby a.StartDate ascending
-                                                       select a;
+                                                       select a).ToList();
 
                     ViewBag.ActiveActivities = activities.Where(a => a.StartDate <= DateTime.Today && a.EndDate >= DateTime.Today);
                     ViewBag.FutureActivities = activities.Where(a => a.StartDate > DateTime.Today);
                     ViewBag.FinishedActivities = activities.Where(a => a.EndDate < DateTime.Today);
+
+                    ViewBag.HasActiveActivities = activities.Where(a => a.StartDate <= DateTime.Today && a.EndDate >= DateTime.Today).Count() > 0;
+                    ViewBag.HasFutureActivities = activities.Where(a => a.StartDate > DateTime.Today).Count() > 0;
+                    ViewBag.HasFinishedActivities = activities.Where(a => a.EndDate < DateTime.Today).Count() > 0;
 
                 }
 
