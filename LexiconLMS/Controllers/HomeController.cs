@@ -24,64 +24,60 @@ namespace LexiconLMS.Controllers
                 var currentUserId = User.Identity.GetUserId();
                 var user = userManager.Users.FirstOrDefault(u => u.Id == currentUserId);
                 ViewBag.FullName = user.FullName;
-                
+
                 if (User.IsInRole("elev"))
                 {
-                    Group group = context.Groups.Find(user.GroupId); 
+                    Group group = context.Groups.Find(user.GroupId);
                     ViewBag.Group = group.Name;
+                    ViewBag.GroupStart = group.StartDate;
+                    ViewBag.GroupEnd = group.EndDate;
 
-                     List<Course> activeCourses = (from c in context.Courses
-                                                  where (c.GroupId == user.GroupId &&
-                                                  c.StartDate <= DateTime.Today &&
-                                                  c.EndDate >= DateTime.Today)
+                    IEnumerable<Course> courses = from c in context.Courses
+                                                  where c.GroupId == user.GroupId
                                                   orderby c.StartDate ascending
-                                                  select c).ToList();
-                    ViewBag.ActiveCourses = activeCourses;
+                                                  select c;
 
-                    List<Course> finishedCourses = (from c in context.Courses
-                                                  where (c.GroupId == user.GroupId &&
-                                                  c.EndDate < DateTime.Today)
-                                                  orderby c.StartDate ascending
-                                                  select c).ToList();
-                    ViewBag.FinishedCourses = finishedCourses;
+                    ViewBag.ActiveCourses = courses.Where(c => c.StartDate <= DateTime.Today && c.EndDate >= DateTime.Today);
+                    ViewBag.FutureCourses = courses.Where(c => c.StartDate > DateTime.Today);
+                    ViewBag.FinishedCourses = courses.Where(c => c.EndDate < DateTime.Today);
 
-                    List<Course> futureCourses = (from c in context.Courses
-                                                    where (c.GroupId == user.GroupId &&
-                                                    c.StartDate > DateTime.Today)
-                                                    orderby c.StartDate ascending
-                                                    select c).ToList();
-                    ViewBag.FutureCourses = futureCourses;
+                    ViewBag.HasActiveCourses = courses.Where(c => c.StartDate <= DateTime.Today && c.EndDate >= DateTime.Today).Count() > 0;
+                    ViewBag.HasFutureCourses = courses.Where(c => c.StartDate > DateTime.Today).Count() > 0;
+                    ViewBag.HasFinishedCourses = courses.Where(c => c.EndDate < DateTime.Today).Count() > 0;
 
-                    ViewBag.HasActiveCourses = (activeCourses.Count() > 0);
-                    ViewBag.HasFinishedCourses = (finishedCourses.Count() > 0);
-                    ViewBag.HasFutureCourses = (futureCourses.Count() > 0);
+                    //ViewBag.HasFinishedCourses = (finishedCourses.Count() > 0);
+                    //ViewBag.HasFutureCourses = (futureCourses.Count() > 0);
+
+
+                    IEnumerable<Activity> activities = from c in context.Courses
+                                                       from a in c.Activities
+                                                       where (c.GroupId == user.GroupId)
+                                                       orderby a.StartDate ascending
+                                                       select a;
+
+                    ViewBag.ActiveActivities = activities.Where(a => a.StartDate <= DateTime.Today && a.EndDate >= DateTime.Today);
+                    ViewBag.FutureActivities = activities.Where(a => a.StartDate > DateTime.Today);
+                    ViewBag.FinishedActivities = activities.Where(a => a.EndDate < DateTime.Today);
+
                 }
 
-                if (User.IsInRole("lärare")) 
+                if (User.IsInRole("lärare"))
                 {
-                    IEnumerable<Group> activeGroups = from g in context.Groups
-                                 where (g.StartDate <= DateTime.Today && 
-                                        g.EndDate >= DateTime.Today)
-                                 orderby g.StartDate descending
-                                 select g;
-                    ViewBag.ActiveGroups = activeGroups;
-                    ViewBag.HasActiveGroups = (activeGroups.Count() > 0);
+                    IEnumerable<Group> groups = from g in context.Groups
+                                                orderby g.StartDate ascending
+                                                select g;
 
-                    IEnumerable<Group> finishedGroups = from g in context.Groups
-                                                        where g.EndDate < DateTime.Today
-                                                        orderby g.EndDate descending
-                                                        select g;
-                    ViewBag.FinishedGroups = finishedGroups;
-                    ViewBag.HasFinishedGroups = (finishedGroups.Count() > 0);
+                    ViewBag.ActiveGroups = groups.Where(g => g.StartDate <= DateTime.Today && g.EndDate >= DateTime.Today);
+                    ViewBag.FutureGroups = groups.Where(g => g.StartDate > DateTime.Today);
+                    ViewBag.FinishedGroups = groups.Where(g => g.EndDate < DateTime.Today);
 
-                    IEnumerable<Group> futureGroups = from g in context.Groups
-                                                      where g.StartDate > DateTime.Today
-                                                      orderby g.StartDate ascending
-                                                      select g;
-                    ViewBag.FutureGroups = futureGroups;
-                    ViewBag.HasFutureGroups = (futureGroups.Count() > 0);
+                    ViewBag.HasActiveGroups = groups.Where(g => g.StartDate <= DateTime.Today && 
+                                                                g.EndDate >= DateTime.Today).Count() > 0;
+                    ViewBag.HasFutureGroups = groups.Where(g => g.StartDate > DateTime.Today).Count() > 0;
+                    ViewBag.HasFinishedGroups = groups.Where(g => g.EndDate < DateTime.Today).Count() > 0;
 
-                    // make active/FUTURE AND FINISHED GROUPINGS TUESDAY
+                    
+                    
                     var courses = context.Courses.ToList();
                     ViewBag.Courses = courses;
                 }

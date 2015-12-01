@@ -30,5 +30,7 @@ namespace LexiconLMS.Models
 
         [Display(Name = "GruppId")]
         public int GroupId { get; set; }
+
+        public virtual ICollection<Activity> Activities { get; set; }
     }
 }

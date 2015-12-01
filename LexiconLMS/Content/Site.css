@@ -62,3 +62,47 @@ textarea {
                                                           background:url("../img/dataTables/sort_desc_disabled.png") no-repeat center right
                                                       }
     */
+
+
+.active_groups{
+    background-color:rgb(212, 250, 212);
+}
+
+.future_groups {
+    background-color:palegrey; 
+}
+
+ hr {
+    border-top:1px solid red;
+    width:95%;
+}
+
+.groupheader {
+    font-size:x-large;
+    font-weight:600;
+}
+
+.groupname {
+    font-size: larger;
+    font-weight:600;
+}
+
+.groupdate {
+    font-style:italic;
+}
+
+.hascourses {
+    font-weight:600;
+}
+
+.coursedate {
+    font-size:smaller;
+}
+
+.coursename {
+    font-size:medium;
+}
+
+.grouplink {
+    font-size:smaller;
+}
