@@ -120,20 +120,14 @@ namespace LexiconLMS.Controllers
             {
                 ViewData[_formData] = collection[_formData];
             }
-
                 var group = context.Groups
                 .Where(g => g.Id == id)
                 .FirstOrDefault();
 
-                string name = Convert.ToString(collection["Name"]);
-                string description = Convert.ToString(collection["Description"]);
-                DateTime sDate = Convert.ToDateTime(collection["StartDate"]);
-                DateTime eDate = Convert.ToDateTime(collection["EndDate"]);
-
-                group.Name = name;
-                group.Description = description;
-                group.StartDate = sDate;
-                group.EndDate = eDate;
+                group.Name = Convert.ToString(collection["Name"]);
+                group.Description = Convert.ToString(collection["Description"]);
+                group.StartDate = Convert.ToDateTime(collection["StartDate"]);
+                group.EndDate = Convert.ToDateTime(collection["EndDate"]);
 
                 context.Groups.AddOrUpdate(g => g.Id,
                      group);

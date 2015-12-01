@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.EnterpriseServices.CompensatingResourceManager;
 using System.Globalization;
 using System.Linq;
@@ -12,6 +13,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LexiconLMS.Models;
 using System.Net.Mail;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LexiconLMS.Controllers
 {
@@ -20,6 +22,9 @@ namespace LexiconLMS.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private static ApplicationDbContext context = new ApplicationDbContext();
+        private static RoleStore<IdentityRole> roleStore = new RoleStore<IdentityRole>(context);
+        private RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(roleStore);
 
         public AccountController()
         {
@@ -142,6 +147,22 @@ namespace LexiconLMS.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            var rolesList = roleManager.Roles.ToList();
+            List<string> roles = new List<string>();
+            foreach (var role in rolesList)
+            {
+                roles.Add(role.Name);
+            }
+            ViewBag.Roles = roles;
+            var groupsList = context.Groups.ToList();
+            IDictionary<string, int> groups = new Dictionary<string, int>();
+            foreach (var group in groupsList)
+            {
+                groups.Add(group.Name, group.Id);
+            }
+            ViewBag.Groups = groups;
+            ViewBag.Roles = roles;
+            
             return View();
         }
 
@@ -154,8 +175,9 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FullName = model.FullName, GroupId = model.GroupId };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FullName = model.FullName, GroupId = model.GroupId};
                 var result = await UserManager.CreateAsync(user, model.Password);
+                UserManager.AddToRole(user.Id, model.Role);
                 if (result.Succeeded)
                 {
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);

@@ -1,7 +1,11 @@
-﻿@model LexiconLMS.Models.Group
+﻿@using LexiconLMS.Models
+@using Microsoft.AspNet.Identity
+@model LexiconLMS.Models.Group
 
 @{
     ViewBag.Title = "Editera";
+    var context = new ApplicationDbContext();
+    var groupMembers = context.Users.Where(u => u.GroupId == Model.Id);
 }
 
 <h2>Editera grupp</h2>
@@ -9,8 +13,8 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+
+    <div class="form-horizontal form-group">
         <h4>Grupp:</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -57,6 +61,11 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka", "Details", new { id = Model.Id }) |
-    @Html.ActionLink("Tillbaka till listan", "Index")
+    @Html.ActionLink("Tillbaka", "Details", new {id = Model.Id}) |
+    @Html.ActionLink("Tillbaka till listan", "Index") |
+</div>
+<br/>
+<br />
+<div>
+    @Html.Partial("_GroupMembers", groupMembers)
 </div>

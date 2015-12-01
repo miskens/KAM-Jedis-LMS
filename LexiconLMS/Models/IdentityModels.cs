@@ -31,6 +31,9 @@ namespace LexiconLMS.Models
         [Display(Name="Gruppid")]
         public int? GroupId { get; set; }
 
+        [Display(Name = "Roll")]
+        public string Role { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
