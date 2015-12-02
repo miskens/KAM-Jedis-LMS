@@ -39,7 +39,7 @@
                     @if (User.IsInRole("elev"))
                     {
                         <li>@Html.ActionLink("Din Grupp", "Index", "Group")</li>
-                        <li>@Html.ActionLink("Alla användare", "Index", "Users")</li>
+                        @*<li>@Html.ActionLink("Alla användare", "Index", "Users")</li>*@ //ska inte vara med för elever!!!
                         @*Add following links when the time comes... mwahaha
                         <li>@Html.ActionLink("Mina Kurser", "Index", "Courses")</li>
                         <li>@Html.ActionLink("Uppgifter", "Index", "Activities")</li>*@

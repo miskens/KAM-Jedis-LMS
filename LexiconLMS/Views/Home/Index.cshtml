@@ -37,7 +37,7 @@ else
                     </div>
 
                     <div class="groupdate">
-                        @Html.Raw(group.StartDate.Date.ToString("d") + " -- " + group.EndDate.Date.ToString("d"))
+                        @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
                     </div>
 
                         int i = 0;
@@ -47,21 +47,21 @@ else
                             {
                                 if (i == 0)
                                 {
-                    <div class="hascourses">
-                        <br />
-                        @Html.Raw("Ingående kurser:")
-                    </div>
+                                    <div class="hascourses">
+                                        <br />
+                                        Ingående kurser:
+                                    </div>
                                     i++;
                                 }
 
-                    <div class="coursename">
-                        @Html.Raw(course.Name)
-                    </div>
+                                <div class="coursename">
+                                    @course.Name
+                                </div>
 
-                    <div class="coursedate">
-                        @Html.Raw(course.StartDate.Date.ToString("d") + " -- " + course.EndDate.Date.ToString("d"))
-                    </div>
-                    <br />
+                                <div class="coursedate">
+                                    @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                                </div>
+                                <br />
                             }
                         }
                     <hr />
@@ -221,20 +221,20 @@ else
         }
 
 
-                @if (ViewBag.HasFutureCourses)
+        @if (ViewBag.HasFutureCourses)
         {
-                    <div class="hascourses">
-                        Kommande kurser:
-                    </div>
+            <div class="hascourses">
+                Kommande kurser:
+            </div>
             foreach (var course in ViewBag.FutureCourses)
             {
-                    <div class="coursename">
-                        @course.Name
-                    </div>
-                    <div class="coursedate">
-                        @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
-                    </div>
-                    <br />
+                <div class="coursename">
+                    @course.Name
+                </div>
+                <div class="coursedate">
+                    @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                </div>
+                <br />
 
                 if (ViewBag.HasFutureActivities)
                 {
@@ -280,15 +280,14 @@ else
                             {
                                 if (activity.CourseId == course.Id)
                                 {
+                                    <div class="activityname">
+                                        @activity.Name
+                                    </div>
 
-                    <div class="activityname">
-                        @activity.Name
-                    </div>
-
-                    <div class="activity">
-                        @activity.Description
-                    </div>
-                    <br />
+                                    <div class="activity">
+                                        @activity.Description
+                                    </div>
+                                    <br />
                                 }
                             }
                         }
