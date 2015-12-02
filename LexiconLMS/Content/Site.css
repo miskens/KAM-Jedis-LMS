@@ -64,8 +64,16 @@ textarea {
     */
 
 
-.active_groups{
+.highlight_background{
     background-color:rgb(212, 250, 212);
+}
+
+.activity {
+    font-style:italic;
+}
+
+.activityname {
+    font-weight:600;
 }
 
 .future_groups {
