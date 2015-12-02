@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<LexiconLMS.Models.ApplicationUser>
 
 @{
-    ViewBag.Title = "Alla användare";    
+    ViewBag.Title = "Användare";    
 }
 
 <h2>Alla användare</h2>
 
 <p>
-    @Html.ActionLink("Lägg in ny användare", "Register", "Account")
+    @Html.ActionLink("Skapa ny användare", "Register", "Account")
 </p>
 <table class="table">
     <tr>
@@ -33,6 +33,9 @@
         @*<th>
             @Html.DisplayNameFor(model => model.PhoneNumber)
         </th>*@
+        <th>
+
+        </th>
     </tr>
 
 @foreach (var item in Model) {
