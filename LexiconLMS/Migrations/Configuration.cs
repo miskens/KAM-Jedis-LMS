@@ -29,9 +29,9 @@ namespace LexiconLMS.Migrations
                 new Group { Name = "Sharepoint", Description = "Sharepoint förr och nu. Den här klassen kommer att handla om att sitta och nöta arslet och klicka på framåt- och bakåtknapparna i browsern, samt att klicka i textrutor och ange siffror mellan 1-10. Det kan även hända att man får klicka på en färg för att sätta bakgrundsfärgen på en sida.", StartDate = new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) },
                 new Group { Name = "Dynamics", Description = "Bli mer dynamisk med Dynamics.", StartDate = new DateTime(2015, 10, 22), EndDate = new DateTime(2016, 01, 20) },
                 new Group { Name = "Pascal", Description = "Finns det nån som ännu använder Pascal?", StartDate = new DateTime(2014, 01, 10), EndDate = new DateTime(2014, 06, 18) },
-                new Group { Name = "Python", Description ="En typ av orm, eller ett programmeringsspråk?", StartDate= new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) },
-                new Group { Name = "EMACS", Description = "En editor och ett fönstersystem och ett enprocessoperativsystem, allt i ett!", StartDate = new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) }
-
+                new Group { Name = "Python", Description = "En typ av orm, eller ett programmeringsspråk?", StartDate = new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) },
+                new Group { Name = "EMACS", Description = "En editor och ett fönstersystem och ett enprocessoperativsystem, allt i ett!", StartDate = new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) },
+                new Group { Name = "Världsherravälde", Description = "Från hantlangare till evil overlord på 100 dagar.", StartDate = new DateTime(2015, 08, 03), EndDate = new DateTime(2015, 11, 11) }
             );
             context.SaveChanges();
 
@@ -41,10 +41,12 @@ namespace LexiconLMS.Migrations
                 new Course { Name = "C# 101", Description = "C# introduktion", StartDate = new DateTime(2015, 08, 31), EndDate = new DateTime(2015, 09, 30), GroupId = 2 },
                 new Course { Name = "C# 102", Description = "C# fortsättning", StartDate = new DateTime(2015, 10, 01), EndDate = new DateTime(2015, 12, 12), GroupId = 2 },
                 new Course { Name = "Sharepoint expert", Description = "Sharepoint för experter, övriga göre sig ej besvär!", StartDate = new DateTime(2016, 03, 14), EndDate = new DateTime(2016, 04, 28), GroupId = 3 },
-                new Course { Name = "Sharepoint mellannivå", Description = "Inte nybörjare, inte expert?", StartDate = new DateTime(2016,02,10), EndDate=new DateTime(2016,03,12), GroupId=3 },
-                new Course {  Name = "Sharepoint newbie", Description="Färskingar!", StartDate=new DateTime(2016,01,20), EndDate = new DateTime(2016,02,06), GroupId = 3},
-                new Course { Name = "Pythonormars skötsel", Description = "Ormskräcken börjar här!", StartDate = new DateTime(2016, 01, 20), EndDate = new DateTime(2016, 02, 06), GroupId = 6 }
-
+                new Course { Name = "Sharepoint mellannivå", Description = "Inte nybörjare, inte expert?", StartDate = new DateTime(2016, 02, 10), EndDate = new DateTime(2016, 03, 12), GroupId = 3 },
+                new Course { Name = "Sharepoint newbie", Description = "Färskingar!", StartDate = new DateTime(2016, 01, 20), EndDate = new DateTime(2016, 02, 06), GroupId = 3 },
+                new Course { Name = "Pythonormars skötsel", Description = "Ormskräcken börjar här!", StartDate = new DateTime(2016, 01, 20), EndDate = new DateTime(2016, 02, 06), GroupId = 6 },
+                new Course { Name = "Hantlangarskötsel", Description = "Dina minioner välbefinnande är nödvändig för att framgångsrikt ta över världen.", StartDate = new DateTime(2015, 08, 03), EndDate = new DateTime(2015, 08, 30), GroupId = 8 },
+                new Course { Name = "Ondskefulla skratt 101", Description = "Skrattar först som skrattar bäst.", StartDate = new DateTime(2015, 09, 01), EndDate = new DateTime(2015, 09, 30), GroupId = 8 },
+                new Course { Name = "Ondskefulla skratt 102", Description = "Fortsättningskurs i elaka och ondskefulla skratt. Nu med fokus på andningen.", StartDate = new DateTime(2015,10,01), EndDate= new DateTime(2015,11,11), GroupId=8 }
                 );
             context.SaveChanges();
 
@@ -52,7 +54,10 @@ namespace LexiconLMS.Migrations
                 new Activity { Name = "Laboration i Java 101",Description="Första labben i Java", Type="laboration", StartDate = new DateTime(2015,10,04), EndDate= new DateTime(2015,10,06), CourseId= 1 },
                 new Activity { Name = "Laboration 2 i Java 101", Description = "Andra labben i Java", Type = "laboration", StartDate = new DateTime(2015, 10, 14), EndDate = new DateTime(2015, 10, 18), CourseId = 1 },
                 new Activity { Name = "Dynamics från början", Description = "Börja från början", Type = "övning", StartDate = new DateTime(2015, 11, 30), EndDate = new DateTime(2015, 12, 12), CourseId = 1 },
-                new Activity { Name = "Pascal för den allvetande", Description = "Den allvetande skräphögen regerar", Type = "inlämningsuppgift", StartDate = new DateTime(2015, 10, 22), EndDate = new DateTime(2015, 10, 29), CourseId = 2 }
+                new Activity { Name = "Pascal för den allvetande", Description = "Den allvetande skräphögen regerar", Type = "inlämningsuppgift", StartDate = new DateTime(2015, 10, 22), EndDate = new DateTime(2015, 10, 29), CourseId = 2 },
+                new Activity { Name = "Skrattlabb", Description="Användning av diafragman vid elakt skratt.", Type = "laboration", StartDate= new DateTime(2015,10,04), EndDate= new DateTime(2015,10,08), CourseId = 11 },
+                new Activity { Name = "Historiskt skrattande", Description="Lär dig skratta som historiska ondskefulla typer", Type = "laboration", StartDate= new DateTime(2015,10,10), EndDate= new DateTime(2015,10,30), CourseId = 11 },
+                new Activity { Name = "Inlämningsuppgift i skratt", Description="Spela in dig själv medan du flabbar som en galen typ som just tagit över världsherraväldet!", Type = "inlämningsuppgift", StartDate= new DateTime(2015,11,04), EndDate= new DateTime(2015,11,09), CourseId = 11 }
                 );
             context.SaveChanges();
 
@@ -129,6 +134,10 @@ namespace LexiconLMS.Migrations
 
             email = "nisaw99@hotmail.com";
             user = new ApplicationUser { FullName = "Niklas Säwensten", UserName = email, Email = email, Active = true, GroupId = 2 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "despicableme@eviloverlords.com";
+            user = new ApplicationUser { FullName = "Emperor Palpatine", UserName = email, Email = email, Active = true, GroupId = 8 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
         }

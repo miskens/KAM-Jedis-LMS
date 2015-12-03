@@ -153,7 +153,6 @@ namespace LexiconLMS.Controllers
             {
                 roles.Add(role.Name);
             }
-            ViewBag.Roles = roles;
             var groupsList = context.Groups.ToList();
             IDictionary<string, int> groups = new Dictionary<string, int>();
             foreach (var group in groupsList)

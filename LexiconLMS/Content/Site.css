@@ -63,6 +63,64 @@ textarea {
                                                       }
     */
 
+
+.highlight_background{
+    background-color:rgb(212, 250, 212);
+}
+
+.activity {
+    font-style:italic;
+}
+
+.activityname {
+    font-weight:600;
+}
+
+.future_groups {
+    background-color:palegrey; 
+}
+
+ hr {
+    border-top:1px solid red;
+    width:95%;
+}
+
+.groupheader {
+    font-size:x-large;
+    font-weight:600;
+}
+
+.groupname {
+    font-size: larger;
+    font-weight:600;
+}
+
+.groupdate {
+    font-style:italic;
+}
+
+.hascourses {
+    font-weight:600;
+}
+
+.coursedate {
+    font-size:smaller;
+}
+
+.coursename {
+    font-size:medium;
+}
+
+.grouplink {
+    font-size:smaller;
+}
+
+.welcome {
+    font-size:xx-large;
+    
+     color: red;
+}
+
 .sg-table-div {
     padding-top: 30px;
 }

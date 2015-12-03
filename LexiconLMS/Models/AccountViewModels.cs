@@ -49,8 +49,7 @@ namespace LexiconLMS.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "E-post")]
-        [EmailAddress]
+        [Display(Name = "Användarnamn")]
         public string Email { get; set; }
 
         [Required]

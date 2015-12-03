@@ -1,38 +1,21 @@
 ﻿@model LexiconLMS.Models.ApplicationUser
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Radering";
 }
 
-<h2>Delete</h2>
+<h2>@*Delete*@</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Är du säker på att du vill radera?</h3>
 <div>
-    <h4>ApplicationUser</h4>
+    <h4>Ej aktiv användare visas ej i listor för grupper, kurser mm!</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.FullName)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.FullName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GroupId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GroupId)
         </dd>
 
         <dt>
@@ -51,86 +34,39 @@
             @Html.DisplayFor(model => model.UserName)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+
         @*<dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>*@
-
-        @*<dt>
-            @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumberConfirmed)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EmailConfirmed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EmailConfirmed)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PasswordHash)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SecurityStamp)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SecurityStamp)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TwoFactorEnabled)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TwoFactorEnabled)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LockoutEndDateUtc)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LockoutEnabled)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LockoutEnabled)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AccessFailedCount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AccessFailedCount)
-        </dd>*@
-
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>*@
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Ändra användaren", "Edit", new { id = Model.Id })
+            <input type="submit" value="eller radera definitivt!" class="btn btn-default" />
+            @Html.ActionLink("Tillbaka till listan", "Index")
         </div>
     }
 </div>
