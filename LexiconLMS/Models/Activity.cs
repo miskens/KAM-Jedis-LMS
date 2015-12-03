@@ -26,13 +26,14 @@ namespace LexiconLMS.Models
         public string Type { get; set; }
 
         [Display(Name = "Startdatum")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
         [Display(Name = "Slutdatum")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
-
-        //[ForeignKey("Id")]
-        //public Course Course { get; set; }
 
         [Display(Name = "KursId")]
         public int CourseId { get; set; }
