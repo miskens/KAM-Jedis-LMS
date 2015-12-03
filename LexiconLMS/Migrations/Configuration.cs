@@ -39,7 +39,7 @@ namespace LexiconLMS.Migrations
                 new Course { Name = "Java 101", Description = "En introduktion till Java", StartDate = new DateTime(2015, 09, 30), EndDate = new DateTime(2015, 10, 24), GroupId = 1 },
                 new Course { Name = "Java 102", Description = "Java fortsättning", StartDate = new DateTime(2015, 10, 25), EndDate = new DateTime(2015, 11, 10), GroupId = 1 },
                 new Course { Name = "Java 103", Description = "Java fortsättning", StartDate = new DateTime(2015, 10, 25), EndDate = new DateTime(2015, 11, 10), GroupId = 1 },
-                new Course { Name = "Java 101-3", Description = "Java fortsättning", StartDate = new DateTime(2015, 10, 25), EndDate = new DateTime(2015, 11, 10), GroupId = 2 },
+                new Course { Name = "Java 101-3", Description = "Java fortsättning", StartDate = new DateTime(2015, 10, 25), EndDate = new DateTime(2015, 11, 10), GroupId = 1 },
                 new Course { Name = "C# 100", Description = "C# introduktion", StartDate = new DateTime(2015, 08, 31), EndDate = new DateTime(2015, 09, 10), GroupId = 2 },
                 new Course { Name = "C# 101", Description = "C# introduktion", StartDate = new DateTime(2015, 09, 20), EndDate = new DateTime(2015, 09, 30), GroupId = 2 },
                 new Course { Name = "C# 102", Description = "C# fortsättning", StartDate = new DateTime(2015, 10, 01), EndDate = new DateTime(2015, 10, 22), GroupId = 2 },

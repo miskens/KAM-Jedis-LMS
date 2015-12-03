@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Detaljer";
     var groups = ViewBag.Groups;
+
+    string sender = Request.RequestContext.RouteData.Values["sender"].ToString();
 }
 
 <h2>Detaljvy användare</h2>
@@ -40,7 +42,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.GroupId, new SelectList(groups, "Value", "Key", new { htmlAttributes = new { @class = "form-control" } }))
+            @ViewBag.Group
         </dd>
 
         <dt>
@@ -77,6 +79,16 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
+    @if (User.IsInRole("lärare"))
+    {
+        @Html.ActionLink("Ändra", "Edit", new { id = Model.Id })
+    }
+    @if (sender == "g")
+    {
+        @Html.ActionLink("Tillbaka", "Index", "Group")
+    }
+    else
+    {
     @Html.ActionLink("Tillbaka till listan", "Index")
+    }
 </p>

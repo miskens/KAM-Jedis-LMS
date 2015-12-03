@@ -9,6 +9,7 @@ namespace LexiconLMS.Models
 {
     public class Group
     {
+        [Display(Name = "Grupp")]
         public int Id { get; set; }
 
         [Display(Name="Benämning")]
