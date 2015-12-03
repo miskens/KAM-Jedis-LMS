@@ -20,6 +20,7 @@ namespace LexiconLMS.Controllers
         private ApplicationDbContext context = new ApplicationDbContext();
 
         // GET: Users
+        [Authorize(Roles = "lärare")]
         public ActionResult Index()
         {
             var users = context.Users.ToList();
