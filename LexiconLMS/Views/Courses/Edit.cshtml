@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Ändra ";
+
+    string sender = Request.RequestContext.RouteData.Values["sender"].ToString();
 }
 
 <h2>Ändra kursinformation</h2>
@@ -66,7 +68,15 @@
 }
 
 <div>
+    @if (sender == "g")
+    {
+        @Html.ActionLink("Tillbaka", "Index", "Group")
+    }
+    else
+    {
     @Html.ActionLink("Tillbaka till listan", "Index")
+    }
+
 </div>
 
 @section Scripts {
