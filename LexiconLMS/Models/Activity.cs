@@ -16,7 +16,7 @@ namespace LexiconLMS.Models
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Aktivitetsnamn")]
+        [Display(Name = "Aktivitet")]
         public string Name { get; set; }
 
         [Display(Name = "Beskrivning")]
@@ -25,17 +25,17 @@ namespace LexiconLMS.Models
         [Display(Name = "Typ")]
         public string Type { get; set; }
 
-        [Display(Name = "Startdatum")]
+        [Display(Name = "Start")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
-        [Display(Name = "Slutdatum")]
+        [Display(Name = "Slut")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
-        [Display(Name = "KursId")]
+        [Display(Name = "Kurs")]
         public int CourseId { get; set; }
     }
 }

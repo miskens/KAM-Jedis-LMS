@@ -25,20 +25,20 @@ else
             <div class="col-md-4 highlight_background">
                 @if (ViewBag.HasActiveGroups)
                 {
-                    <div class="groupheader">
-                        Aktuella grupper:
-                    </div>
-                    <br />
+                <div class="groupheader">
+                    Aktuella grupper:
+                </div>
+                <br />
 
                     foreach (var group in ViewBag.ActiveGroups)
                     {
-                    <div class="groupname">
-                        @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id }, null)
-                    </div>
+                <div class="groupname">
+                    @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id }, null)
+                </div>
 
-                    <div class="groupdate">
-                        @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
-                    </div>
+                <div class="groupdate">
+                    @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
+                </div>
 
                         int i = 0;
                         foreach (var course in ViewBag.Courses)
@@ -47,44 +47,46 @@ else
                             {
                                 if (i == 0)
                                 {
-                                    <div class="hascourses">
-                                        <br />
-                                        Ingående kurser:
-                                    </div>
+                <div class="hascourses">
+                    <br />
+                    Ingående kurser:
+                </div>
                                     i++;
                                 }
 
-                                <div class="coursename">
-                                    @course.Name
-                                </div>
+                <div class="coursename">
+                    @course.Name
+                </div>
 
-                                <div class="coursedate">
-                                    @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
-                                </div>
-                                <br />
+                <div class="coursedate">
+                    @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                </div>
+                <br />
                             }
                         }
-                    <hr />
+                <hr />
                     }
                 }
             </div>
 
                 // Future groups listed for teachers in middle column
-            <div class="col-md-4 future_groups">
+                <div class="col-md-4 future_groups">
 
-                @if (ViewBag.HasFutureGroups)
+                    @if (ViewBag.HasFutureGroups)
                     {
-                    <div class="groupheader">
-                        Kommande grupper:
-                    </div>
-                    <br />
+                        <div class="groupheader">
+                            Kommande grupper:
+                        </div>
+                        <br />
                         foreach (var group in ViewBag.FutureGroups)
                         {
-                    <div class="groupname">
-                        @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id }, null)
-                    </div>
+                            <div class="groupname">
+                                @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id }, null)
+                            </div>
 
-                    @Html.Raw(group.StartDate.Date.ToString("d") + " -- " + group.EndDate.Date.ToString("d"))
+                            <div class="groupdate">
+                                @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
+                            </div>
 
                             int i = 0;
                             foreach (var course in ViewBag.Courses)
@@ -93,45 +95,45 @@ else
                                 {
                                     if (i == 0)
                                     {
-                    <div class="hascourses">
-                        <br />
-                        @Html.Raw("Ingående kurser:")
-                    </div>
+                                        <div class="hascourses">
+                                            <br />
+                                            Ingående kurser:
+                                        </div>
                                         i++;
                                     }
 
-                    <div class="coursename">
-                        @Html.Raw(course.Name)
-                    </div>
+                                    <div class="coursename">
+                                        @course.Name
+                                    </div>
 
-                    <div class="coursedate">
-                        @Html.Raw(course.StartDate.Date.ToString("d") + " -- " + course.EndDate.Date.ToString("d"))
-                    </div>
-                    <br />
+                                    <div class="coursedate">
+                                        @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                                    </div>
+                                    <br />
                                 }
                             }
-                    <hr />
+                            <hr />
                         }
                     }
-            </div>
+                </div>
 
                     // Discontinued groups listed for teachers in rightmost column
-            <div class="col-md-4">
-                @if (ViewBag.HasFutureGroups)
+                    <div class="col-md-4">
+                        @if (ViewBag.HasFutureGroups)
                         {
-                    <div class="groupheader">
-                        Avslutade grupper:
-                    </div>
-                    <br />
+                            <div class="groupheader">
+                                Avslutade grupper:
+                            </div>
+                            <br />
                             foreach (var group in ViewBag.FinishedGroups)
                             {
-                    <div class="groupname">
-                        @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id }, null)
-                    </div>
+                                <div class="groupname">
+                                    @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id }, null)
+                                </div>
 
-                    <div class="groupdate">
-                        @Html.Raw(group.StartDate.Date.ToString("d") + " -- " + group.EndDate.Date.ToString("d"))
-                    </div>
+                                <div class="groupdate">
+                                    @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
+                                </div>
 
                                 int i = 0;
                                 foreach (var course in ViewBag.Courses)
@@ -140,34 +142,34 @@ else
                                     {
                                         if (i == 0)
                                         {
-                    <div class="hascourses">
-                        <br />
-                        @Html.Raw("Ingående kurser:")
-                    </div>
+                                            <div class="hascourses">
+                                                <br />
+                                                Ingående kurser:
+                                            </div>
                                             i++;
                                         }
 
-                    <div class="coursename">
-                        @Html.Raw(course.Name)
-                    </div>
+                                        <div class="coursename">
+                                            @course.Name
+                                        </div>
 
-                    <div class="coursedate">
-                        @Html.Raw(course.StartDate.Date.ToString("d") + " -- " + course.EndDate.Date.ToString("d"))
-                    </div>
-                    <br />
+                                        <div class="coursedate">
+                                            @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                                        </div>
+                                        <br />
                                     }
                                 }
-                    <hr />
+                                <hr />
                             }
                         }
-            </div>
+                    </div>
         }
         else
         {
             // Group student is in, listed along with courses and activities
             <div class="col-md-4 highlight_background">
                 <div class="groupname">
-                    Grupp: @Html.Raw(ViewBag.Group)
+                    Grupp: @ViewBag.Group
                 </div>
                 <div class="groupdate">
                     @ViewBag.GroupStart.ToString("d") -- @ViewBag.GroupStart.ToString("d")
@@ -181,79 +183,81 @@ else
 
             <div class="col-md-4 ">
                 @if (ViewBag.HasActiveCourses)
-        {
+                {
                     <div class="hascourses">
                         Pågående kurser:
                     </div>
 
-            foreach (var course in ViewBag.ActiveCourses)
-            {
-
-                    <div class="coursename">
-                        @course.Name
-                    </div>
-
-                    <div class="coursedate">
-                        @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
-                    </div>
-                    <br />
-
-                if (ViewBag.HasActiveActivities)
-                {
-                    foreach (var activity in ViewBag.ActiveActivities)
+                    foreach (var course in ViewBag.ActiveCourses)
                     {
-                        if (activity.CourseId == course.Id)
+
+                        <div class="coursename">
+                            @course.Name
+                        </div>
+
+                        <div class="coursedate">
+                            @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                        </div>
+                        <br />
+
+                        if (ViewBag.HasActiveActivities)
                         {
-                    <div class="activityname">
-                        @activity.Name
-                    </div>
-                    <div class="activity">
-                        @activity.Description
+                            foreach (var activity in ViewBag.ActiveActivities)
+                            {
+                                if (activity.CourseId == course.Id)
+                                {
+                                    <div class="activityname">
+                                        @activity.Name
+                                    </div>
+                                    <div class="activity">
+                                        @activity.Description
 
-                    </div>
-                    <br />
+                                    </div>
+                                    <br />
 
+                                }
+                            }
                         }
+                        <hr />
                     }
                 }
-                    <hr />
-            }
-        }
 
 
-        @if (ViewBag.HasFutureCourses)
-        {
-            <div class="hascourses">
-                Kommande kurser:
-            </div>
-            foreach (var course in ViewBag.FutureCourses)
-            {
-                <div class="coursename">
-                    @course.Name
-                </div>
-                <div class="coursedate">
-                    @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
-                </div>
-                <br />
-
-                if (ViewBag.HasFutureActivities)
+                @if (ViewBag.HasFutureCourses)
                 {
-                    foreach (var activity in ViewBag.FutureActivities)
+                    <div class="hascourses">
+                        Kommande kurser:
+                    </div>
+                    foreach (var course in ViewBag.FutureCourses)
                     {
-                    <div class="activityname">
-                        @activity.Name
-                    </div>
-                    <div class="activity">
-                        @activity.Description
+                        <div class="coursename">
+                            @course.Name
+                        </div>
+                        <div class="coursedate">
+                            @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                        </div>
+                        <br />
 
-                    </div>
-                    <br />
+                        if (ViewBag.HasFutureActivities)
+                        {
+                            foreach (var activity in ViewBag.FutureActivities)
+                            {
+                                <div class="activityname">
+                                    @activity.Name
+                                </div>
+                                <div class="activity">
+                                    @activity.Description
+
+                                </div>
+                                <br />
+                            }
+                        }
+
+                        <hr />
                     }
+
+
                 }
-
-            }
-
-        }
             </div>
 
 
@@ -266,13 +270,14 @@ else
 
                     foreach (var course in ViewBag.FinishedCourses)
                     {
-                    <div class="coursename">
-                        @course.Name
-                    </div>
-                    <div class="coursedate">
-                        @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
-                    </div>
-                    <br />
+                        <div class="coursename">
+                            @*@Html.ActionLink((string)course.Name, "Details", "Courses", new object { id = course.Id, sender ="s" }, null)*@
+                            @course.Name
+                        </div>
+                        <div class="coursedate">
+                            @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                        </div>
+                        <br />
 
                         if (ViewBag.HasFinishedActivities)
                         {
@@ -291,7 +296,7 @@ else
                                 }
                             }
                         }
-                    <hr />
+                        <hr />
                     }
                 }
             </div>
