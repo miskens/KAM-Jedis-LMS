@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "KursDetaljer";
+    string sender = Request.QueryString["sender"];
 }
 
 <h2>Detaljer för kurs</h2>
@@ -53,6 +54,16 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Tillbaka till listan", "Index")
+    @if (User.IsInRole("lärare"))
+    {
+        @Html.ActionLink("Ändra", "Edit", new {id = Model.Id})
+    }
+    @if (sender == "g")
+    {
+        @Html.ActionLink("Tillbaka", "Index", "Group")
+    }
+    else
+    {
+        @Html.ActionLink("Tillbaka", "Index")
+    }
 </p>

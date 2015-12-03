@@ -1,8 +1,10 @@
-﻿@model IEnumerable<LexiconLMS.Models.Course>
+﻿@using LexiconLMS.Controllers
+@model IEnumerable<LexiconLMS.Models.Course>
 
 @{
     ViewBag.Title = "_SGroupCourses";
-}
+    string sender = "g";
+    }
 
 <h4>Kurser</h4>
 <div class="sgc-div1">
@@ -20,7 +22,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink((string)item.Name, "Details", "Course", new { id = item.Id }, null)
+                    @Html.ActionLink((string)item.Name, "Details", "Courses", new { id = item.Id, sender }, null)
                 </td>
                 <td class="sgc-table-td2">
                     @Html.DisplayFor(modelItem => item.StartDate)
