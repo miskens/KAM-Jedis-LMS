@@ -2,6 +2,9 @@
 
 @{
     ViewBag.Title = "Detaljer";
+    var groups = ViewBag.Groups;
+
+    string sender = Request.RequestContext.RouteData.Values["sender"].ToString();
 }
 
 <h2>Detaljvy användare</h2>
@@ -76,6 +79,16 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
+    @if (User.IsInRole("lärare"))
+    {
+        @Html.ActionLink("Ändra", "Edit", new { id = Model.Id })
+    }
+    @if (sender == "g")
+    {
+        @Html.ActionLink("Tillbaka", "Index", "Group")
+    }
+    else
+    {
     @Html.ActionLink("Tillbaka till listan", "Index")
+    }
 </p>
