@@ -1,7 +1,12 @@
-﻿@model LexiconLMS.Models.Group
+﻿@using System.Linq
+@using System.Web.Mvc.Html
+@using LexiconLMS.Models
+@model LexiconLMS.Models.Group
 
 @{
     ViewBag.Title = "Gruppdetaljer";
+    var context = new ApplicationDbContext();
+    var groupMembers = context.Users.Where(u => u.GroupId == Model.Id);
 }
 
 <h2>Gruppdetaljer</h2>
@@ -48,3 +53,8 @@
     @Html.ActionLink("Editera", "Edit", new {id = Model.Id}) |
     @Html.ActionLink("Tillbaka till lista över grupper", "Index")
 </p>
+
+<br /><br />
+<div>
+    @Html.Partial("_TGroupMembers", groupMembers)
+</div>

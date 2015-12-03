@@ -168,10 +168,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511301347027_init.cs" />
-    <Compile Include="Migrations\201511301347027_init.Designer.cs">
-      <DependentUpon>201511301347027_init.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -256,20 +252,22 @@
     </Content>
     <Content Include="Views\Group\Create.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
-    <Content Include="Views\Group\LGroups.cshtml" />
-    <Content Include="Views\Group\EGroups.cshtml" />
+    <Content Include="Views\Group\TGroups.cshtml" />
+    <Content Include="Views\Group\StudentGroup.cshtml" />
     <Content Include="Views\Group\Details.cshtml" />
     <Content Include="Views\Group\Edit.cshtml" />
     <Content Include="Views\Group\Delete.cshtml" />
-    <Content Include="Views\Group\_EGroupMembers.cshtml" />
+    <Content Include="Views\Group\_SGroupMembers.cshtml" />
     <Content Include="Views\Account\ForgotPasswordMailFailed.cshtml" />
     <Content Include="Views\Account\ForgotPasswordAccountNotFound.cshtml" />
     <Content Include="Views\Group\GroupmemberDetails.cshtml" />
-    <Content Include="Views\Group\_GroupMembers.cshtml" />
+    <Content Include="Views\Group\_TGroupMembers.cshtml" />
+    <Content Include="Views\Group\_SGroupCourses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
+    <Folder Include="Views\Course\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

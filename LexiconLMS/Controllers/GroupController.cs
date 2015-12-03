@@ -24,7 +24,7 @@ namespace LexiconLMS.Controllers
             if (User.IsInRole("lärare"))
             {
                 var groups = context.Groups.ToList();
-                return LGroups(groups);
+                return TGroups(groups);
             }
             else
             {
@@ -34,23 +34,23 @@ namespace LexiconLMS.Controllers
                 var currentUserId = User.Identity.GetUserId();
                 var user = userManager.Users.FirstOrDefault(u => u.Id == currentUserId);
 
-                return EGroups(user.GroupId.Value, user.GroupId.ToString());
+                return StudentGroup(user.GroupId.Value, user.GroupId.ToString());
             }
         }
 
         // GET: Show Groups for teachers
         [Authorize(Roles = "lärare")]
-        public ActionResult LGroups(List<Group> groups)
+        public ActionResult TGroups(List<Group> groups)
         {
-            return View("LGroups", groups);   
+            return View("TGroups", groups);   
         }
 
         // GET: Show Group students Group
-        [Authorize(Roles = "elev")]
-        public ActionResult EGroups(int id, string userGroupId)
+        [Authorize(Roles = "elev,lärare")]
+        public ActionResult StudentGroup(int id, string userGroupId)
         {
             var group = context.Groups.FirstOrDefault(g => g.Id.ToString() == userGroupId);
-            return View("EGroups", group);
+            return View("StudentGroup", group);
         }
 
 
@@ -66,16 +66,16 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Group/Create
-        [Authorize(Roles = "lärare")]
         [HttpGet]
+        [Authorize(Roles = "lärare")]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Group/Create
-        [Authorize(Roles="lärare")]
         [HttpPost]
+        [Authorize(Roles = "lärare")]
         public ActionResult Create(Group model)
         {
             ApplicationDbContext context = new ApplicationDbContext();
@@ -98,8 +98,8 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Group/Edit/5
-         [Authorize(Roles = "lärare")]
         [HttpGet]
+        [Authorize(Roles = "lärare")]
         public ActionResult Edit(int id)
         {
             var group = context.Groups
@@ -110,8 +110,8 @@ namespace LexiconLMS.Controllers
         }
 
         // POST: Group/Edit/5
-        [Authorize(Roles = "lärare")]
         [HttpPost]
+        [Authorize(Roles = "lärare")]
         public ActionResult Edit(int id, FormCollection collection)
         {
             try
@@ -155,8 +155,8 @@ namespace LexiconLMS.Controllers
         }
 
         // POST: Group/Delete/5
-        [Authorize(Roles = "lärare")]
         [HttpPost]
+        [Authorize(Roles = "lärare")]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try

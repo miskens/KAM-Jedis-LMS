@@ -33,15 +33,10 @@
 {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.FullName)
+            @Html.ActionLink((string)item.FullName, "Details", "Users", new { id = item.Id }, null)
         </td>
-        <td>
+        <td class="sgm-td2">
             @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>@Html.DisplayFor(modelItem => item.Id)</td>
-
-        <td>
-            @Html.ActionLink("Detaljer", "GroupmemberDetails", new { id=item.Id }, null)
         </td>
     </tr>
 }

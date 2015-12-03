@@ -26,7 +26,7 @@ namespace LexiconLMS.Migrations
             context.Groups.AddOrUpdate(g => g.Name,
                 new Group { Name = "Java", Description = "Händiga typer det där", StartDate = new DateTime(2015, 09, 30), EndDate = new DateTime(2016, 02, 28) },
                 new Group { Name = "C#", Description = "Ny beskrivning", StartDate = new DateTime(2015, 08, 31), EndDate = new DateTime(2015, 12, 18) },
-                new Group { Name = "Sharepoint", Description = "Sharepoint förr och nu.", StartDate = new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) },
+                new Group { Name = "Sharepoint", Description = "Sharepoint förr och nu. Den här klassen kommer att handla om att sitta och nöta arslet och klicka på framåt- och bakåtknapparna i browsern, samt att klicka i textrutor och ange siffror mellan 1-10. Det kan även hända att man får klicka på en färg för att sätta bakgrundsfärgen på en sida.", StartDate = new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) },
                 new Group { Name = "Dynamics", Description = "Bli mer dynamisk med Dynamics.", StartDate = new DateTime(2015, 10, 22), EndDate = new DateTime(2016, 01, 20) },
                 new Group { Name = "Pascal", Description = "Finns det nån som ännu använder Pascal?", StartDate = new DateTime(2014, 01, 10), EndDate = new DateTime(2014, 06, 18) },
                 new Group { Name = "Python", Description ="En typ av orm, eller ett programmeringsspråk?", StartDate= new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) },

@@ -4,8 +4,6 @@
 
 @{
     ViewBag.Title = "Editera";
-    var context = new ApplicationDbContext();
-    var groupMembers = context.Users.Where(u => u.GroupId == Model.Id);
 }
 
 <h2>Editera grupp</h2>
@@ -63,9 +61,4 @@
 <div>
     @Html.ActionLink("Tillbaka", "Details", new {id = Model.Id}) |
     @Html.ActionLink("Tillbaka till listan", "Index") |
-</div>
-<br/>
-<br />
-<div>
-    @Html.Partial("_GroupMembers", groupMembers)
 </div>
