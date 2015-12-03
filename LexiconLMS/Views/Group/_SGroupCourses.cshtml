@@ -20,7 +20,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink((string)item.Name, "Details", "Course", new { id = item.Id }, null)
+                    @Html.ActionLink((string)item.Name, "Details", "Courses", new { id = item.Id, sender = "g"}, null)
                 </td>
                 <td class="sgc-table-td2">
                     @Html.DisplayFor(modelItem => item.StartDate)
