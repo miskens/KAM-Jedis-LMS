@@ -4,7 +4,7 @@
     ViewBag.Title = "Användare";    
 }
 
-<h2>Alla användare</h2>
+<h2>Användare</h2>
 
 <p>
     @Html.ActionLink("Skapa ny användare", "Register", "Account")
@@ -64,7 +64,7 @@
 
         <td>
             @Html.ActionLink("Ändra", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Detalj", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Detalj", "Details", new { id=item.Id, sender = "u" }) |
             @Html.ActionLink("Radera", "Delete", new { id=item.Id })
         </td>
     </tr>

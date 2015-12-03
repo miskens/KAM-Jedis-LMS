@@ -83,12 +83,16 @@
     {
         @Html.ActionLink("Ändra", "Edit", new { id = Model.Id })
     }
+    @if (sender == "u")
+    {
+        @Html.ActionLink("Tillbaka till användare", "Index", "Users")
+    }
     @if (sender == "g")
     {
-        @Html.ActionLink("Tillbaka", "Index", "Group")
+        @Html.ActionLink("Tillbaka till listan", "Index", "Group")
     }
-    else
+    @if (sender == "s")
     {
-    @Html.ActionLink("Tillbaka till listan", "Index")
+        @Html.ActionLink("Tillbaka till startsidan", "Index", "Home")
     }
 </p>
