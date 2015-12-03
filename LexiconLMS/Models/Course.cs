@@ -20,13 +20,14 @@ namespace LexiconLMS.Models
         public string Description { get; set; }
 
         [Display(Name = "Startdatum")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
         [Display(Name = "Slutdatum")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
-        
-        //[ForeignKey("Id")]
-        //public int Group Group { get; set; }
 
         [Display(Name = "GruppId")]
         public int GroupId { get; set; }

@@ -120,3 +120,38 @@ textarea {
     
      color: red;
 }
+
+.sg-table-div {
+    padding-top: 30px;
+}
+
+.sg-table-td1 {
+    padding-right: 100px; 
+    width: 70%;
+}
+.sg-td1-div1 {
+    padding-bottom: 20px;
+}
+.sg-td1-div2 {
+    border-top-style: solid; 
+    border-top-width: thin; 
+    border-top-color: red;
+}
+.sg-table-td2 {
+    padding-left: 50px; 
+    padding-top: 20px; 
+    vertical-align: top; 
+    border-left-style: solid; 
+    border-left-width: thin; 
+    border-left-color: red; 
+    width: 40%;
+}
+.sgm-td2 {
+    width: 20%;
+}
+.sgc-div1 {
+    width: 8>0%;
+}
+.sgc-table-td2 {
+    width: 30%
+}

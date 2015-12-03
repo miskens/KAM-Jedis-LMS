@@ -25,8 +25,8 @@ namespace LexiconLMS.Migrations
 
             context.Groups.AddOrUpdate(g => g.Name,
                 new Group { Name = "Java", Description = "Händiga typer det där", StartDate = new DateTime(2015, 09, 30), EndDate = new DateTime(2016, 02, 28) },
-                new Group { Name = "C#", Description = "C# i skarpt läge", StartDate = new DateTime(2015, 08, 31), EndDate = new DateTime(2015, 12, 18) },
-                new Group { Name = "Sharepoint", Description = "Sharepoint förr och nu.", StartDate = new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) },
+                new Group { Name = "C#", Description = "Ny beskrivning", StartDate = new DateTime(2015, 08, 31), EndDate = new DateTime(2015, 12, 18) },
+                new Group { Name = "Sharepoint", Description = "Sharepoint förr och nu. Den här klassen kommer att handla om att sitta och nöta arslet och klicka på framåt- och bakåtknapparna i browsern, samt att klicka i textrutor och ange siffror mellan 1-10. Det kan även hända att man får klicka på en färg för att sätta bakgrundsfärgen på en sida.", StartDate = new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) },
                 new Group { Name = "Dynamics", Description = "Bli mer dynamisk med Dynamics.", StartDate = new DateTime(2015, 10, 22), EndDate = new DateTime(2016, 01, 20) },
                 new Group { Name = "Pascal", Description = "Finns det nån som ännu använder Pascal?", StartDate = new DateTime(2014, 01, 10), EndDate = new DateTime(2014, 06, 18) },
                 new Group { Name = "Python", Description = "En typ av orm, eller ett programmeringsspråk?", StartDate = new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 04, 30) },
@@ -38,13 +38,23 @@ namespace LexiconLMS.Migrations
             context.Courses.AddOrUpdate(c => c.Name,
                 new Course { Name = "Java 101", Description = "En introduktion till Java", StartDate = new DateTime(2015, 09, 30), EndDate = new DateTime(2015, 10, 24), GroupId = 1 },
                 new Course { Name = "Java 102", Description = "Java fortsättning", StartDate = new DateTime(2015, 10, 25), EndDate = new DateTime(2015, 11, 10), GroupId = 1 },
-                new Course { Name = "C# 101", Description = "C# introduktion", StartDate = new DateTime(2015, 08, 31), EndDate = new DateTime(2015, 09, 30), GroupId = 2 },
-                new Course { Name = "C# 102", Description = "C# fortsättning", StartDate = new DateTime(2015, 10, 01), EndDate = new DateTime(2015, 12, 12), GroupId = 2 },
+                new Course { Name = "Java 103", Description = "Java fortsättning", StartDate = new DateTime(2015, 10, 25), EndDate = new DateTime(2015, 11, 10), GroupId = 1 },
+                new Course { Name = "Java 101-3", Description = "Java fortsättning", StartDate = new DateTime(2015, 10, 25), EndDate = new DateTime(2015, 11, 10), GroupId = 2 },
+                new Course { Name = "C# 100", Description = "C# introduktion", StartDate = new DateTime(2015, 08, 31), EndDate = new DateTime(2015, 09, 10), GroupId = 2 },
+                new Course { Name = "C# 101", Description = "C# introduktion", StartDate = new DateTime(2015, 09, 20), EndDate = new DateTime(2015, 09, 30), GroupId = 2 },
+                new Course { Name = "C# 102", Description = "C# fortsättning", StartDate = new DateTime(2015, 10, 01), EndDate = new DateTime(2015, 10, 22), GroupId = 2 },
+                new Course { Name = "C# 103", Description = "C# fortsättning", StartDate = new DateTime(2015, 11, 01), EndDate = new DateTime(2015, 10, 16), GroupId = 2 },
+                new Course { Name = "C# 104", Description = "C# fortsättning", StartDate = new DateTime(2015, 12, 01), EndDate = new DateTime(2015, 11, 23), GroupId = 2 },
+                new Course { Name = "C# 105", Description = "C# fortsättning", StartDate = new DateTime(2016, 01, 01), EndDate = new DateTime(2016, 01, 20), GroupId = 2 },
+                new Course { Name = "C# 106", Description = "C# fortsättning", StartDate = new DateTime(2016, 02, 01), EndDate = new DateTime(2016, 02, 18), GroupId = 2 },
                 new Course { Name = "Sharepoint expert", Description = "Sharepoint för experter, övriga göre sig ej besvär!", StartDate = new DateTime(2016, 03, 14), EndDate = new DateTime(2016, 04, 28), GroupId = 3 },
                 new Course { Name = "Sharepoint mellannivå", Description = "Inte nybörjare, inte expert?", StartDate = new DateTime(2016, 02, 10), EndDate = new DateTime(2016, 03, 12), GroupId = 3 },
                 new Course { Name = "Sharepoint newbie", Description = "Färskingar!", StartDate = new DateTime(2016, 01, 20), EndDate = new DateTime(2016, 02, 06), GroupId = 3 },
+                new Course { Name = "Sharepoint a-z", Description = "Sharepoint för experter, övriga göre sig ej besvär!", StartDate = new DateTime(2016, 03, 14), EndDate = new DateTime(2016, 03, 15), GroupId = 2 },
                 new Course { Name = "Pythonormars skötsel", Description = "Ormskräcken börjar här!", StartDate = new DateTime(2016, 01, 20), EndDate = new DateTime(2016, 02, 06), GroupId = 6 },
+                new Course { Name = ".net grund", Description = "E-kurs med Scott Allen", StartDate = new DateTime(2016, 01, 20), EndDate = new DateTime(2016, 02, 06), GroupId = 2 },
                 new Course { Name = "Hantlangarskötsel", Description = "Dina minioner välbefinnande är nödvändig för att framgångsrikt ta över världen.", StartDate = new DateTime(2015, 08, 03), EndDate = new DateTime(2015, 08, 30), GroupId = 8 },
+                new Course { Name = "Ondskefulla skratt a-z", Description = "Skrattar först som skrattar bäst som skattar mest.", StartDate = new DateTime(2015, 09, 01), EndDate = new DateTime(2015, 09, 30), GroupId = 2 },
                 new Course { Name = "Ondskefulla skratt 101", Description = "Skrattar först som skrattar bäst.", StartDate = new DateTime(2015, 09, 01), EndDate = new DateTime(2015, 09, 30), GroupId = 8 },
                 new Course { Name = "Ondskefulla skratt 102", Description = "Fortsättningskurs i elaka och ondskefulla skratt. Nu med fokus på andningen.", StartDate = new DateTime(2015,10,01), EndDate= new DateTime(2015,11,11), GroupId=8 }
                 );
@@ -88,7 +98,7 @@ namespace LexiconLMS.Migrations
 
             email = "kenneth.forsstrom@hotmail.com";
             roles = new[] { "elev" };
-            user = new ApplicationUser { FullName = "Kenneth Forsström", UserName = email, Email = email, Active = true, GroupId = 1 };
+            user = new ApplicationUser { FullName = "Kenneth Forsström", UserName = email, Email = email, Active = true, GroupId = 2 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "vitastjern@gmail.com";
@@ -97,19 +107,19 @@ namespace LexiconLMS.Migrations
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "miskens@hotmail.com";
-            user = new ApplicationUser { FullName = "Michael Puusaari", UserName = email, Email = email, Active = true, GroupId = 3 };
+            user = new ApplicationUser { FullName = "Michael Puusaari", UserName = email, Email = email, Active = true, GroupId = 2 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "matti.boustedt@gmail.com";
-            user = new ApplicationUser { FullName = "Matti Boustedt", UserName = email, Email = email, Active = true, GroupId = 4 };
+            user = new ApplicationUser { FullName = "Matti Boustedt", UserName = email, Email = email, Active = true, GroupId = 2 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "a.ronnegard@gmail.com";
-            user = new ApplicationUser { FullName = "Anna-Karin Rönnegård", UserName = email, Email = email, Active = true, GroupId = 5 };
+            user = new ApplicationUser { FullName = "Anna-Karin Rönnegård", UserName = email, Email = email, Active = true, GroupId = 2 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "jonasjakobsson.sundbyberg@gmail.com";
-            user = new ApplicationUser { FullName = "Jonas Jakobsson", UserName = email, Email = email, Active = true, GroupId = 1 };
+            user = new ApplicationUser { FullName = "Jonas Jakobsson", UserName = email, Email = email, Active = true, GroupId = 2 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "staffan.ericsson2@gmail.com";
@@ -117,23 +127,67 @@ namespace LexiconLMS.Migrations
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "christinamkronblad@yahoo.se";
-            user = new ApplicationUser { FullName = "Christina Kronblad", UserName = email, Email = email, Active = true, GroupId = 3 };
+            user = new ApplicationUser { FullName = "Christina Kronblad", UserName = email, Email = email, Active = true, GroupId = 2 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "olga.kagyrina@gmail.com";
-            user = new ApplicationUser { FullName = "Olga Kagyrina", UserName = email, Email = email, Active = false, GroupId = 4 };
+            user = new ApplicationUser { FullName = "Olga Kagyrina", UserName = email, Email = email, Active = false, GroupId = 2 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "nina@gmail.se";
-            user = new ApplicationUser { FullName = "Nina Oksa", UserName = email, Email = email, Active = false, GroupId = 5 };
+            user = new ApplicationUser { FullName = "Nina Oksa", UserName = email, Email = email, Active = false, GroupId = 2 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "adnansweden14@gmail.com";
-            user = new ApplicationUser { FullName = "Fredrik Hedlund", UserName = email, Email = email, Active = false, GroupId = 1 };
+            user = new ApplicationUser { FullName = "Fredrik Hedlund", UserName = email, Email = email, Active = false, GroupId = 2 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "nisaw99@hotmail.com";
             user = new ApplicationUser { FullName = "Niklas Säwensten", UserName = email, Email = email, Active = true, GroupId = 2 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "kalle@nomail.com";
+            user = new ApplicationUser { FullName = "Kalle Öberg", UserName = email, Email = email, Active = true, GroupId = 6 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "kjelle@nomail.com";
+            user = new ApplicationUser { FullName = "Kjell Ek", UserName = email, Email = email, Active = true, GroupId = 5 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "peter@nomail.com";
+            user = new ApplicationUser { FullName = "Peter Petersson", UserName = email, Email = email, Active = true, GroupId = 3 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "lena@nomail.com";
+            user = new ApplicationUser { FullName = "Lena EK", UserName = email, Email = email, Active = true, GroupId = 4 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "alena@nomail.com";
+            user = new ApplicationUser { FullName = "Alien Night", UserName = email, Email = email, Active = true, GroupId = 5 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "stina@nomail.com";
+            user = new ApplicationUser { FullName = "Stina Sten", UserName = email, Email = email, Active = true, GroupId = 6 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "anna@nomail.com";
+            user = new ApplicationUser { FullName = "Anna Berg", UserName = email, Email = email, Active = true, GroupId = 1 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "sten@nomail.com";
+            user = new ApplicationUser { FullName = "Sten Stinasson", UserName = email, Email = email, Active = true, GroupId = 7 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "nina@nomail.com";
+            user = new ApplicationUser { FullName = "Nina Öberg", UserName = email, Email = email, Active = true, GroupId = 1 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "greta@nomail.com";
+            user = new ApplicationUser { FullName = "Greta Grus", UserName = email, Email = email, Active = true, GroupId = 5 };
+            CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
+
+            email = "elina@nomail.com";
+            user = new ApplicationUser { FullName = "Elina Arnesson", UserName = email, Email = email, Active = true, GroupId = 8 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "despicableme@eviloverlords.com";

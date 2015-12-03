@@ -144,7 +144,7 @@ namespace LexiconLMS.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles="lärare")]
         public ActionResult Register()
         {
             var rolesList = roleManager.Roles.ToList();
@@ -168,8 +168,8 @@ namespace LexiconLMS.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "lärare")]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)

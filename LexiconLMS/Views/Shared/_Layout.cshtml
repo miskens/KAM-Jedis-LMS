@@ -24,16 +24,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @* Color is changed in Site.css instead of here *@
                     <li>@Html.ActionLink("Startsida", "Index", "Home")</li>
                     @*<li>@Html.ActionLink("Om", "About", "Home")</li>*@
                     <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
                     @if (User.IsInRole("lärare"))
                     {
+                        <li>@Html.ActionLink("Kurser", "Index", "Courses")</li>
                         <li>@Html.ActionLink("Grupper", "Index", "Group")</li>
                         <li>@Html.ActionLink("Användare", "Index", "Users")</li>
-                        @*Add following links when the time comes... mwahaha
-                        <li>@Html.ActionLink("Kurser", "Index", "Courses")</li>
+                        @*Add following link when the time comes... mwahaha
                         <li>@Html.ActionLink("Dokument", "Index", "Documents")</li>*@
                     }
                     @if (User.IsInRole("elev"))

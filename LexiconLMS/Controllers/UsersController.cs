@@ -40,6 +40,14 @@ namespace LexiconLMS.Controllers
         // GET: Users/Details/5
         public ActionResult Details(string id)
         {
+            var groupsList = context.Groups.ToList();
+            IDictionary<string, int> groups = new Dictionary<string, int>();
+            foreach (var group in groupsList)
+            {
+                groups.Add(group.Name, group.Id);
+            }
+            ViewBag.Groups = groups;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

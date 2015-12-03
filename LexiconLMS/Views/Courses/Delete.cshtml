@@ -1,18 +1,14 @@
-﻿@using System.Linq
-@using System.Web.Mvc.Html
-@using LexiconLMS.Models
-@model LexiconLMS.Models.Group
+﻿@model LexiconLMS.Models.Course
 
 @{
-    ViewBag.Title = "Gruppdetaljer";
-    var context = new ApplicationDbContext();
-    var groupMembers = context.Users.Where(u => u.GroupId == Model.Id);
+    ViewBag.Title = "Radera";
 }
 
-<h2>Gruppdetaljer</h2>
+@*<h2>Delete</h2>*@
 
+<h3>Är du säker ?</h3>
 <div>
-    <h4>Grupp:</h4>
+    <h4>Course</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -47,14 +43,22 @@
             @Html.DisplayFor(model => model.EndDate)
         </dd>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Editera", "Edit", new {id = Model.Id}) |
-    @Html.ActionLink("Tillbaka till lista över grupper", "Index")
-</p>
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupId)
+        </dt>
 
-<br /><br />
-<div>
-    @Html.Partial("_TGroupMembers", groupMembers)
+        <dd>
+            @Html.DisplayFor(model => model.GroupId)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Radera" class="btn btn-default" /> |
+            @Html.ActionLink("Tillbaka till listan", "Index")
+        </div>
+    }
 </div>

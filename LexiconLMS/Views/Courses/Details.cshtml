@@ -1,22 +1,23 @@
-﻿@using System.IdentityModel.Configuration
-@using LexiconLMS.Models
-@using Microsoft.AspNet.Identity
-@model LexiconLMS.Models.Group
+﻿@model LexiconLMS.Models.Course
 
 @{
-    var context = new ApplicationDbContext();
-    var currentUserId = User.Identity.GetUserId();
-    
-    var currentUser = context.Users.FirstOrDefault(u => u.Id == currentUserId);
-    var groupMembers = context.Users.Where(u => u.GroupId == currentUser.GroupId);
-    ViewBag.Title = "EIndex";
+    ViewBag.Title = "KursDetaljer";
 }
 
-<h1>Grupp: @Html.DisplayFor(model => model.Name)</h1>
+<h2>Detaljer för kurs</h2>
 
 <div>
+ @*   <h4>Course</h4>*@
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
@@ -41,9 +42,17 @@
             @Html.DisplayFor(model => model.EndDate)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupId)
+        </dd>
+
     </dl>
 </div>
-<br/><br/>
-<div>
-    @Html.Partial("_EGroupMembers", groupMembers)
-</div>
+<p>
+    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Tillbaka till listan", "Index")
+</p>
