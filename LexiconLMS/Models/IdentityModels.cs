@@ -13,10 +13,9 @@ namespace LexiconLMS.Models
     {
         public ApplicationUser() {
             Active = true;
-            FullName = "Namn";
         }
 
-        [Display(Name= "Namn")]
+        [Display(Name = "Förnamn Efternamn")]
         public string FullName { get; set; }
                 
         [Display(Name= "Aktiv/Inskriven")]
@@ -28,7 +27,7 @@ namespace LexiconLMS.Models
         [Display(Name = "Telefonnr")]
         public override string PhoneNumber { get; set; }
 
-        [Display(Name="Gruppid")]
+        [Display(Name="Grupp")]
         public int? GroupId { get; set; }
 
         [Display(Name = "Roll")]

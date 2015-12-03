@@ -14,6 +14,7 @@ namespace LexiconLMS.Models
     public class Activity
     {
         [Key]
+        [Display(Name = "Aktivitet")]
         public int Id { get; set; }
 
         [Display(Name = "Aktivitetsnamn")]
