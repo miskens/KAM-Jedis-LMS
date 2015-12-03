@@ -15,7 +15,7 @@ namespace LexiconLMS.Models
             Active = true;
         }
 
-        [Display(Name = "Förnamn Efternamn")]
+        [Display(Name = "För- och efternamn")]
         public string FullName { get; set; }
                 
         [Display(Name= "Aktiv/Inskriven")]
