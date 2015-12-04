@@ -77,9 +77,9 @@
 {
     @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
 }
-else
+@if (sender == "s")
 {
-    @Html.ActionLink("Tillbaka till listan", "Index")
+    @Html.ActionLink("Tillbaka", "Index", "Home", null)
 }
 </div>
 
