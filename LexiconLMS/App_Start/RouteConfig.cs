@@ -14,27 +14,33 @@ namespace LexiconLMS
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             //routes.MapRoute(
-            //name: "RouteToSenderUsers",
-            //url: "Users/Details/{id}/{sender}",
-            //defaults: new { controller = "Users", action = "Details", id = UrlParameter.Optional, sender = UrlParameter.Optional }
+            //name: "RouteToSenderHome",
+            //url: "Home/Details/{id}/{sender}",
+            //defaults: new { controller = "Home", action = "Details", id = UrlParameter.Optional, sender = UrlParameter.Optional }
             //);
 
             routes.MapRoute(
             name: "RouteToSenderCourses",
-            url: "Courses/Details/{id}/{sender}",
-            defaults: new { controller = "Courses", action = "Details", id = UrlParameter.Optional, sender = UrlParameter.Optional }
+            url: "Courses/{action}/{id}/{sender}/{gId}",
+            defaults: new { controller = "Courses", action = "Details", id = UrlParameter.Optional, sender = UrlParameter.Optional, gId = UrlParameter.Optional }
             );
 
             routes.MapRoute(
             name: "RouteToSenderUserDetails",
-            url: "Users/Details/{id}/{sender}/{gId}",
+            url: "Users/{action}/{id}/{sender}/{gId}",
             defaults: new { controller = "Users", action = "Details", id = UrlParameter.Optional, sender = UrlParameter.Optional, gId = UrlParameter.Optional }
             );
 
             routes.MapRoute(
             name: "RouteToSenderGroupDetails",
-            url: "Group/Details/{id}/{sender}/{gId}",
+            url: "Group/{action}/{id}/{sender}/{gId}",
             defaults: new { controller = "Group", action = "Details", id = UrlParameter.Optional, sender = UrlParameter.Optional, gId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+            name: "RouteToSenderCoursectivities",
+            url: "Activities/{action}/{id}/{sender}/{gId}/{cId}",
+            defaults: new { controller = "Activities", action = "Details", id = UrlParameter.Optional, sender = UrlParameter.Optional, gId = UrlParameter.Optional, cId = UrlParameter.Optional }
             );
 
             routes.MapRoute(

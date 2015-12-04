@@ -16,7 +16,7 @@ else
     <div class="row">
 
         <div class="welcome">
-            Välkommen @Html.ActionLink((string)ViewBag.FullName, "Details", "Users", new { id = ViewBag.UserId }, null)
+            Välkommen @Html.ActionLink((string)ViewBag.FullName, "Details", "Users", new { id = ViewBag.UserId, sender="s" }, null)!
         </div>
 
         @if (User.IsInRole("lärare"))
@@ -33,7 +33,7 @@ else
                     foreach (var group in ViewBag.ActiveGroups)
                     {
                 <div class="groupname">
-                    @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id }, null)
+                        @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id, sender="s" }, null)
                 </div>
 
                 <div class="groupdate">
@@ -55,7 +55,7 @@ else
                                 }
 
                 <div class="coursename">
-                    @course.Name
+                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
                 </div>
 
                 <div class="coursedate">
@@ -81,7 +81,7 @@ else
                         foreach (var group in ViewBag.FutureGroups)
                         {
                             <div class="groupname">
-                                @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id }, null)
+                        @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id, sender="s" }, null)
                             </div>
 
                             <div class="groupdate">
@@ -103,7 +103,7 @@ else
                                     }
 
                                     <div class="coursename">
-                                        @course.Name
+                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
                                     </div>
 
                                     <div class="coursedate">
@@ -128,7 +128,7 @@ else
                             foreach (var group in ViewBag.FinishedGroups)
                             {
                                 <div class="groupname">
-                                    @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id }, null)
+                        @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id, sender = "s" }, null)
                                 </div>
 
                                 <div class="groupdate">
@@ -150,7 +150,7 @@ else
                                         }
 
                                         <div class="coursename">
-                                            @course.Name
+                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
                                         </div>
 
                                         <div class="coursedate">
@@ -169,7 +169,7 @@ else
             // Group student is in, listed along with courses and activities
             <div class="col-md-4 highlight_background">
                 <div class="groupname">
-                    Grupp: @ViewBag.Group
+                    Grupp: @Html.ActionLink((string)ViewBag.Group, "Details", "Group", new { id = ViewBag.GroupId, sender ="s" }, null)
                 </div>
                 <div class="groupdate">
                     @ViewBag.GroupStart.ToString("d") -- @ViewBag.GroupStart.ToString("d")
@@ -192,7 +192,7 @@ else
                     {
 
                         <div class="coursename">
-                            @course.Name
+                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
                         </div>
 
                         <div class="coursedate">
@@ -207,7 +207,7 @@ else
                                 if (activity.CourseId == course.Id)
                                 {
                                     <div class="activityname">
-                                        @activity.Name
+                        @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s"}, null)
                                     </div>
                                     <div class="activity">
                                         @activity.Description
@@ -231,7 +231,7 @@ else
                     foreach (var course in ViewBag.FutureCourses)
                     {
                         <div class="coursename">
-                            @course.Name
+                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender = "s"}, null)
                         </div>
                         <div class="coursedate">
                             @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
@@ -243,11 +243,10 @@ else
                             foreach (var activity in ViewBag.FutureActivities)
                             {
                                 <div class="activityname">
-                                    @activity.Name
+                        @Html.ActionLink((string)activity.Name, "Details", "Activities", new {id=activity.Id, sender="s"},null)
                                 </div>
                                 <div class="activity">
                                     @activity.Description
-
                                 </div>
                                 <br />
                             }
@@ -271,8 +270,7 @@ else
                     foreach (var course in ViewBag.FinishedCourses)
                     {
                         <div class="coursename">
-                            @*@Html.ActionLink((string)course.Name, "Details", "Courses", new object { id = course.Id, sender ="s" }, null)*@
-                            @course.Name
+                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
                         </div>
                         <div class="coursedate">
                             @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
@@ -286,7 +284,7 @@ else
                                 if (activity.CourseId == course.Id)
                                 {
                                     <div class="activityname">
-                                        @activity.Name
+                        @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s"}, null)
                                     </div>
 
                                     <div class="activity">

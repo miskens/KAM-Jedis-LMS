@@ -4,6 +4,11 @@
     ViewBag.Title = "Ändra ";
 
     string sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    int groupId = 0;
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+    }
 }
 
 <h2>Ändra kursinformation</h2>
@@ -68,15 +73,14 @@
 }
 
 <div>
-    @if (sender == "g")
-    {
-        @Html.ActionLink("Tillbaka", "Index", "Group")
-    }
-    else
-    {
-    @Html.ActionLink("Tillbaka till listan", "Index")
-    }
-
+@if (sender == "g" && groupId != 0)
+{
+    @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = groupId, sender, groupId }, null)
+}
+@if (sender == "s")
+{
+    @Html.ActionLink("Tillbaka", "Index", "Home", null)
+}
 </div>
 
 @section Scripts {

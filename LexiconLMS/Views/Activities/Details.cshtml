@@ -2,12 +2,28 @@
 
 @{
     ViewBag.Title = "Details";
+
+    string sender = string.Empty;
+    if (Request.RequestContext.RouteData.Values["sender"] != null)
+    {
+        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    }
+
+    int groupId= 0;
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+    }
+
+    int courseId = 0;
+    if (Request.RequestContext.RouteData.Values["cId"] != null)
+    {
+        courseId = Int32.Parse(Request.RequestContext.RouteData.Values["cId"].ToString());
+    }
 }
 
-<h2>@Html.DisplayFor(model => model.Name)</h2>
-
 <div>
-    <h4>Kurs: @ViewBag.CourseName</h4>
+        <h4>@Model.Name ( @Model.StartDate.ToShortDateString() - @Model.EndDate.ToShortDateString())</h4>
     <hr />
     <dl class="dl-horizontal">
 
@@ -48,12 +64,26 @@
     </dl>
 </div>
 <p>
-    @if (User.IsInRole("lärare"))
+    @if (sender == "c")
     {
-        @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) @Html.Raw("|") @Html.ActionLink("Till aktivitetslistan", "Index")
+        if (User.IsInRole("lärare"))
+        {
+            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id })
+            @Html.Raw("|")
+            @Html.ActionLink("Till alla aktiviteter", "Index")
+        }
+        else
+        {
+            @Html.ActionLink("Tillbaka", "Details", "Courses")
+        }
     }
-    else
+    @if (sender == "g")
     {
-        @Html.ActionLink("Till kursens sida", "Details", "Courses", new { id = Model.CourseId }, null)
+        if (User.IsInRole("lärare"))
+        {
+            @Html.ActionLink("Ändra", "Edit", "Activities", new { id = Model.Id, sender, groupId, cId = Model.Id }, null)
+            @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = Model.Id, sender, groupId, courseId }, null)
+        }
+            @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender, groupId }, null)
     }
 </p>

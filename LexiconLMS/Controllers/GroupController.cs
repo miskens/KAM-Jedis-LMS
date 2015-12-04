@@ -8,6 +8,7 @@ using System.Security;
 using System.Web;
 using System.Web.Mvc;
 using LexiconLMS.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 
@@ -34,7 +35,7 @@ namespace LexiconLMS.Controllers
                 var currentUserId = User.Identity.GetUserId();
                 var user = userManager.Users.FirstOrDefault(u => u.Id == currentUserId);
 
-                return StudentGroup(user.GroupId.Value, user.GroupId.ToString());
+                return SGroup(user.GroupId.Value, user.GroupId.ToString());
             }
         }
 
@@ -47,10 +48,14 @@ namespace LexiconLMS.Controllers
 
         // GET: Show Group students Group
         [Authorize(Roles = "elev,lärare")]
-        public ActionResult StudentGroup(int id, string userGroupId)
+        public ActionResult SGroup(int id, string userGroupId)
         {
+            if (userGroupId.IsNullOrWhiteSpace())
+            {
+                return RedirectToAction("Index", "Group");
+            }
             var group = context.Groups.FirstOrDefault(g => g.Id.ToString() == userGroupId);
-            return View("StudentGroup", group);
+            return View("SGroup", group);
         }
 
 
@@ -58,11 +63,19 @@ namespace LexiconLMS.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var group = context.Groups
-                       .Where(g => g.Id == id)
-                       .FirstOrDefault();
+            var userId = User.Identity.GetUserId();
+            var user = context.Users.FirstOrDefault(u => u.Id == userId);
+            var group = context.Groups.Find(id);
 
-            return View(group);
+            if (User.IsInRole("elev") && (group.Id == user.GroupId))
+            {
+                return RedirectToAction("SGroup", group);
+            }
+            if (User.IsInRole("lärare"))
+            {
+                return View(group);
+            }
+            return RedirectToAction("Index", "Group");
         }
 
         // GET: Group/Create
@@ -176,14 +189,14 @@ namespace LexiconLMS.Controllers
             }
         }
 
-        public ActionResult GroupmemberDetails(string id)
-        {
-            ApplicationUser applicationUser = context.Users.Find(id);
-            if (applicationUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(applicationUser);
-        }
+        //public ActionResult GroupmemberDetails(string id)
+        //{
+        //    ApplicationUser applicationUser = context.Users.Find(id);
+        //    if (applicationUser == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(applicationUser);
+        //}
     }
 }

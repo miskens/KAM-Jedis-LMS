@@ -1,18 +1,32 @@
 ﻿@model LexiconLMS.Models.Activity
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editera";
+    
+    string sender = string.Empty;
+    if (Request.RequestContext.RouteData.Values["sender"] != null)
+    {
+        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    }
+    int groupId = 0;
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+    }
+
+    int courseId = 0;
+    if (Request.RequestContext.RouteData.Values["cId"] != null)
+    {
+        courseId = Int32.Parse(Request.RequestContext.RouteData.Values["cId"].ToString());
+    }
 }
-
-<h2>Edit</h2>
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Activity</h4>
+        <h4>Ändra aktivitet</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -74,7 +88,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender, groupId }, null)
 </div>
 
 @section Scripts {

@@ -22,7 +22,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink((string)item.Name, "Details", "Courses", new { id = item.Id, sender = "g" }, null)
+            @Html.ActionLink((string)item.Name, "Details", "Courses", new { id = item.Id, sender = "g", gId = item.GroupId }, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
@@ -34,8 +34,8 @@
             @Html.DisplayFor(modelItem => item.EndDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", "Courses", new { id=item.Id, sender = "g" }, null)  |
-            @Html.ActionLink("Delete", "Delete", "Courses", new { id = item.Id, sender = "g" }, null)
+            @Html.ActionLink("Ändra", "Edit", "Courses", new { id = item.Id, sender = "g", gId = item.GroupId }, null) |
+            @Html.ActionLink("Ta bort", "Delete", "Courses", new { id = item.Id, sender = "g", gId = item.GroupId }, null)
         </td>
     </tr>
 }
