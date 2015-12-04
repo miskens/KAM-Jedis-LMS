@@ -8,7 +8,7 @@
     var context = new ApplicationDbContext();
 
     var activities = context.Activities.Where(a => a.CourseId == Model.Id);
-    
+
     string sender = string.Empty;
     if (Request.RequestContext.RouteData.Values["sender"] != null)
     {
@@ -16,7 +16,7 @@
     }
     int groupId = 0;
     if (Request.RequestContext.RouteData.Values["gId"] != null)
-    { 
+    {
         groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
     }
 }
@@ -24,7 +24,7 @@
 
 <div>
     @*   <h4>Course</h4>*@
-    <hr/>
+    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Description)
@@ -64,7 +64,7 @@
 <p>
     @if (User.IsInRole("lärare"))
     {
-        @Html.ActionLink("Ändra", "Edit", new {id = Model.Id, sender, gId = groupId})
+        @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId = groupId })
     }
     @if (sender == "g")
     {
@@ -72,14 +72,14 @@
         {
             if (groupId != 0)
             {
-                @Html.ActionLink("Tillbaka", "Details", "Group", new {id = groupId}, null)
-    }
-    @if (sender == "s")
-    {
-        @Html.ActionLink("Tillbaka", "Index", "Home")
-    }
-    else
-    {
+                @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
+            }
+            if (sender == "s")
+            {
+                @Html.ActionLink("Tillbaka", "Index", "Home")
+            }
+            else
+            {
                 @Html.ActionLink("Tillbaka", "Details", "Group")
             }
         }
