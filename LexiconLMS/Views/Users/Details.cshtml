@@ -5,7 +5,15 @@
     var groups = ViewBag.Groups;
 
     string sender = Request.RequestContext.RouteData.Values["sender"].ToString();
-    string groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
+    int groupId;
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+    }
+    else
+    {
+        groupId = 0;
+    }
 }
 
 <h2>@Html.DisplayFor(model => model.FullName)</h2>
@@ -72,20 +80,31 @@
     </dl>
 </div>
 <p>
-    @if (User.IsInRole("lärare"))
+@if (groupId == 0)
+{
+    if (User.IsInRole("lärare"))
     {
         @Html.ActionLink("Ändra", "Edit", new {id = Model.Id})
     }
-    @if (sender == "u")
+
+    if (sender == "u")
     {
         @Html.ActionLink("Tillbaka till listan", "Index", "Users")
     }
-    @if (sender == "g")
+    if (sender == "g")
     {
-        @Html.ActionLink("Tillbaka", "Details", "Group", new {id = groupId}, null)
+        @Html.ActionLink("Tillbaka", "Details", "Group")
     }
-    @if (sender == "s")
+    if (sender == "s")
     {
         @Html.ActionLink("Tillbaka till startsidan", "Index", "Home")
     }
+}
+else
+{
+    if (sender == "g")
+    {
+        @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
+    }
+}
 </p>
