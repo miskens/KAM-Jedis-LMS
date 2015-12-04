@@ -25,20 +25,20 @@ else
             <div class="col-md-4 highlight_background">
                 @if (ViewBag.HasActiveGroups)
                 {
-                    <div class="groupheader">
-                        Aktuella grupper:
-                    </div>
-                    <br />
+                <div class="groupheader">
+                    Aktuella grupper:
+                </div>
+                <br />
 
                     foreach (var group in ViewBag.ActiveGroups)
                     {
-                    <div class="groupname">
+                <div class="groupname">
                         @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id, sender="s" }, null)
-                    </div>
+                </div>
 
-                    <div class="groupdate">
-                        @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
-                    </div>
+                <div class="groupdate">
+                    @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
+                </div>
 
                         int i = 0;
                         foreach (var course in ViewBag.Courses)
@@ -47,46 +47,46 @@ else
                             {
                                 if (i == 0)
                                 {
-                    <div class="hascourses">
-                        <br />
-                        Ingående kurser:
-                    </div>
+                <div class="hascourses">
+                    <br />
+                    Ingående kurser:
+                </div>
                                     i++;
                                 }
 
-                    <div class="coursename">
+                <div class="coursename">
                         @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
-                    </div>
+                </div>
 
-                    <div class="coursedate">
-                        @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
-                    </div>
-                    <br />
+                <div class="coursedate">
+                    @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                </div>
+                <br />
                             }
                         }
-                    <hr />
+                <hr />
                     }
                 }
             </div>
 
                 // Future groups listed for teachers in middle column
-            <div class="col-md-4 future_groups">
+                <div class="col-md-4 future_groups">
 
-                @if (ViewBag.HasFutureGroups)
+                    @if (ViewBag.HasFutureGroups)
                     {
-                    <div class="groupheader">
-                        Kommande grupper:
-                    </div>
-                    <br />
+                        <div class="groupheader">
+                            Kommande grupper:
+                        </div>
+                        <br />
                         foreach (var group in ViewBag.FutureGroups)
                         {
-                    <div class="groupname">
+                            <div class="groupname">
                         @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id, sender="s" }, null)
-                    </div>
+                            </div>
 
-                    <div class="groupdate">
-                        @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
-                    </div>
+                            <div class="groupdate">
+                                @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
+                            </div>
 
                             int i = 0;
                             foreach (var course in ViewBag.Courses)
@@ -95,45 +95,45 @@ else
                                 {
                                     if (i == 0)
                                     {
-                    <div class="hascourses">
-                        <br />
-                        Ingående kurser:
-                    </div>
+                                        <div class="hascourses">
+                                            <br />
+                                            Ingående kurser:
+                                        </div>
                                         i++;
                                     }
 
-                    <div class="coursename">
+                                    <div class="coursename">
                         @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
-                    </div>
+                                    </div>
 
-                    <div class="coursedate">
-                        @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
-                    </div>
-                    <br />
+                                    <div class="coursedate">
+                                        @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                                    </div>
+                                    <br />
                                 }
                             }
-                    <hr />
+                            <hr />
                         }
                     }
-            </div>
+                </div>
 
                     // Discontinued groups listed for teachers in rightmost column
-            <div class="col-md-4">
-                @if (ViewBag.HasFutureGroups)
+                    <div class="col-md-4">
+                        @if (ViewBag.HasFutureGroups)
                         {
-                    <div class="groupheader">
-                        Avslutade grupper:
-                    </div>
-                    <br />
+                            <div class="groupheader">
+                                Avslutade grupper:
+                            </div>
+                            <br />
                             foreach (var group in ViewBag.FinishedGroups)
                             {
-                    <div class="groupname">
+                                <div class="groupname">
                         @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id, sender = "s" }, null)
-                    </div>
+                                </div>
 
-                    <div class="groupdate">
-                        @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
-                    </div>
+                                <div class="groupdate">
+                                    @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
+                                </div>
 
                                 int i = 0;
                                 foreach (var course in ViewBag.Courses)
@@ -142,27 +142,27 @@ else
                                     {
                                         if (i == 0)
                                         {
-                    <div class="hascourses">
-                        <br />
-                        Ingående kurser:
-                    </div>
+                                            <div class="hascourses">
+                                                <br />
+                                                Ingående kurser:
+                                            </div>
                                             i++;
                                         }
 
-                    <div class="coursename">
+                                        <div class="coursename">
                         @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
-                    </div>
+                                        </div>
 
-                    <div class="coursedate">
-                        @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
-                    </div>
-                    <br />
+                                        <div class="coursedate">
+                                            @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                                        </div>
+                                        <br />
                                     }
                                 }
-                    <hr />
+                                <hr />
                             }
                         }
-            </div>
+                    </div>
         }
         else
         {
@@ -191,14 +191,14 @@ else
                     foreach (var course in ViewBag.ActiveCourses)
                     {
 
-                    <div class="coursename">
+                        <div class="coursename">
                         @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
-                    </div>
+                        </div>
 
-                    <div class="coursedate">
-                        @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
-                    </div>
-                    <br />
+                        <div class="coursedate">
+                            @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                        </div>
+                        <br />
 
                         if (ViewBag.HasActiveActivities)
                         {
@@ -206,19 +206,19 @@ else
                             {
                                 if (activity.CourseId == course.Id)
                                 {
-                    <div class="activityname">
+                                    <div class="activityname">
                         @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s"}, null)
-                    </div>
-                    <div class="activity">
-                        @activity.Description
+                                    </div>
+                                    <div class="activity">
+                                        @activity.Description
 
-                    </div>
-                    <br />
+                                    </div>
+                                    <br />
 
                                 }
                             }
                         }
-                    <hr />
+                        <hr />
                     }
                 }
 
@@ -230,25 +230,25 @@ else
                     </div>
                     foreach (var course in ViewBag.FutureCourses)
                     {
-                    <div class="coursename">
+                        <div class="coursename">
                         @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender = "s"}, null)
-                    </div>
-                    <div class="coursedate">
-                        @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
-                    </div>
-                    <br />
+                        </div>
+                        <div class="coursedate">
+                            @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                        </div>
+                        <br />
 
                         if (ViewBag.HasFutureActivities)
                         {
                             foreach (var activity in ViewBag.FutureActivities)
                             {
-                    <div class="activityname">
+                                <div class="activityname">
                         @Html.ActionLink((string)activity.Name, "Details", "Activities", new {id=activity.Id, sender="s"},null)
-                    </div>
-                        <div class="activity">
-                            @activity.Description
-                        </div>
-                        <br />
+                                </div>
+                                <div class="activity">
+                                    @activity.Description
+                                </div>
+                                <br />
                             }
                         }
 
@@ -269,13 +269,13 @@ else
 
                     foreach (var course in ViewBag.FinishedCourses)
                     {
-                    <div class="coursename">
+                        <div class="coursename">
                         @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
-                    </div>
-                    <div class="coursedate">
-                        @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
-                    </div>
-                    <br />
+                        </div>
+                        <div class="coursedate">
+                            @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                        </div>
+                        <br />
 
                         if (ViewBag.HasFinishedActivities)
                         {
@@ -283,18 +283,18 @@ else
                             {
                                 if (activity.CourseId == course.Id)
                                 {
-                    <div class="activityname">
+                                    <div class="activityname">
                         @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s"}, null)
-                    </div>
+                                    </div>
 
-                    <div class="activity">
-                        @activity.Description
-                    </div>
-                    <br />
+                                    <div class="activity">
+                                        @activity.Description
+                                    </div>
+                                    <br />
                                 }
                             }
                         }
-                    <hr />
+                        <hr />
                     }
                 }
             </div>

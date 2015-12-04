@@ -4,6 +4,18 @@
 
 @{
     ViewBag.Title = "Editera";
+
+    string sender = string.Empty;
+    if (Request.RequestContext.RouteData.Values["sender"] != null)
+    {
+        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    } 
+    
+    int groupId = 0;
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+    } 
 }
 
 <h2>Editera grupp</h2>
@@ -59,5 +71,13 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka till listan", "Index") |
+    @if (sender == string.Empty)
+    {
+        @Html.ActionLink("Tillbaka till listan", "Index")
+    }
+    @if (sender == "g" && groupId != 0)
+    {
+        @Html.ActionLink("Tillbaka", "Details", "Group", new {id = groupId}, null)
+    }
+
 </div>

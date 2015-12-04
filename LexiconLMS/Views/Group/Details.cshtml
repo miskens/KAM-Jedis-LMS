@@ -1,4 +1,5 @@
 ﻿@using System.Linq
+@using System.Runtime.Remoting.Channels
 @using System.Web.Mvc.Html
 @using LexiconLMS.Models
 @model LexiconLMS.Models.Group
@@ -35,27 +36,10 @@
                         <dd>
                             @Html.DisplayFor(model => model.Description)
                         </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.StartDate)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.StartDate)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.EndDate)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.EndDate)
-                        </dd>
-
                     </dl>
                 </div>
                 <p>
-                    @Html.ActionLink("Editera", "Edit", new { id = Model.Id }) |
+                    @Html.ActionLink("Editera", "Edit", new { id = Model.Id, sender = "g", gId = Model.Id }) |
                     @Html.ActionLink("Tillbaka till lista", "Index")
                 </p>
                 <br /><br />
