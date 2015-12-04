@@ -16,14 +16,15 @@
     }
     int groupId = 0;
     if (Request.RequestContext.RouteData.Values["gId"] != null)
-    { 
+    {
         groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
     }
 }
-<h2>@Model.Name</h2> <h4>( @Model.StartDate - @Model.EndDate )</h4>
+<h2>@Model.Name</h2>
+<h4>( @Model.EndDate.ToShortDateString() - @Model.EndDate.ToShortDateString() )</h4>
 
 <div>
-    <hr/>
+    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Description)
@@ -36,9 +37,13 @@
 </div>
 <br /><br />
 <p>
-    @if (User.IsInRole("lärare"))
+    @if (sender == "s")
     {
-        @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId = groupId })
+        if (User.IsInRole("lärare"))
+        {
+            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId = groupId })
+        }
+        @Html.ActionLink("Tillbaka", "Index", "Home")
     }
     @if (sender == "g")
     {
@@ -47,10 +52,6 @@
             if (groupId != 0)
             {
                 @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
-            }
-            if (sender == "s")
-            {
-                @Html.ActionLink("Tillbaka", "Index", "Home")
             }
             else
             {

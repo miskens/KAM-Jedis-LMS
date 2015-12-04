@@ -8,6 +8,7 @@ using System.Security;
 using System.Web;
 using System.Web.Mvc;
 using LexiconLMS.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 
@@ -49,6 +50,10 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "elev,lärare")]
         public ActionResult SGroup(int id, string userGroupId)
         {
+            if (userGroupId.IsNullOrWhiteSpace())
+            {
+                return RedirectToAction("Index", "Group");
+            }
             var group = context.Groups.FirstOrDefault(g => g.Id.ToString() == userGroupId);
             return View("SGroup", group);
         }
@@ -66,15 +71,11 @@ namespace LexiconLMS.Controllers
             {
                 return RedirectToAction("SGroup", group);
             }
-            else
-            {
-                return RedirectToAction("Index");
-            }
             if (User.IsInRole("lärare"))
             {
                 return View(group);
             }
-            return View("Index");
+            return RedirectToAction("Index", "Group");
         }
 
         // GET: Group/Create

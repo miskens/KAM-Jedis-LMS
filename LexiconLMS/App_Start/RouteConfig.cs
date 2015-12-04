@@ -38,9 +38,9 @@ namespace LexiconLMS
             );
 
             routes.MapRoute(
-            name: "RouteToSenderActivities",
-            url: "Activities/Details/{id}/{sender}",
-            defaults: new { controller = "Activities", action = "Details", id = UrlParameter.Optional, sender = UrlParameter.Optional }
+            name: "RouteToSenderCoursectivities",
+            url: "Activities/{action}/{id}/{sender}/{gId}/{cId}",
+            defaults: new { controller = "Activities", action = "Details", id = UrlParameter.Optional, sender = UrlParameter.Optional, gId = UrlParameter.Optional, cId = UrlParameter.Optional }
             );
 
             routes.MapRoute(
