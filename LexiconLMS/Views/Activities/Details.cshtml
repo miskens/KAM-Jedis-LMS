@@ -7,6 +7,7 @@
 <h2>@Html.DisplayFor(model => model.Name)</h2>
 
 <div>
+    @*<h4>Kurs: @Html.ActionLink((string)ViewBag.CourseName, "Courses", "Details", new { id = Model.CourseId, sender = "c"}, null)</h4>*@
     <h4>Kurs: @ViewBag.CourseName</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -50,10 +51,10 @@
 <p>
     @if (User.IsInRole("lärare"))
     {
-        @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) @Html.Raw("|") @Html.ActionLink("Till aktivitetslistan", "Index")
+        @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) @Html.Raw("|") @Html.ActionLink("Till alla aktiviteter", "Index")
     }
     else
     {
-        @Html.ActionLink("Till kursens sida", "Details", "Courses", new { id = Model.CourseId }, null)
+        @Html.ActionLink("Till kursen", "Details", "Courses")
     }
 </p>

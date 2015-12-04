@@ -38,7 +38,7 @@
 <p>
     @if (User.IsInRole("lärare"))
     {
-        @Html.ActionLink("Ändra", "Edit", new {id = Model.Id, sender, gId = groupId})
+        @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId = groupId })
     }
     @if (sender == "g")
     {
@@ -46,7 +46,11 @@
         {
             if (groupId != 0)
             {
-                @Html.ActionLink("Tillbaka", "Details", "Group", new {id = groupId}, null)
+                @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
+            }
+            if (sender == "s")
+            {
+                @Html.ActionLink("Tillbaka", "Index", "Home")
             }
             else
             {

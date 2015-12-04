@@ -30,6 +30,7 @@ namespace LexiconLMS.Controllers
                 {
                     Group group = context.Groups.Find(user.GroupId);
                     ViewBag.Group = group.Name;
+                    ViewBag.Groupid = group.Id;
                     ViewBag.GroupDescription = group.Description;
                     ViewBag.GroupStart = group.StartDate;
                     ViewBag.GroupEnd = group.EndDate;
