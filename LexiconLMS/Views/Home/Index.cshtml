@@ -16,7 +16,7 @@ else
     <div class="row">
 
         <div class="welcome">
-            Välkommen @Html.ActionLink((string)ViewBag.FullName, "Details", "Users", new { id = ViewBag.UserId }, null)
+            Välkommen @Html.ActionLink((string)ViewBag.FullName, "Details", "Users", new { id = ViewBag.UserId, sender = "s" }, null)
         </div>
 
         @if (User.IsInRole("lärare"))

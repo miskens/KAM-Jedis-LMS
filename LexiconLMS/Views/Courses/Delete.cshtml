@@ -4,7 +4,11 @@
     ViewBag.Title = "Radera";
 
     string sender = Request.RequestContext.RouteData.Values["sender"].ToString();
-    string groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
+    int groupId = 0;
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+    }
 }
 
 <h3>Är du säker ?</h3>
@@ -56,7 +60,7 @@
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
-        if (sender == "g")
+        if (sender == "g" && groupId != 0)
         {
             <div class="form-actions no-color">
                 <input type="submit" value="Radera" class="btn btn-default"/> |
