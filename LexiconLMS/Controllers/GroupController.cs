@@ -58,11 +58,23 @@ namespace LexiconLMS.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var group = context.Groups
-                       .Where(g => g.Id == id)
-                       .FirstOrDefault();
+            var userId = User.Identity.GetUserId();
+            var user = context.Users.FirstOrDefault(u => u.Id == userId);
+            var group = context.Groups.Find(id);
 
-            return View(group);
+            if (User.IsInRole("elev") && (group.Id == user.GroupId))
+            {
+                return RedirectToAction("SGroup", group);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            if (User.IsInRole("lärare"))
+            {
+                return View(group);
+            }
+            return View("Index");
         }
 
         // GET: Group/Create
