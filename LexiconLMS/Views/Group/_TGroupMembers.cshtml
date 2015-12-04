@@ -33,9 +33,6 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @* Mickes Att göra-lista Låt stå :) *@
-            @*TODO: Routing för details är klart.. fixa Edit och delete och sen create för alla*@
-            @*TODO: Lägg till en tredje parameter med användarens gruppid för att routa tillbaka till rätt grupps detaljsida*@
             @Html.ActionLink((string) item.FullName, "Details", "Users", new {id = item.Id, sender = "g", gId = item.GroupId}, null)
         </td>
         <td>

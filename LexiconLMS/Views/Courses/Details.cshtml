@@ -8,8 +8,9 @@
     var context = new ApplicationDbContext();
 
     var activities = context.Activities.Where(a => a.CourseId == Model.Id);
-
+    
     string sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    string groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
 }
 <h2>@Model.Name</h2>
 
@@ -61,7 +62,7 @@
     }
     @if (sender == "g")
     {
-        @Html.ActionLink("Tillbaka", "Index", "Group")
+        @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
     }
     else
     {

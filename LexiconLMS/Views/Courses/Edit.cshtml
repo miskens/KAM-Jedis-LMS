@@ -4,6 +4,7 @@
     ViewBag.Title = "Ändra ";
 
     string sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    string groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
 }
 
 <h2>Ändra kursinformation</h2>
@@ -68,12 +69,12 @@
 }
 
 <div>
-    @if (sender == "g")
-    {
-        @Html.ActionLink("Tillbaka", "Index", "Group")
-    }
-    else
-    {
+@if (sender == "g")
+{
+    @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
+}
+else
+{
     @Html.ActionLink("Tillbaka till listan", "Index")
     }
 

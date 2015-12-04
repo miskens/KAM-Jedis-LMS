@@ -81,7 +81,7 @@
 <div>
     @if (sender == "g")
     {
-        @Html.ActionLink("Tillbaka", "Details", sender, new { id = groupId })
+        @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
     }
     else
     {
