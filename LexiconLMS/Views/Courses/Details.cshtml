@@ -62,6 +62,10 @@
     {
         @Html.ActionLink("Tillbaka", "Index", "Group")
     }
+    @if (sender == "s")
+    {
+        @Html.ActionLink("Tillbaka", "Index", "Home")
+    }
     else
     {
         @Html.ActionLink("Tillbaka till listan", "Index")

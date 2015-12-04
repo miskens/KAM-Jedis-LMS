@@ -271,8 +271,7 @@ else
                     foreach (var course in ViewBag.FinishedCourses)
                     {
                         <div class="coursename">
-                            @*@Html.ActionLink((string)course.Name, "Details", "Courses", new object { id = course.Id, sender ="s" }, null)*@
-                            @course.Name
+                            @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
                         </div>
                         <div class="coursedate">
                             @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
@@ -286,7 +285,7 @@ else
                                 if (activity.CourseId == course.Id)
                                 {
                                     <div class="activityname">
-                                        @activity.Name
+                                        @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s"}, null)
                                     </div>
 
                                     <div class="activity">
