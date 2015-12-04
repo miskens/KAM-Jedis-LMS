@@ -2,6 +2,9 @@
 
 @{
     ViewBag.Title = "Radering";
+
+    string sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    string groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
 }
 
 <h2>@*Delete*@</h2>
@@ -50,23 +53,32 @@
             @Html.DisplayFor(model => model.Active)
         </dd>
 
-        @*<dt>
+        <dt>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.PhoneNumber)
-            </dd>*@
+            </dd>
     </dl>
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            @Html.ActionLink("Ändra användaren", "Edit", new { id = Model.Id })
-            <input type="submit" value="eller radera definitivt!" class="btn btn-default" />
-            @Html.ActionLink("Tillbaka till listan", "Index")
-        </div>
+        if (sender == "g")
+        {
+            <div class="form-actions no-color">
+                <input type="submit" value="eller radera definitivt!" class="btn btn-default" />
+                @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
+            </div>
+        }
+        else
+        {
+             <div class="form-actions no-color">
+                 @Html.ActionLink("Ändra användaren", "Edit", new {id = Model.Id})
+                 <input type="submit" value="eller radera definitivt!" class="btn btn-default"/>
+                 @Html.ActionLink("Tillbaka till listan", "Index")
+             </div>
+         }
     }
 </div>

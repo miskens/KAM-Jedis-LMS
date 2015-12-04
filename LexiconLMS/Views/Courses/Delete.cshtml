@@ -2,9 +2,10 @@
 
 @{
     ViewBag.Title = "Radera";
-}
 
-@*<h2>Delete</h2>*@
+    string sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    string groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
+}
 
 <h3>Är du säker ?</h3>
 <div>
@@ -55,10 +56,19 @@
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Radera" class="btn btn-default" /> |
-            @Html.ActionLink("Tillbaka till listan", "Index")
-        </div>
+        if (sender == "g")
+        {
+            <div class="form-actions no-color">
+                <input type="submit" value="Radera" class="btn btn-default"/> |
+                @Html.ActionLink("Tillbaka", "Details", "Group", new {id = groupId}, null)
+            </div>
+        }
+        else
+        {
+            <div class="form-actions no-color">
+                <input type="submit" value="Radera" class="btn btn-default" /> |
+                @Html.ActionLink("Tillbaka till listan", "Index")
+            </div>
+        }
     }
 </div>
