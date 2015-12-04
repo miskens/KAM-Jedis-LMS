@@ -34,7 +34,7 @@ namespace LexiconLMS.Controllers
                 var currentUserId = User.Identity.GetUserId();
                 var user = userManager.Users.FirstOrDefault(u => u.Id == currentUserId);
 
-                return StudentGroup(user.GroupId.Value, user.GroupId.ToString());
+                return SGroup(user.GroupId.Value, user.GroupId.ToString());
             }
         }
 
@@ -47,10 +47,10 @@ namespace LexiconLMS.Controllers
 
         // GET: Show Group students Group
         [Authorize(Roles = "elev,lärare")]
-        public ActionResult StudentGroup(int id, string userGroupId)
+        public ActionResult SGroup(int id, string userGroupId)
         {
             var group = context.Groups.FirstOrDefault(g => g.Id.ToString() == userGroupId);
-            return View("StudentGroup", group);
+            return View("SGroup", group);
         }
 
 
@@ -176,14 +176,14 @@ namespace LexiconLMS.Controllers
             }
         }
 
-        public ActionResult GroupmemberDetails(string id)
-        {
-            ApplicationUser applicationUser = context.Users.Find(id);
-            if (applicationUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(applicationUser);
-        }
+        //public ActionResult GroupmemberDetails(string id)
+        //{
+        //    ApplicationUser applicationUser = context.Users.Find(id);
+        //    if (applicationUser == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(applicationUser);
+        //}
     }
 }

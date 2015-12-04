@@ -255,7 +255,7 @@
     <Content Include="Views\Group\Create.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Group\TGroups.cshtml" />
-    <Content Include="Views\Group\StudentGroup.cshtml" />
+    <Content Include="Views\Group\SGroup.cshtml" />
     <Content Include="Views\Group\Details.cshtml" />
     <Content Include="Views\Group\Edit.cshtml" />
     <Content Include="Views\Group\Delete.cshtml" />

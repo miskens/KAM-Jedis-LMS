@@ -51,10 +51,11 @@ namespace LexiconLMS.Controllers
                 return HttpNotFound();
             }
 
-            var ApplicationUserGroup = (context.Groups.Where(g => g.Id == applicationUser.GroupId).FirstOrDefault()).Name;
-
-
-            ViewBag.Group = ApplicationUserGroup;
+            if (applicationUser.GroupId != null)
+            { 
+                var applicationUserGroup = (context.Groups.Where(g => g.Id == applicationUser.GroupId).FirstOrDefault()).Name;
+                ViewBag.Group = applicationUserGroup;
+            }
 
             return View(applicationUser);
         }
