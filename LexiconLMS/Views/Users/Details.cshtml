@@ -100,7 +100,7 @@
         if (User.IsInRole("lärare") && groupId != 0)
         { 
             @Html.ActionLink("Tillbaka", "Details", "Group", new {id = groupId}, null)
-        }
+    }
         if (User.IsInRole("elev"))
         {
             @Html.ActionLink("Tillbaka", "Index", "Group")
