@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LexiconLMS.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace LexiconLMS.Controllers
 {
@@ -54,12 +55,15 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "lärare")]
         public ActionResult Create([Bind(Include = "Id,Name,Description,Type,StartDate,EndDate,CourseId")] Activity activity)
         {
-            if (ModelState.IsValid)
+            bool endDateError = (activity.EndDate < activity.StartDate);
+
+            if (ModelState.IsValid && !endDateError)
             {
                 db.Activities.Add(activity);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
 
             return View(activity);
         }
@@ -136,5 +140,6 @@ namespace LexiconLMS.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

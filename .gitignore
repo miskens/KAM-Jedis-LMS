@@ -187,3 +187,5 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/LexiconLMS/Migrations/201511271407485_init.cs
+/LexiconLMS/Migrations/201511271407485_init.resx

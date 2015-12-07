@@ -2,12 +2,19 @@
 
 @{
     ViewBag.Title = "_CourseActivities";
+
+    int groupId= 0;
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+    }
+    int cId = (int)ViewData["CourseId"];
 }
 
 <h2>Aktiviteter</h2>
 
 <p>
-    @Html.ActionLink("Lägg till ny aktivitet", "Create")
+    @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { sender = "g", gId = groupId, cId }, null)
 </p>
 <table class="table">
     <tr>
@@ -18,30 +25,20 @@
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.StartDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.EndDate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseId)
-        </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.ActionLink((string)item.Name, "Details", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.StartDate)
@@ -50,12 +47,8 @@
             @Html.DisplayFor(modelItem => item.EndDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CourseId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Ändra", "Edit", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null) |
+            @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
         </td>
     </tr>
 }
