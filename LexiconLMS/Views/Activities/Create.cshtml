@@ -2,6 +2,23 @@
 
 @{
     ViewBag.Title = "Create";
+
+    string sender = string.Empty;
+    if (Request.RequestContext.RouteData.Values["sender"] != null)
+    {
+        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    }
+    int groupId = 0;
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+    } 
+    int courseId = 0;
+    
+    if (Request.RequestContext.RouteData.Values["cId"] != null)
+    {
+        courseId = Int32.Parse(Request.RequestContext.RouteData.Values["cId"].ToString());
+    }
 }
 
 <h2>Skapa ny aktivitet</h2>
@@ -73,14 +90,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Spara" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = courseId, sender, gId = groupId }, null)
 </div>
 
 @section Scripts {

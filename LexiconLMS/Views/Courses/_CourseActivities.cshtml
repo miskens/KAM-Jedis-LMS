@@ -3,22 +3,18 @@
 @{
     ViewBag.Title = "_CourseActivities";
 
-    string sender = string.Empty;
-    if (Request.RequestContext.RouteData.Values["sender"] != null)
-    {
-        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
-    }
     int groupId= 0;
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
         groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
-    }  
+    }
+    int cId = (int)ViewData["CourseId"];
 }
 
 <h2>Aktiviteter</h2>
 
 <p>
-    @Html.ActionLink("Lägg till ny aktivitet", "Create")
+    @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { sender = "g", gId = groupId, cId }, null)
 </p>
 <table class="table">
     <tr>
@@ -39,7 +35,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink((string)item.Name, "Details", "Activities", new { id = item.Id, sender, gId = groupId, cId = item.CourseId }, null)
+            @Html.ActionLink((string)item.Name, "Details", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
@@ -51,8 +47,8 @@
             @Html.DisplayFor(modelItem => item.EndDate)
         </td>
         <td>
-            @Html.ActionLink("Ändra", "Edit", "Activities", new { id = item.Id, sender, gId = groupId, cId = item.CourseId }, null) |
-            @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = item.Id, sender, gId = groupId, cId = item.CourseId }, null)
+            @Html.ActionLink("Ändra", "Edit", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null) |
+            @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
         </td>
     </tr>
 }
