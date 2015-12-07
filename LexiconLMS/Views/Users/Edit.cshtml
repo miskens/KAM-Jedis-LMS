@@ -4,7 +4,12 @@
     ViewBag.Title = "Editera";
     var groups = ViewBag.Groups;
 
-    string sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    string sender = string.Empty;
+    if (Request.RequestContext.RouteData.Values["sender"] != null)
+    {
+        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    }
+
     int groupId = 0;
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
@@ -18,7 +23,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -66,13 +71,13 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -83,15 +88,22 @@
 }
 
 <div>
-    @if (sender == "g" && groupId != 0)
+
+    @if (sender == string.Empty)
     {
-        @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
+        @Html.ActionLink("Tillbaka till listan", "Index", new { id = Model.Id });
     }
-    
+    @if (sender == "g")
+    {
+        @Html.ActionLink("Tillbaka", "Details", "Group", new { id = Model.GroupId, sender }, null);
+    }
     @if (sender == "s")
     {
-        @Html.ActionLink("Tillbaka", "Details", "Users", new { id = Model.Id, sender }, null)
+        @Html.ActionLink("Tillbaka till startsidan", "Index", "Home", new { id = Model.Id, sender }, null);
     }
+
+
+
 </div>
 
 @section Scripts {

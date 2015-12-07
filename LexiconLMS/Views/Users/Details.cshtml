@@ -84,11 +84,11 @@
     {
         if (sender != string.Empty)
         {
-            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender })
+            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId=groupId })
         }
         else
         {
-            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id })
+            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id})
         }
     }
     @if (sender == "u")
@@ -99,7 +99,7 @@
     {
         if (User.IsInRole("lärare") && groupId != 0)
         { 
-            @Html.ActionLink("Tillbaka", "Details", "Group", new {id = groupId}, null)
+            @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
     }
         if (User.IsInRole("elev"))
         {

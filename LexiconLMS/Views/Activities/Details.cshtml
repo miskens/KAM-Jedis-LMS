@@ -72,18 +72,21 @@
             @Html.Raw("|")
             @Html.ActionLink("Till alla aktiviteter", "Index")
         }
-        else
-        {
-            @Html.ActionLink("Tillbaka", "Details", "Courses")
-        }
+        @Html.ActionLink("Tillbaka", "Details", "Courses", new {id = Model.Id})
     }
     @if (sender == "g")
     {
         if (User.IsInRole("lärare"))
         {
-            @Html.ActionLink("Ändra", "Edit", "Activities", new { id = Model.Id, sender, groupId, cId = Model.Id }, null)
-            @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = Model.Id, sender, groupId, courseId }, null)
+            @Html.ActionLink("Ändra", "Edit", "Activities", new { id = Model.Id, sender, groupId, cId = Model.Id }, null) 
+            @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = Model.Id, sender, groupId, courseId }, null)  
         }
             @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender, groupId }, null)
+    }
+    else
+    {
+        <div class="form-actions no-color">
+            @Html.ActionLink("Tillbaka till listan", "Details", "Courses", new { id = Model.CourseId, sender, groupId }, null)
+        </div>
     }
 </p>

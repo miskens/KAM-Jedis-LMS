@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LexiconLMS.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace LexiconLMS.Controllers
 {
@@ -106,7 +107,11 @@ namespace LexiconLMS.Controllers
             {
                 context.Entry(activity).State = EntityState.Modified;
                 context.SaveChanges();
-                return RedirectToAction("Index");
+
+                var course = context.Courses.FirstOrDefault(c => c.Id == activity.CourseId);
+                var group = context.Courses.FirstOrDefault(g => g.Id == course.GroupId);
+                var groupId = group.Id;
+                return RedirectToAction("Details", "Courses", new { id = activity.CourseId, sender = "g", gId = groupId});
             }
             return View(activity);
         }

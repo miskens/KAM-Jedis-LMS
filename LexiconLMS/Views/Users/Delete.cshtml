@@ -72,6 +72,7 @@
         if (sender == "g" && groupId != 0)
         {
             <div class="form-actions no-color">
+                @Html.ActionLink("Ändra användaren", "Edit", new { id = Model.Id, sender, gId=groupId})
                 <input type="submit" value="eller radera definitivt!" class="btn btn-default" />
                 @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
             </div>
