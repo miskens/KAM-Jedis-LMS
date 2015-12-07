@@ -13,12 +13,12 @@ namespace LexiconLMS.Controllers
     [Authorize]
     public class CoursesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext context = new ApplicationDbContext();
 
         // GET: Courses
         public ActionResult Index()
         {
-            return View(db.Courses.ToList());
+            return View(context.Courses.ToList());
         }
 
         // GET: Courses/Details/5
@@ -28,7 +28,7 @@ namespace LexiconLMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Find(id);
+            Course course = context.Courses.Find(id);
             if (course == null)
             {
                 return HttpNotFound();
@@ -47,16 +47,27 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "lärare")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate,GroupId")] Course course)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate,GroupId")] Course model)
         {
             if (ModelState.IsValid)
             {
-                db.Courses.Add(course);
-                db.SaveChanges();
+                var group = context.Groups.FirstOrDefault(g => g.Id == model.GroupId);
+                DateTime start = group.StartDate;
+                DateTime end = group.EndDate;
+                string dateTimeFailureMessage = Functions.CheckDatesForCourse(model, start, end, DateTime.Today);
+
+                if (dateTimeFailureMessage != string.Empty)
+                {
+                    ModelState.AddModelError("", dateTimeFailureMessage);
+                    return View(model);
+                }
+
+                context.Courses.Add(model);
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(course);
+            return View(model);
         }
 
         // GET: Courses/Edit/5
@@ -67,7 +78,7 @@ namespace LexiconLMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Find(id);
+            Course course = context.Courses.Find(id);
             if (course == null)
             {
                 return HttpNotFound();
@@ -83,8 +94,8 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(course).State = EntityState.Modified;
-                db.SaveChanges();
+                context.Entry(course).State = EntityState.Modified;
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(course);
@@ -98,7 +109,7 @@ namespace LexiconLMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Find(id);
+            Course course = context.Courses.Find(id);
             if (course == null)
             {
                 return HttpNotFound();
@@ -112,9 +123,9 @@ namespace LexiconLMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Course course = db.Courses.Find(id);
-            db.Courses.Remove(course);
-            db.SaveChanges();
+            Course course = context.Courses.Find(id);
+            context.Courses.Remove(course);
+            context.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -122,7 +133,7 @@ namespace LexiconLMS.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                context.Dispose();
             }
             base.Dispose(disposing);
         }

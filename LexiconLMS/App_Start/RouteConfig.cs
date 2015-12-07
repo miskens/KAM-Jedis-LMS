@@ -20,6 +20,12 @@ namespace LexiconLMS
             //);
 
             routes.MapRoute(
+            name: "RouteToOwnerAtCreate",
+            url: "{controller}/Create/{sender}/{gId}/{cId}",
+            defaults: new { controller = "Group", action = "Create", sender = UrlParameter.Optional, gId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
             name: "RouteToSenderCourses",
             url: "Courses/{action}/{id}/{sender}/{gId}",
             defaults: new { controller = "Courses", action = "Details", id = UrlParameter.Optional, sender = UrlParameter.Optional, gId = UrlParameter.Optional }

@@ -12,13 +12,15 @@
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
         groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
-    }  
+    }
+
+    var courseId = ViewData["courseId"];
 }
 
 <h2>Aktiviteter</h2>
 
 <p>
-    @Html.ActionLink("Lägg till ny aktivitet", "Create")
+    @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { sender, gId = groupId, cId = courseId }, null)
 </p>
 <table class="table">
     <tr>

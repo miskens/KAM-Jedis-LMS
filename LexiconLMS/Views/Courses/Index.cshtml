@@ -47,9 +47,9 @@
             @Html.DisplayFor(modelItem => item.GroupId)
         </td>
         <td>
-            @Html.ActionLink("Ändra", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Ändra", "Edit", new { id=item.Id, sender = "c" }) |
             @Html.ActionLink("Detalj", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Radera", "Delete", new { id=item.Id })
+            @Html.ActionLink("Radera", "Delete", new { id=item.Id, sender = "c" })
         </td>
     </tr>
 }
