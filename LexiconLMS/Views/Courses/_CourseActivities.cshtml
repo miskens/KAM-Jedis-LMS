@@ -3,6 +3,12 @@
 @{
     ViewBag.Title = "_CourseActivities";
 
+    string sender = string.Empty;
+    if (Request.RequestContext.RouteData.Values["sender"] != null)
+    {
+        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    }  
+    
     int groupId= 0;
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
