@@ -86,14 +86,14 @@
         if (sender == "g")
         {
             <div class="form-actions no-color">
-                <input type="submit" value="Radera" class="btn btn-default" /> |
+                <input type="submit" value="Radera" class="btn btn-default" /> 
                 @Html.ActionLink("Tillbaka till listan", "Index")
             </div>
         }
         else
         {
             <div class="form-actions no-color">
-                <input type="submit" value="Radera" class="btn btn-default" /> |
+                <input type="submit" value="Radera" class="btn btn-default" /> 
                 @Html.ActionLink("Tillbaka till listan", "Details", "Courses", new { id = Model.CourseId, sender, groupId} )
             </div>
         }

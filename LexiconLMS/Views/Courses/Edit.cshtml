@@ -81,6 +81,10 @@
 {
     @Html.ActionLink("Tillbaka", "Index", "Home", null)
 }
+@if (sender == "c")
+{
+    @Html.ActionLink("Tillbaka", "Index", "Courses", null)
+}
 </div>
 
 @section Scripts {

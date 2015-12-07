@@ -83,4 +83,10 @@
         }
             @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender, groupId }, null)
     }
+    else
+    {
+        <div class="form-actions no-color">
+            @Html.ActionLink("Tillbaka till listan", "Details", "Courses", new { id = Model.CourseId, sender, groupId }, null)
+        </div>
+    }
 </p>

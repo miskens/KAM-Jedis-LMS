@@ -38,11 +38,16 @@
 </div>
 <br /><br />
 <p>
+    @if (sender == "c")
+    {
+        @Html.ActionLink("Ändra ", "Edit", new { id = Model.Id, sender, gId = groupId }) 
+        @Html.ActionLink("Tillbaka till listan", "Index", "Courses")
+    }
     @if (sender == "s")
     {
         if (User.IsInRole("lärare"))
         {
-            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId = groupId })
+            @Html.ActionLink("Ändra ", "Edit", new { id = Model.Id, sender, gId = groupId })
         }
         @Html.ActionLink("Tillbaka", "Index", "Home")
     }

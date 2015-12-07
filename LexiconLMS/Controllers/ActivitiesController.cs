@@ -98,7 +98,11 @@ namespace LexiconLMS.Controllers
             {
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                var course = db.Courses.FirstOrDefault(c => c.Id == activity.CourseId);
+                var group = db.Courses.FirstOrDefault(g => g.Id == course.GroupId);
+                var groupId = group.Id;
+                return RedirectToAction("Details", "Courses", new { id = activity.CourseId, sender = "g", gId = groupId});
             }
             return View(activity);
         }
