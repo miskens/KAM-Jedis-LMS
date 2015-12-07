@@ -7,7 +7,7 @@
 
     var context = new ApplicationDbContext();
 
-    var activities = context.Activities.Where(a => a.CourseId == Model.Id).ToList();
+    var activities = context.Activities.Where(a => a.CourseId == Model.Id);
 
     string sender = string.Empty;
     if (Request.RequestContext.RouteData.Values["sender"] != null)
@@ -19,7 +19,6 @@
     {
         groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
     }
-    ViewData["courseId"] = Model.Id;
 }
 <h2>@Model.Name</h2>
 <h4>( @Model.EndDate.ToShortDateString() - @Model.EndDate.ToShortDateString() )</h4>
@@ -38,16 +37,11 @@
 </div>
 <br /><br />
 <p>
-    @if (sender == "c")
-    {
-        @Html.ActionLink("Ändra ", "Edit", new { id = Model.Id, sender, gId = groupId }) 
-        @Html.ActionLink("Tillbaka till listan", "Index", "Courses")
-    }
     @if (sender == "s")
     {
         if (User.IsInRole("lärare"))
         {
-            @Html.ActionLink("Ändra ", "Edit", new { id = Model.Id, sender, gId = groupId })
+            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId = groupId })
         }
         @Html.ActionLink("Tillbaka", "Index", "Home")
     }
@@ -61,6 +55,7 @@
             }
             else
             {
+                @ @Request.UrlReferrer.;
                 @Html.ActionLink("Tillbaka", "Details", "Group")
             }
         }
@@ -72,5 +67,5 @@
 </p>
 <br /><br />
 <div>
-    @Html.Partial("_CourseActivities", activities, ViewData)
+    @Html.Partial("_CourseActivities", activities)
 </div>
