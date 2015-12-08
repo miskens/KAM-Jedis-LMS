@@ -30,6 +30,12 @@ namespace LexiconLMS.Models
         [Display(Name="Grupp")]
         public int? GroupId { get; set; }
 
+        [Display(Name = "Användarnamn")]
+        public override string UserName { get; set; }
+
+        [Display(Name = "Antal fel login")]
+        public override int AccessFailedCount { get; set; }
+
         [Display(Name = "Roll")]
         public string Role { get; set; }
 
@@ -59,6 +65,8 @@ namespace LexiconLMS.Models
         public DbSet<Activity> Activities { get; set; }
 
         public DbSet<Course> Courses { get; set; }
+
+        public System.Data.Entity.DbSet<LexiconLMS.Models.Document> Documents { get; set; }
 
         //public System.Data.Entity.DbSet<LexiconLMS.Models.ApplicationUser> ApplicationUsers { get; set; }
     }

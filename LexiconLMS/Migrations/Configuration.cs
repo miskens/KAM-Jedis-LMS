@@ -56,19 +56,19 @@ namespace LexiconLMS.Migrations
                 new Course { Name = "Hantlangarskötsel", Description = "Dina minioner välbefinnande är nödvändig för att framgångsrikt ta över världen.", StartDate = new DateTime(2015, 08, 03), EndDate = new DateTime(2015, 08, 30), GroupId = 8 },
                 new Course { Name = "Ondskefulla skratt a-z", Description = "Skrattar först som skrattar bäst som skattar mest.", StartDate = new DateTime(2015, 09, 01), EndDate = new DateTime(2015, 09, 15), GroupId = 8 },
                 new Course { Name = "Ondskefulla skratt 101", Description = "Skrattar först som skrattar bäst.", StartDate = new DateTime(2015, 09, 16), EndDate = new DateTime(2015, 09, 30), GroupId = 8 },
-                new Course { Name = "Ondskefulla skratt 102", Description = "Fortsättningskurs i elaka och ondskefulla skratt. Nu med fokus på andningen.", StartDate = new DateTime(2015,10,01), EndDate= new DateTime(2015,11,11), GroupId=8 }
+                new Course { Name = "Ondskefulla skratt 102", Description = "Fortsättningskurs i elaka och ondskefulla skratt. Nu med fokus på andningen.", StartDate = new DateTime(2015, 10, 01), EndDate = new DateTime(2015, 11, 11), GroupId = 8 }
                 );
             context.SaveChanges();
 
             context.Activities.AddOrUpdate(a => a.Name,
-                new Activity { Name = "Laboration i Java 101",Description="Första labben i Java", Type="laboration", StartDate = new DateTime(2015,10,04), EndDate= new DateTime(2015,10,06), CourseId= 1 },
+                new Activity { Name = "Laboration i Java 101", Description = "Första labben i Java", Type = "laboration", StartDate = new DateTime(2015, 10, 04), EndDate = new DateTime(2015, 10, 06), CourseId = 1 },
                 new Activity { Name = "Laboration 2 i Java 101", Description = "Andra labben i Java", Type = "laboration", StartDate = new DateTime(2015, 10, 14), EndDate = new DateTime(2015, 10, 18), CourseId = 1 },
                 new Activity { Name = "Sharepoint från början", Description = "Börja från början", Type = "övning", StartDate = new DateTime(2016, 01, 20), EndDate = new DateTime(2016, 02, 06), CourseId = 14 },
                 new Activity { Name = "C# för den allvetande", Description = "Den allvetande skräphögen regerar", Type = "inlämningsuppgift", StartDate = new DateTime(2015, 11, 01), EndDate = new DateTime(2015, 11, 09), CourseId = 9 },
-                new Activity { Name = "Skrattlabb", Description="Användning av diafragman vid elakt skratt.", Type = "laboration", StartDate= new DateTime(2015,11,02), EndDate= new DateTime(2015,11,08), CourseId = 21 },
-                new Activity { Name = "Historiskt skrattande", Description="Lär dig skratta som historiska ondskefulla typer", Type = "laboration", StartDate= new DateTime(2015,09,10), EndDate= new DateTime(2015,09,15), CourseId = 19 },
-                new Activity { Name = "Inlämningsuppgift i skratt", Description="Spela in dig själv medan du flabbar som en galen typ som just tagit över världsherraväldet!", Type = "inlämningsuppgift", StartDate= new DateTime(2015,10,04), EndDate= new DateTime(2015,10,09), CourseId = 21 },
-                new Activity { Name = "Inlämningsuppgift C#", Description="Gör ett lyxigt garage!", Type = "inlämningsuppgift", StartDate=new DateTime(2015,11,29), EndDate=new DateTime(2015,12,05), CourseId = 11}
+                new Activity { Name = "Skrattlabb", Description = "Användning av diafragman vid elakt skratt.", Type = "laboration", StartDate = new DateTime(2015, 11, 02), EndDate = new DateTime(2015, 11, 08), CourseId = 21 },
+                new Activity { Name = "Historiskt skrattande", Description = "Lär dig skratta som historiska ondskefulla typer", Type = "laboration", StartDate = new DateTime(2015, 09, 10), EndDate = new DateTime(2015, 09, 15), CourseId = 19 },
+                new Activity { Name = "Inlämningsuppgift i skratt", Description = "Spela in dig själv medan du flabbar som en galen typ som just tagit över världsherraväldet!", Type = "inlämningsuppgift", StartDate = new DateTime(2015, 10, 04), EndDate = new DateTime(2015, 10, 09), CourseId = 21 },
+                new Activity { Name = "Inlämningsuppgift C#", Description = "Gör ett lyxigt garage!", Type = "inlämningsuppgift", StartDate = new DateTime(2015, 11, 29), EndDate = new DateTime(2015, 12, 05), CourseId = 11 }
                 );
             context.SaveChanges();
 
@@ -195,7 +195,16 @@ namespace LexiconLMS.Migrations
             user = new ApplicationUser { FullName = "Emperor Palpatine", UserName = email, Email = email, Active = true, GroupId = 8 };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
+
+            context.Documents.AddOrUpdate(d => d.Name,
+                new Document { Name = "Test av grupp", Uri = "SavedDocuments/test1grupp.txt", Description = "Testdokument för att testa kopplat till grupp. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 09, 30), GroupId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id },
+                new Document { Name = "Test av kurs", Uri = "SavedDocuments/test1kurs.txt", Description = "Testdokument för att testa kopplat till kurs. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 02), CourseId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id },
+                new Document { Name = "Test av aktivitet", Uri = "SavedDocuments/test1aktivitet.txt", Description = "Testdokument för att testa kopplat till aktivitet. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 05), ActivityId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id }
+                );
+
         }
+
+
 
         private static void CreateUserSeedWithPasswordSecret(ApplicationDbContext context, UserManager<ApplicationUser> manager, string email, ApplicationUser user, RoleManager<IdentityRole> roleManager, string[] roles)
         {

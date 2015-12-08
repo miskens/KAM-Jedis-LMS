@@ -45,5 +45,11 @@ namespace LexiconLMS.Models
 
         [Display(Name = "Kurs")]
         public int CourseId { get; set; }
+
+        // Needed for hand-in assignments
+        [Display(Name = "Deadline")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? Deadline { get; set; }
     }
 }
