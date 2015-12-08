@@ -1,7 +1,25 @@
 ﻿@model LexiconLMS.Models.Course
+@using System.Configuration
+@using LexiconLMS.Models
 
 @{
     ViewBag.Title = "SkapaKurs";
+
+    ApplicationDbContext context = new ApplicationDbContext();
+
+    string sender = string.Empty;
+    if (Request.RequestContext.RouteData.Values["sender"] != null)
+    {
+        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    }
+
+    int groupId = 0;
+    var group = new Group();
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+        group = context.Groups.FirstOrDefault(g => g.Id == groupId);
+    }
 }
 
 <h2>Skapa ny kurs</h2>
@@ -34,7 +52,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } }) 
                 @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -48,7 +66,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.GroupId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(groupName => group.Id, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.GroupId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
@@ -64,7 +82,15 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka till listan", "Index")
+    @if (sender == "g")
+    {
+        @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
+    }
+    else
+    {
+        @Html.ActionLink("Tillbaka till listan", "Index")
+    }
+
 </div>
 
 @section Scripts {

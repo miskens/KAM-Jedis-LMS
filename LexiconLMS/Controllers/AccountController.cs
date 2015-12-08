@@ -229,7 +229,7 @@ namespace LexiconLMS.Controllers
             {
                 var user = UserManager.FindByEmail(model.Email);
 
-                SmtpClient client =  MailHandler.ConfigureSmtpClient();   
+                SmtpClient client =  Functions.ConfigureSmtpClient();   
                 MailMessage mail = new MailMessage("admin@Lexicon.se", model.Email);
                 mail.IsBodyHtml = true;
                 mail.Subject = "Lexicon: Återställning av lösenord.";

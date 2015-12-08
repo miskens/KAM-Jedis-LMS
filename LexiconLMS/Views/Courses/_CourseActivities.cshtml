@@ -3,18 +3,25 @@
 @{
     ViewBag.Title = "_CourseActivities";
 
+    string sender = string.Empty;
+    if (Request.RequestContext.RouteData.Values["sender"] != null)
+    {
+        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    }  
+    
     int groupId= 0;
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
         groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
-    }
-    int cId = (int)ViewData["CourseId"];
+    }  
+
+    var courseId = ViewData["courseId"];
 }
 
 <h2>Aktiviteter</h2>
 
 <p>
-    @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { sender = "g", gId = groupId, cId }, null)
+    @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { sender, gId = groupId, cId = courseId }, null)
 </p>
 <table class="table">
     <tr>

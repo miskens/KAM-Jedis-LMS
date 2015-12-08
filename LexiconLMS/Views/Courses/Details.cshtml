@@ -7,7 +7,7 @@
 
     var context = new ApplicationDbContext();
 
-    var activities = context.Activities.Where(a => a.CourseId == Model.Id).ToList();
+    var activities = context.Activities.Where(a => a.CourseId == Model.Id);
 
     string sender = string.Empty;
     if (Request.RequestContext.RouteData.Values["sender"] != null)
@@ -38,16 +38,11 @@
 </div>
 <br /><br />
 <p>
-    @if (sender == "c")
-    {
-        @Html.ActionLink("Ändra ", "Edit", new { id = Model.Id, sender, gId = groupId }) 
-        @Html.ActionLink("Tillbaka till listan", "Index", "Courses")
-    }
     @if (sender == "s")
     {
         if (User.IsInRole("lärare"))
         {
-            @Html.ActionLink("Ändra ", "Edit", new { id = Model.Id, sender, gId = groupId })
+            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId = groupId })
         }
         @Html.ActionLink("Tillbaka", "Index", "Home")
     }
@@ -60,7 +55,7 @@
                 @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
             }
             else
-            {
+            {         
                 @Html.ActionLink("Tillbaka", "Details", "Group")
             }
         }

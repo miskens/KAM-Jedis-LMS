@@ -14,13 +14,13 @@ namespace LexiconLMS.Controllers
     [Authorize]
     public class ActivitiesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext context = new ApplicationDbContext();
 
         // GET: Activities
         [Authorize(Roles = "lärare")]
         public ActionResult Index()
         {
-            return View(db.Activities.ToList());
+            return View(context.Activities.ToList());
         }
 
         // GET: Activities/Details/5
@@ -30,13 +30,13 @@ namespace LexiconLMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activity activity = db.Activities.Find(id);
+            Activity activity = context.Activities.Find(id);
             if (activity == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.CourseName = db.Courses.Find(activity.CourseId).Name;
+            ViewBag.CourseName = context.Courses.Find(activity.CourseId).Name;
             return View(activity);
         }
 
@@ -53,19 +53,28 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "lärare")]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,Type,StartDate,EndDate,CourseId")] Activity activity)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,Type,StartDate,EndDate,CourseId")] Activity model)
         {
-            bool endDateError = (activity.EndDate < activity.StartDate);
-
-            if (ModelState.IsValid && !endDateError)
+            if (ModelState.IsValid)
             {
-                db.Activities.Add(activity);
-                db.SaveChanges();
+                var course = context.Courses.FirstOrDefault(c => c.Id == model.CourseId);
+                DateTime start = course.StartDate;
+                DateTime end = course.EndDate;
+
+                string dateTimeFailureMessage = Functions.CheckDatesForActivity(model, start, end, DateTime.Today);
+
+                if (dateTimeFailureMessage != string.Empty)
+                {
+                    ModelState.AddModelError("", dateTimeFailureMessage);
+                    return View(model);
+                }
+
+                context.Activities.Add(model);
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-
-            return View(activity);
+            return View(model);
         }
 
         
@@ -77,7 +86,7 @@ namespace LexiconLMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activity activity = db.Activities.Find(id);
+            Activity activity = context.Activities.Find(id);
             if (activity == null)
             {
                 return HttpNotFound();
@@ -96,11 +105,11 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(activity).State = EntityState.Modified;
-                db.SaveChanges();
+                context.Entry(activity).State = EntityState.Modified;
+                context.SaveChanges();
 
-                var course = db.Courses.FirstOrDefault(c => c.Id == activity.CourseId);
-                var group = db.Courses.FirstOrDefault(g => g.Id == course.GroupId);
+                var course = context.Courses.FirstOrDefault(c => c.Id == activity.CourseId);
+                var group = context.Courses.FirstOrDefault(g => g.Id == course.GroupId);
                 var groupId = group.Id;
                 return RedirectToAction("Details", "Courses", new { id = activity.CourseId, sender = "g", gId = groupId});
             }
@@ -116,7 +125,7 @@ namespace LexiconLMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activity activity = db.Activities.Find(id);
+            Activity activity = context.Activities.Find(id);
             if (activity == null)
             {
                 return HttpNotFound();
@@ -130,9 +139,9 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "lärare")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Activity activity = db.Activities.Find(id);
-            db.Activities.Remove(activity);
-            db.SaveChanges();
+            Activity activity = context.Activities.Find(id);
+            context.Activities.Remove(activity);
+            context.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -140,10 +149,9 @@ namespace LexiconLMS.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                context.Dispose();
             }
             base.Dispose(disposing);
         }
-
     }
 }

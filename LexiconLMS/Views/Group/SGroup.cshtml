@@ -18,7 +18,8 @@
         <tr>
             <td class="sg-table-td1">
                 <div class="sg-td1-div1">
-                    <h1>Grupp: @Html.DisplayFor(model => model.Name)</h1>
+                    <h1>Grupp: @Html.DisplayFor(model => model.Name) <a href="@Url.Action("Index", "Group")"> 
+                                                                <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:30px;" /></a></h1>
                     <h4>@Html.DisplayFor(m => m.StartDate) - @Html.DisplayFor(m => m.EndDate)</h4>
                     <hr />
                     <dl class="dl-horizontal">
