@@ -60,6 +60,8 @@ namespace LexiconLMS.Models
 
         public DbSet<Course> Courses { get; set; }
 
+        public System.Data.Entity.DbSet<LexiconLMS.Models.Document> Documents { get; set; }
+
         //public System.Data.Entity.DbSet<LexiconLMS.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
