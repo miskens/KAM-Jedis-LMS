@@ -36,6 +36,7 @@ namespace LexiconLMS.Models
         [Display(Name = "Kom ihåg den här webläsaren?")]
         public bool RememberBrowser { get; set; }
 
+        [Display(Name = "Kom ihåg mig?")]
         public bool RememberMe { get; set; }
     }
 
@@ -49,7 +50,7 @@ namespace LexiconLMS.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Användarnamn")]
+        [Display(Name = "Användarnamn (E-post)")]
         public string Email { get; set; }
 
         [Required]

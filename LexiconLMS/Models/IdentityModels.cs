@@ -30,6 +30,12 @@ namespace LexiconLMS.Models
         [Display(Name="Grupp")]
         public int? GroupId { get; set; }
 
+        [Display(Name = "Användarnamn")]
+        public override string UserName { get; set; }
+
+        [Display(Name = "Antal fel login")]
+        public override int AccessFailedCount { get; set; }
+
         [Display(Name = "Roll")]
         public string Role { get; set; }
 

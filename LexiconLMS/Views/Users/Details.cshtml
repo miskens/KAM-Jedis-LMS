@@ -55,59 +55,43 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EmailConfirmed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EmailConfirmed)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Active)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Active)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
     </dl>
 </div>
 <p>
-    @if (User.IsInRole("lärare"))
+    @if (sender == "s")
     {
-        if (sender != string.Empty)
-        {
-            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId=groupId })
-        }
-        else
-        {
-            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id})
-        }
+        @Html.ActionLink("Till startsidan", "Index", "Home")
     }
+
     @if (sender == "u")
     {
-        @Html.ActionLink("Tillbaka till listan", "Index", "Users")
+        @Html.ActionLink("Till listan", "Index", "Users")
     }
+
     @if (sender == "g")
     {
         if (User.IsInRole("lärare") && groupId != 0)
         { 
-            @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
+            @Html.ActionLink("Till gruppdetaljer", "Details", "Group", new { id = groupId }, null)
     }
         if (User.IsInRole("elev"))
         {
-            @Html.ActionLink("Tillbaka", "Index", "Group")
+            @Html.ActionLink("Till grupplistan", "Index", "Group")
         }
     }
-    @if (sender == "s")
+
+    @if (User.IsInRole("lärare"))
     {
-        @Html.ActionLink("Tillbaka till startsidan", "Index", "Home")
+        if (sender != string.Empty)
+        {
+            @Html.Raw(" | ")
+            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId=groupId })
+        }
     }
 </p>
