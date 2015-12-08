@@ -1,0 +1,97 @@
+﻿@using Microsoft.AspNet.Identity
+@model LexiconLMS.Models.Document
+
+@{
+    // Upload a new document
+    ViewBag.Title = "Create";
+
+    string sender = string.Empty;
+    if (Request.RequestContext.RouteData.Values["sender"] != null)
+    {
+        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    }
+    
+    int groupId = 0;
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+    }
+    
+    int courseId = 0;
+    if (Request.RequestContext.RouteData.Values["cId"] != null)
+    {
+        courseId = Int32.Parse(Request.RequestContext.RouteData.Values["cId"].ToString());
+    }
+
+    int activityId = 0;
+    if (Request.RequestContext.RouteData.Values["aId"] != null)
+    {
+        activityId = Int32.Parse(Request.RequestContext.RouteData.Values["aId"].ToString());
+    }
+    
+    var uId = User.Identity.GetUserId();
+
+    var now = DateTime.Now;
+}
+
+<h2>Ladda upp ett nytt dokument</h2>
+
+
+@using (Html.BeginForm("Create", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.Hidden("GroupId", groupId)
+
+        @Html.Hidden("CourseId", courseId)
+
+        @Html.Hidden("ActivityId", activityId)
+         
+        @Html.Hidden("UserId", uId)
+
+        @Html.Hidden("UploadTime", now)
+
+        <div class="form-group">
+            @Html.Label("Fil att ladda upp", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" id="file" name="uploadFile" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Spara" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Tillbaka", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

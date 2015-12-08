@@ -197,9 +197,9 @@ namespace LexiconLMS.Migrations
 
 
             context.Documents.AddOrUpdate(d => d.Name,
-                new Document { Name = "Test av grupp", Uri="SavedDocuments/test1grupp.txt", Description = "Testdokument för att testa kopplat till grupp. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 09, 30), GroupId = 1, UserId = 2 },
-                new Document { Name = "Test av kurs", Uri = "SavedDocuments/test1kurs.txt", Description = "Testdokument för att testa kopplat till kurs. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 02), CourseId = 1, UserId = 2 },
-                new Document { Name = "Test av aktivitet", Uri = "SavedDocuments/test1aktivitet.txt", Description = "Testdokument för att testa kopplat till aktivitet. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 05), ActivityId = 1, UserId = 2 }
+                new Document { Name = "Test av grupp", Uri = "SavedDocuments/test1grupp.txt", Description = "Testdokument för att testa kopplat till grupp. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 09, 30), GroupId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id },
+                new Document { Name = "Test av kurs", Uri = "SavedDocuments/test1kurs.txt", Description = "Testdokument för att testa kopplat till kurs. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 02), CourseId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id },
+                new Document { Name = "Test av aktivitet", Uri = "SavedDocuments/test1aktivitet.txt", Description = "Testdokument för att testa kopplat till aktivitet. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 05), ActivityId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id }
                 );
 
         }

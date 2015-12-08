@@ -37,7 +37,7 @@ namespace LexiconLMS.Models
         public int? CourseId { get; set; }
 
         [Display(Name = "Användare")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [Display(Name = "Aktivitet")]
         public int? ActivityId { get; set; }

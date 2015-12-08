@@ -161,6 +161,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -170,9 +171,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201512032001520_init.cs" />
-    <Compile Include="Migrations\201512032001520_init.Designer.cs">
-      <DependentUpon>201512032001520_init.cs</DependentUpon>
+    <Compile Include="Migrations\201512080958273_addedDeadlineToActivities.cs" />
+    <Compile Include="Migrations\201512080958273_addedDeadlineToActivities.Designer.cs">
+      <DependentUpon>201512080958273_addedDeadlineToActivities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512081013462_nullableIdsInDocuments.cs" />
+    <Compile Include="Migrations\201512081013462_nullableIdsInDocuments.Designer.cs">
+      <DependentUpon>201512081013462_nullableIdsInDocuments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512081457303_correctedDatabase.cs" />
+    <Compile Include="Migrations\201512081457303_correctedDatabase.Designer.cs">
+      <DependentUpon>201512081457303_correctedDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -188,18 +197,18 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Documents\Lexicon mockup.png" />
+    <Content Include="ProjectDocuments\Lexicon mockup.png" />
     <Content Include="Content\Images\logo-lexicon.gif" />
     <Content Include="Content\Layout.css" />
-    <Content Include="Documents\logincap1.PNG" />
+    <Content Include="ProjectDocuments\logincap1.PNG" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Documents\LexiconLMS WIREFRAME.pdf" />
-    <Content Include="Documents\Lexicon LMS Entitets.pdf" />
+    <Content Include="ProjectDocuments\LexiconLMS WIREFRAME.pdf" />
+    <Content Include="ProjectDocuments\Lexicon LMS Entitets.pdf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -281,9 +290,15 @@
     <Content Include="Views\Activities\Index.cshtml" />
     <Content Include="Views\Courses\_CourseActivities.cshtml" />
     <Content Include="Views\Group\_TGroupCourses.cshtml" />
+    <Content Include="Views\Documents\Create.cshtml" />
+    <Content Include="Views\Documents\Delete.cshtml" />
+    <Content Include="Views\Documents\Details.cshtml" />
+    <Content Include="Views\Documents\Edit.cshtml" />
+    <Content Include="Views\Documents\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\uploads\" />
     <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
@@ -294,8 +309,14 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512032001520_init.resx">
-      <DependentUpon>201512032001520_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512080958273_addedDeadlineToActivities.resx">
+      <DependentUpon>201512080958273_addedDeadlineToActivities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512081013462_nullableIdsInDocuments.resx">
+      <DependentUpon>201512081013462_nullableIdsInDocuments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512081457303_correctedDatabase.resx">
+      <DependentUpon>201512081457303_correctedDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -50,6 +50,12 @@ namespace LexiconLMS
             );
 
             routes.MapRoute(
+            name: "RouteToSenderDocumentsCreate",
+            url: "Documents/Create/{gId}/{cId}/{aId}",
+            defaults: new { controller = "Documents", action = "Create", gId = UrlParameter.Optional, cId = UrlParameter.Optional, aId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
