@@ -6,7 +6,7 @@
 
     string sender = string.Empty;
     if (Request.RequestContext.RouteData.Values["sender"] != null)
-    { 
+    {
         sender = Request.RequestContext.RouteData.Values["sender"].ToString();
     }
     int groupId = 0;
@@ -77,9 +77,9 @@
     @if (sender == "g")
     {
         if (User.IsInRole("lärare") && groupId != 0)
-        { 
+        {
             @Html.ActionLink("Till gruppdetaljer", "Details", "Group", new { id = groupId }, null)
-    }
+        }
         if (User.IsInRole("elev"))
         {
             @Html.ActionLink("Till grupplistan", "Index", "Group")
@@ -91,7 +91,7 @@
         if (sender != string.Empty)
         {
             @Html.Raw(" | ")
-            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId=groupId })
+            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId = groupId })
         }
     }
 </p>
