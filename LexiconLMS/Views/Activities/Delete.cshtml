@@ -1,4 +1,5 @@
-﻿@model LexiconLMS.Models.Activity
+﻿@using Microsoft.AspNet.Identity
+@model LexiconLMS.Models.Activity
 
 @{
     ViewBag.Title = "Delete";
@@ -87,7 +88,7 @@
         {
             <div class="form-actions no-color">
                 <input type="submit" value="Radera" class="btn btn-default" /> 
-                @Html.ActionLink("Tillbaka till listan", "Index")
+                @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender, gId = groupId }, null)
             </div>
         }
         else

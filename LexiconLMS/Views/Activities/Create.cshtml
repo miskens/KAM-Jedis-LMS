@@ -1,8 +1,11 @@
-﻿@model LexiconLMS.Models.Activity
+﻿@using LexiconLMS.Models
+@model LexiconLMS.Models.Activity
 
 @{
     ViewBag.Title = "Create";
 
+    ApplicationDbContext context = new ApplicationDbContext();
+    
     string sender = string.Empty;
     if (Request.RequestContext.RouteData.Values["sender"] != null)
     {
@@ -19,6 +22,7 @@
     {
         courseId = Int32.Parse(Request.RequestContext.RouteData.Values["cId"].ToString());
     }
+    var course = context.Courses.FirstOrDefault(c => c.Id == courseId);
 }
 
 <h2>Skapa ny aktivitet</h2>
@@ -81,9 +85,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(courseName => course.Id, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CourseId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(courseName => course.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
             </div>
         </div>

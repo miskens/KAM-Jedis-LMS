@@ -11,7 +11,7 @@
 
     var courses = context.Courses.Where(c => c.GroupId == Model.Id);
 
-    ViewData["GroupId"] = Model.Id;
+    ViewData["groupId"] = Model.Id;
 }
 
 <div class="sg-table-div">
@@ -41,12 +41,12 @@
                     </dl>
                 </div>
                 <p>
-                    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender = "g", gId = Model.Id }) |
+                    @*@Html.ActionLink("Ändra", "Edit", "Group", new { id = Model.Id, sender = "g", gId = Model.Id }, null) |*@
                     @Html.ActionLink("Till grupper", "Index")
                 </p>
                 <br /><br />
                 <div class="sg-td1-div2">
-                    @Html.Partial("_TGroupMembers", groupMembers)
+                    @Html.Partial("_TGroupMembers", groupMembers, ViewData)
                 </div>
             </td>
             <td class="sg-table-td2">

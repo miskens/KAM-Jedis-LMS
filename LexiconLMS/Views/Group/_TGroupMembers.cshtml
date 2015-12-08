@@ -2,13 +2,26 @@
 
 @{
     ViewBag.Title = "_GroupMembers";
+     
+    string sender = string.Empty;
+    if (Request.RequestContext.RouteData.Values["sender"] != null)
+    {
+        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    }
+    int groupId = 0;
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+    }
+
+    var groupId2 = ViewData["groupId"].ToString();
 }
 
 <h2>Gruppmedlemmar</h2>
 
 <p>
     @*TODO: Fixa en ny router för create*@
-    @Html.ActionLink("Skapa ny användare", "Register", "Account")
+    @Html.ActionLink("Skapa ny användare", "Register", "Account", new {sender = "g", gId = groupId2}, null)
 </p>
 <table class="table">
     <tr>

@@ -20,9 +20,12 @@
 
 <h2>Aktiviteter</h2>
 
-<p>
-    @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { sender, gId = groupId, cId = courseId }, null)
-</p>
+@if (User.IsInRole("lärare"))
+{
+    <p>
+        @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new {sender, gId = groupId, cId = courseId}, null)
+    </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -53,10 +56,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.EndDate)
         </td>
-        <td>
-            @Html.ActionLink("Ändra", "Edit", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null) |
-            @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
-        </td>
+@if (User.IsInRole("lärare"))
+{
+    <td>
+        @Html.ActionLink("Ändra", "Edit", "Activities", new {id = item.Id, sender = "g", gId = groupId, cId = item.CourseId}, null) |
+        @Html.ActionLink("Ta bort", "Delete", "Activities", new {id = item.Id, sender = "g", gId = groupId, cId = item.CourseId}, null)
+    </td>
+}
     </tr>
 }
 

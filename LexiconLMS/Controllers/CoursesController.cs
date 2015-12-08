@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Channels;
 using System.Web;
 using System.Web.Mvc;
 using LexiconLMS.Models;
@@ -40,6 +42,17 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles="lärare")]
         public ActionResult Create()
         {
+            //int groupId = 0;
+            //if (Request.RequestContext.RouteData.Values["gId"] != null)
+            //{
+            //    groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+            //}
+            //var group = context.Groups.FirstOrDefault(g => g.Id == groupId);
+
+            //IDictionary<string, int> groupWithIndex = new Dictionary<string, int>();
+            //groupWithIndex.Add(group.Name, group.Id);
+
+            //ViewBag.Group = groupWithIndex;
             return View();
         }
 
@@ -51,7 +64,13 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var group = context.Groups.FirstOrDefault(g => g.Id == model.GroupId);
+                int groupId = 0;
+                if (Request.RequestContext.RouteData.Values["gId"] != null)
+                {
+                    groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+                }
+
+                var group = context.Groups.FirstOrDefault(g => g.Id == groupId);
                 DateTime start = group.StartDate;
                 DateTime end = group.EndDate;
                 string dateTimeFailureMessage = Functions.CheckDatesForCourse(model, start, end, DateTime.Today);
@@ -62,9 +81,11 @@ namespace LexiconLMS.Controllers
                     return View(model);
                 }
 
+                model.GroupId = groupId;
+
                 context.Courses.Add(model);
                 context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Group", new { id = model.GroupId, sender = "g"});
             }
 
             return View(model);
@@ -90,15 +111,15 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "lärare")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,GroupId")] Course course)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,GroupId")] Course model)
         {
             if (ModelState.IsValid)
             {
-                context.Entry(course).State = EntityState.Modified;
+                context.Entry(model).State = EntityState.Modified;
                 context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Group", new { id = model.GroupId, sender = "g" });
             }
-            return View(course);
+            return View();
         }
 
         // GET: Courses/Delete/5
@@ -126,7 +147,7 @@ namespace LexiconLMS.Controllers
             Course course = context.Courses.Find(id);
             context.Courses.Remove(course);
             context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Group", new { id = course.GroupId, sender = "g" });
         }
 
         protected override void Dispose(bool disposing)
