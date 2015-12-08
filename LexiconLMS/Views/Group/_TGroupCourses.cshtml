@@ -1,7 +1,21 @@
-﻿@model IEnumerable<LexiconLMS.Models.Course>
+﻿@using Microsoft.Ajax.Utilities
+@model IEnumerable<LexiconLMS.Models.Course>
 
+@{
+    string sender = string.Empty;
+    if (Request.RequestContext.RouteData.Values["sender"] != null)
+    {
+        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    }
+
+    int groupId = 0;
+    if (Request.RequestContext.RouteData.Values["id"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["id"].ToString());
+    }
+}
 <p>
-    @Html.ActionLink("Lägg till ny", "Create")
+    @Html.ActionLink("Lägg till ny", "Create", "Courses", new {sender = "g", gId = groupId}, null)
 </p>
 <table class="table">
     <tr>

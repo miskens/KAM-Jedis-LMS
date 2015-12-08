@@ -9,7 +9,7 @@
         sender = Request.RequestContext.RouteData.Values["sender"].ToString();
     }
 
-    int groupId= 0;
+    int groupId = 0;
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
         groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
@@ -23,7 +23,7 @@
 }
 
 <div>
-        <h4>@Model.Name ( @Model.StartDate.ToShortDateString() - @Model.EndDate.ToShortDateString())</h4>
+    <h4>@Model.Name ( @Model.StartDate.ToShortDateString() - @Model.EndDate.ToShortDateString())</h4>
     <hr />
     <dl class="dl-horizontal">
 
@@ -66,21 +66,30 @@
 <p>
     @if (sender == "c")
     {
+        @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.Id })
         if (User.IsInRole("lärare"))
         {
+            @Html.Raw(" | ")
             @Html.ActionLink("Ändra", "Edit", new { id = Model.Id })
-            @Html.Raw("|")
+            @Html.Raw(" | ")
             @Html.ActionLink("Till alla aktiviteter", "Index")
         }
-        @Html.ActionLink("Tillbaka", "Details", "Courses", new {id = Model.Id})
     }
     @if (sender == "g")
     {
+        @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender, groupId }, null)
         if (User.IsInRole("lärare"))
         {
-            @Html.ActionLink("Ändra", "Edit", "Activities", new { id = Model.Id, sender, groupId, cId = Model.Id }, null) 
-            @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = Model.Id, sender, groupId, courseId }, null)  
+            @Html.Raw(" | ")
+            @Html.ActionLink("Ändra", "Edit", "Activities", new { id = Model.Id, sender, groupId, cId = Model.Id }, null)
+            @Html.Raw(" | ")
+            @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = Model.Id, sender, groupId, courseId }, null)
         }
-            @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender, groupId }, null)
+    }
+    else
+    {
+        <div class="form-actions no-color">
+            @Html.ActionLink("Tillbaka till listan", "Details", "Courses", new { id = Model.CourseId, sender, groupId }, null)
+        </div>
     }
 </p>

@@ -5,6 +5,19 @@
     ViewBag.Title = "Skapa ny användare";
     var roles = ViewBag.Roles;
     var groups = ViewBag.Groups;
+
+    string sender = string.Empty;
+    if (Request.RequestContext.RouteData.Values["sender"] != null)
+    {
+        sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+    }
+
+    int groupId = 0;
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+    }
+
 }
 
 <h2>@ViewBag.Title</h2>
@@ -57,8 +70,19 @@
                 <input type="submit" class="btn btn-default" value="Registrera"/>
             </div>
         </div>
-
 }
+
+<div>
+    @if (sender == string.Empty)
+    {
+        @Html.ActionLink("Till listan", "Index", "users");
+    }
+    @if (sender == "g")
+    {
+        @Html.ActionLink("Till gruppdetaljer", "Details", "Group", new { id = Model.GroupId, sender }, null);
+    }
+</div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

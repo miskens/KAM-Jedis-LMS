@@ -10,6 +10,8 @@
     var groupMembers = context.Users.Where(u => u.GroupId == Model.Id);
 
     var courses = context.Courses.Where(c => c.GroupId == Model.Id);
+
+    ViewData["GroupId"] = Model.Id;
 }
 
 <div class="sg-table-div">
@@ -39,8 +41,8 @@
                     </dl>
                 </div>
                 <p>
-                    @Html.ActionLink("Editera", "Edit", new { id = Model.Id, sender = "g", gId = Model.Id }) |
-                    @Html.ActionLink("Tillbaka till lista", "Index")
+                    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender = "g", gId = Model.Id }) |
+                    @Html.ActionLink("Till grupper", "Index")
                 </p>
                 <br /><br />
                 <div class="sg-td1-div2">
@@ -48,7 +50,7 @@
                 </div>
             </td>
             <td class="sg-table-td2">
-                @Html.Partial("_TGroupCourses", courses)
+                @Html.Partial("_TGroupCourses", courses, ViewData)
             </td>
         </tr>
     </table>

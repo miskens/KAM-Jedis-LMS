@@ -176,9 +176,9 @@ namespace LexiconLMS.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FullName = model.FullName, GroupId = model.GroupId};
                 var result = await UserManager.CreateAsync(user, model.Password);
-                UserManager.AddToRole(user.Id, model.Role);
                 if (result.Succeeded)
                 {
+                    UserManager.AddToRole(user.Id, model.Role);
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -229,7 +229,7 @@ namespace LexiconLMS.Controllers
             {
                 var user = UserManager.FindByEmail(model.Email);
 
-                SmtpClient client =  MailHandler.ConfigureSmtpClient();   
+                SmtpClient client =  Functions.ConfigureSmtpClient();   
                 MailMessage mail = new MailMessage("admin@Lexicon.se", model.Email);
                 mail.IsBodyHtml = true;
                 mail.Subject = "Lexicon: Återställning av lösenord.";

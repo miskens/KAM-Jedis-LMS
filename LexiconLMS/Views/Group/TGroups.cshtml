@@ -30,7 +30,7 @@
     {
         <tr>
             <td>
-                @Html.ActionLink((string)item.Name, "Details", "Group", new { id = item.Id, sender = "s"}, null)
+                @Html.ActionLink((string)item.Name, "Details", "Group", new { id = item.Id, sender = "g"}, null)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -42,8 +42,8 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.ActionLink("Editera", "Edit", new {id = item.Id}) |
-                @Html.ActionLink("Annihilera", "Delete", new {id = item.Id})
+                @Html.ActionLink("Ändra", "Edit", new {id = item.Id}) |
+                @Html.ActionLink("Radera", "Delete", new {id = item.Id})
             </td>
         </tr>
     }

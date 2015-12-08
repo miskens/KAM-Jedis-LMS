@@ -92,10 +92,19 @@ namespace LexiconLMS.Controllers
         public ActionResult Create(Group model)
         {
             ApplicationDbContext context = new ApplicationDbContext();
+            
             try
             {
                 if (ModelState.IsValid)
                 {
+                    string dateTimeFailureMessage = Functions.CheckDatesForGroup(model.StartDate, model.EndDate, DateTime.Today);
+
+                    if (dateTimeFailureMessage != string.Empty)
+                    {
+                        ModelState.AddModelError("", dateTimeFailureMessage);
+                        return View(model);
+                    }
+
                     var group = new Group { Name = model.Name, Description = model.Description, StartDate = model.StartDate, EndDate = model.EndDate };
                     context.Groups.Add(group);
                     context.SaveChanges();
