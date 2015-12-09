@@ -63,15 +63,15 @@
         if (sender == "g" && groupId != 0)
         {
             <div class="form-actions no-color">
-                <input type="submit" value="Radera" class="btn btn-default"/> |
-                @Html.ActionLink("Tillbaka", "Details", "Group", new {id = groupId}, null)
+                <input type="submit" value="Radera" class="btn btn-default"/> 
+                @Html.ActionLink(" Tillbaka", "Details", "Group", new {id = groupId}, null)
             </div>
         }
         else
         {
             <div class="form-actions no-color">
-                <input type="submit" value="Radera" class="btn btn-default" /> |
-                @Html.ActionLink("Tillbaka till listan", "Index")
+                <input type="submit" value="Radera" class="btn btn-default" /> 
+                @Html.ActionLink(" Tillbaka till listan", "Index")
             </div>
         }
     }
