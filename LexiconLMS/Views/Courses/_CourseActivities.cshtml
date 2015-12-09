@@ -75,8 +75,10 @@
 @if (User.IsInRole("lärare"))
 {
         <td>
+                @Html.ActionLink("Detaljer", "Details", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
                 @if (User.IsInRole("lärare"))
                 {
+                    @Html.Raw(" | ")
                     @Html.ActionLink("Ändra", "Edit", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
                     @Html.Raw(" | ")
                     @Html.ActionLink("Radera", "Delete", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)

@@ -40,11 +40,13 @@
 <p>
     @if (sender == "s")
     {
+        @Html.ActionLink("Tillbaka", "Index", "Home")
+
         if (User.IsInRole("lärare"))
         {
+            @Html.Raw(" | ")
             @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId = groupId })
         }
-        @Html.ActionLink("Tillbaka", "Index", "Home")
     }
     @if (sender == "g")
     {
