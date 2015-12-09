@@ -7,31 +7,32 @@
     if (Request.RequestContext.RouteData.Values["sender"] != null)
     {
         sender = Request.RequestContext.RouteData.Values["sender"].ToString();
-    }  
-    
+    }
+
     int groupId = 0;
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
         groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
-    }  
+    }
 
     var courseId = ViewData["courseId"];
 }
 
 <h2>Aktiviteter</h2>
 
-@if (User.IsInRole("lärare"))
-{
 <p>
-        @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new {sender, gId = groupId, cId = courseId}, null)
-        }
-        else
-        {
-            @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { gId = groupId, cId = courseId }, null)
-        }
+    @if (User.IsInRole("lärare"))
+    {
+        @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { sender, gId = groupId, cId = courseId }, null)
     }
+    
+    @*what?*@
+    
+    @*else
+    {
+        @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { gId = groupId, cId = courseId }, null)
+    }*@
 </p>
-}
 <table class="table">
     <tr>
         <th>
@@ -50,33 +51,33 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.ActionLink((string)item.Name, "Details", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-@if (User.IsInRole("lärare"))
-{
-        <td>
-                @Html.ActionLink("Detaljer", "Details", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
-                @if (User.IsInRole("lärare"))
-                {
-                    @Html.Raw(" | ")
-                    @Html.ActionLink("Ändra", "Edit", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
-                    @Html.Raw(" | ")
-                    @Html.ActionLink("Radera", "Delete", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
-                }
-        </td>
-}
-    </tr>
-}
+        <tr>
+            <td>
+                @Html.ActionLink((string)item.Name, "Details", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            @if (User.IsInRole("lärare"))
+            {
+                <td>
+                    @Html.ActionLink("Detaljer", "Details", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
+                    @if (User.IsInRole("lärare"))
+                    {
+                        @Html.Raw(" | ")
+                        @Html.ActionLink("Ändra", "Edit", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
+                        @Html.Raw(" | ")
+                        @Html.ActionLink("Radera", "Delete", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
+                    }
+                </td>
+            }
+        </tr>
+    }
 
 </table>

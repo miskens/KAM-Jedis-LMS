@@ -68,7 +68,7 @@
         <div class="form-group">
             @Html.LabelFor(groupName => group.Id, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(groupName => group.Name, new { @class = "text-danger", @readonly = "readonly" }))
+                @Html.EditorFor(groupName => group.Name, new { @class = "text-danger", @readonly = "readonly" })
                 @Html.ValidationMessageFor(model => model.GroupId, "", new {@class = "text-danger"})
             </div>
         </div>
