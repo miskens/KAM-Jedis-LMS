@@ -94,7 +94,7 @@ namespace LexiconLMS.Migrations
 
             email = "adrian@xenotype.com";
             // same roles as previous
-            user = new ApplicationUser { FullName = "Adrian Locano", UserName = email, Email = email, Active = true };
+            user = new ApplicationUser { FullName = "Adrian Lozano", UserName = email, Email = email, Active = true };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "kenneth.forsstrom@hotmail.com";
