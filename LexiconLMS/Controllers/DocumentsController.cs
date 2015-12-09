@@ -48,7 +48,8 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name, Description, GroupId, CourseId, ActivityId, UserId, UploadTime")] Document document, HttpPostedFileBase uploadFile)
+        //public ActionResult Create([Bind(Include = "Name, Description, GroupId, CourseId, ActivityId, UserId, UploadTime")] Document document, HttpPostedFileBase uploadFile)
+        public ActionResult Create([Bind(Include = "Name, Description, GroupId, CourseId, ActivityId, UserId")] Document document, HttpPostedFileBase uploadFile)
         {
             if (ModelState.IsValid)
             {
@@ -64,18 +65,17 @@ namespace LexiconLMS.Controllers
                     var uploadedDocument = new Document
                     {
                         Name = document.Name,
+                        OriginalFileName = uploadFile.FileName,
                         Description = document.Description,
                         UserId = document.UserId,
                         Uri = fileName,
-                        UploadTime = document.UploadTime,
-                        GroupId = document.GroupId,
-                        CourseId = document.CourseId,
-                        ActivityId = document.ActivityId
+                        UploadTime = DateTime.Now,
                     };
                     
                     // Set only the "important" value. ActivityId if the doc is connected to an activity,
                     // else check if it is connected to a course and lastly check if it is connected to a group.
-                    // userId (owner) is always set, regardless of it has a connection or not.
+                    // userId (owner) is always set on the doc, regardless of it has a connection to 
+                    // activity/course/group or not.
                     if (document.ActivityId != 0)
                     {
                         uploadedDocument.ActivityId = document.ActivityId;

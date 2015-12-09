@@ -4,12 +4,20 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Dokumentdetaljer</h2>
 
 <div>
-    <h4>Document</h4>
+    <h4>Dokument</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OriginalFileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OriginalFileName)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Uri)
         </dt>
@@ -77,6 +85,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Tillbaka", "Index")
 </p>

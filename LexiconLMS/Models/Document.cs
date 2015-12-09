@@ -30,13 +30,16 @@ namespace LexiconLMS.Models
         [Display(Name = "Skapad")]
         public DateTime UploadTime { get; set; }
 
+        [Display(Name = "Originalets filnamn")]
+        public string OriginalFileName { get; set; }
+
         [Display(Name = "Grupp")]
         public int? GroupId { get; set; }
 
         [Display(Name = "Kurs")]
         public int? CourseId { get; set; }
 
-        [Display(Name = "Användare")]
+        [Display(Name = "Dokumentets ägare")]
         public string UserId { get; set; }
 
         [Display(Name = "Aktivitet")]
