@@ -23,7 +23,7 @@
 }
 
 <div>
-    <h4>@Model.Name ( @Model.StartDate.ToShortDateString() - @Model.EndDate.ToShortDateString())</h4>
+        <h4>@Model.Name ( @Model.StartDate.ToShortDateString() - @Model.EndDate.ToShortDateString())</h4>
     <hr />
     <dl class="dl-horizontal">
 
@@ -85,11 +85,12 @@
             @Html.Raw(" | ")
             @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = Model.Id, sender, groupId, courseId }, null)
         }
+        @Html.ActionLink("Tillbaka", "Details", "Courses", new {id = Model.CourseId, sender, gId = groupId}, null)
     }
     else
     {
         <div class="form-actions no-color">
-            @Html.ActionLink("Tillbaka till listan", "Details", "Courses", new { id = Model.CourseId, sender, groupId }, null)
+            @Html.ActionLink("Tillbaka till listan", "Details", "Courses", new {id = Model.CourseId, sender, groupId}, null)
         </div>
     }
 </p>

@@ -75,7 +75,7 @@
 <div>
 @if (sender == "g" && groupId != 0)
 {
-    @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = groupId, sender, groupId }, null)
+    @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId, sender }, null)
 }
 @if (sender == "s")
 {

@@ -57,7 +57,13 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var course = context.Courses.FirstOrDefault(c => c.Id == model.CourseId);
+                int courseId = 0;
+                if (Request.RequestContext.RouteData.Values["cId"] != null)
+                {
+                    courseId = Int32.Parse(Request.RequestContext.RouteData.Values["cId"].ToString());
+                }
+
+                var course = context.Courses.FirstOrDefault(c => c.Id == courseId);
                 DateTime start = course.StartDate;
                 DateTime end = course.EndDate;
 
@@ -69,9 +75,11 @@ namespace LexiconLMS.Controllers
                     return View(model);
                 }
 
+                model.CourseId = courseId;
+
                 context.Activities.Add(model);
                 context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Courses", new { id = model.CourseId, sender = "g", gId = course.GroupId });
             }
 
             return View(model);
@@ -140,9 +148,10 @@ namespace LexiconLMS.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Activity activity = context.Activities.Find(id);
+            Course course = context.Courses.Find(activity.CourseId);
             context.Activities.Remove(activity);
             context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Courses", new { id = activity.CourseId, sender = "g", gId = course.GroupId });
         }
 
         protected override void Dispose(bool disposing)

@@ -174,6 +174,12 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                int groupId = 0;
+                if (Request.RequestContext.RouteData.Values["gId"] != null)
+                {
+                    groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+                }
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FullName = model.FullName, GroupId = model.GroupId};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -188,7 +194,7 @@ namespace LexiconLMS.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
         //            return RedirectToAction("Index", "Home");
-                    return RedirectToAction("Index", "Users");
+                    return RedirectToAction("Details", "Group", new { id = groupId, sender = "g" });
                 }
                 AddErrors(result);
             }

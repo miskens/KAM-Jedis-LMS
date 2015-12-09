@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -36,6 +37,11 @@ namespace LexiconLMS.Controllers
             if (endDate < today)
             {
                 return msg = "Slutdatum får ej vara tidigare än dagens datum.";
+            }
+            if ((endDate.Month == 02 && endDate.Day == 30) || (startDate.Month == 02 && startDate.Day == 30))
+            {
+                //Lägg till koll för skottår när det finns tid
+                return msg = "Den dagen finns inte i den angivna månaden.";
             }
 
             return msg;
@@ -95,6 +101,13 @@ namespace LexiconLMS.Controllers
             }
 
             return msg;
+        }
+
+        public static string ParseDocumentOwnerEntity()
+        {
+            string entityName = string.Empty;
+
+            return entityName;
         }
     }
 }
