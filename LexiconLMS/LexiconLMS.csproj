@@ -187,6 +187,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\doc_icon.png" />
     <Content Include="ProjectDocuments\Lexicon mockup.png" />
     <Content Include="Content\Images\logo-lexicon.gif" />
     <Content Include="Content\Layout.css" />
@@ -264,7 +265,6 @@
     <Content Include="Views\Group\_SGroupMembers.cshtml" />
     <Content Include="Views\Account\ForgotPasswordMailFailed.cshtml" />
     <Content Include="Views\Account\ForgotPasswordAccountNotFound.cshtml" />
-    <Content Include="Views\Group\GroupmemberDetails.cshtml" />
     <Content Include="Views\Group\_TGroupMembers.cshtml" />
     <Content Include="Views\Group\_SGroupCourses.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />

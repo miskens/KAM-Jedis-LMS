@@ -12,14 +12,24 @@
     ViewBag.Title = "EIndex";
 
     var courses = context.Courses.Where(c => c.GroupId == Model.Id);
+
+    var documents = context.Documents.Where(d => d.GroupId == Model.Id);
 }
 <div class="sg-table-div">
     <table>
         <tr>
             <td class="sg-table-td1">
                 <div class="sg-td1-div1">
-                    <h1>Grupp: @Html.DisplayFor(model => model.Name) <a href="@Url.Action("Index", "Group")"> 
-                                                                <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:30px;" /></a></h1>
+                    <h1>
+                        Grupp: @Html.DisplayFor(model => model.Name)
+                        @if (documents.Any())
+                        {
+                            <a href="@Url.Action("Index", "Documents"@*, new { gId = Model.Id }*@)">
+                                <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:30px;" />
+                            </a>
+
+                        }
+                    </h1>
                     <h4>@Html.DisplayFor(m => m.StartDate) - @Html.DisplayFor(m => m.EndDate)</h4>
                     <hr />
                     <dl class="dl-horizontal">

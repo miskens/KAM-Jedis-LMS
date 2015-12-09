@@ -13,7 +13,7 @@ namespace LexiconLMS.Controllers
         // GET: Document
         public ActionResult Index()
         {
-            string ownerEntityName = Functions.ParseDocumentOwnerEntity();
+            //string ownerEntityName = Functions.ParseDocumentOwnerEntity();
             //var referrer = Request.UrlReferrer.ToString();
             //if (referrer.Contains("Group"))
             //{

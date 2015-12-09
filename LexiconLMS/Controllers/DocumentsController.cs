@@ -14,12 +14,16 @@ namespace LexiconLMS.Controllers
 
     public class DocumentsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext context = new ApplicationDbContext();
 
         // GET: Documents
-        public ActionResult Index()
+        public ActionResult Index() //int id
         {
-            return View(db.Documents.ToList());
+            //string owningEntity = Functions.ParseDocumentOwnerEntity(id);
+
+            //var documents = context.Documents.Where(d => d.GroupId == id);
+
+            return View();
         }
 
         // GET: Documents/Details/5
@@ -29,7 +33,7 @@ namespace LexiconLMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Document document = db.Documents.Find(id);
+            Document document = context.Documents.Find(id);
             if (document == null)
             {
                 return HttpNotFound();
@@ -76,25 +80,25 @@ namespace LexiconLMS.Controllers
                     // Set only the "important" value. ActivityId if the doc is connected to an activity,
                     // else check if it is connected to a course and lastly check if it is connected to a group.
                     // userId (owner) is always set, regardless of it has a connection or not.
-                    if (document.ActivityId != 0)
+                    if (document.ActivityId.ToString() != "0")
                     {
                         uploadedDocument.ActivityId = document.ActivityId;
                     }
-                    else if (document.CourseId != 0)
+                    else if (document.CourseId.ToString() != "0")
                     {
                         uploadedDocument.CourseId = document.CourseId;
                     }
-                    else if (document.GroupId != 0)
+                    else if (document.GroupId.ToString() != "0")
                     { 
                         uploadedDocument.GroupId = document.GroupId; 
                     }
 
                     uploadFile.SaveAs(path);
-                    
-                    db.Documents.Add(uploadedDocument);  
+
+                    context.Documents.Add(uploadedDocument);  
                 }
-                
-                db.SaveChanges();
+
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -108,7 +112,7 @@ namespace LexiconLMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Document document = db.Documents.Find(id);
+            Document document = context.Documents.Find(id);
             if (document == null)
             {
                 return HttpNotFound();
@@ -125,8 +129,8 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(document).State = EntityState.Modified;
-                db.SaveChanges();
+                context.Entry(document).State = EntityState.Modified;
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(document);
@@ -139,7 +143,7 @@ namespace LexiconLMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Document document = db.Documents.Find(id);
+            Document document = context.Documents.Find(id);
             if (document == null)
             {
                 return HttpNotFound();
@@ -152,9 +156,9 @@ namespace LexiconLMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Document document = db.Documents.Find(id);
-            db.Documents.Remove(document);
-            db.SaveChanges();
+            Document document = context.Documents.Find(id);
+            context.Documents.Remove(document);
+            context.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -162,7 +166,7 @@ namespace LexiconLMS.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                context.Dispose();
             }
             base.Dispose(disposing);
         }

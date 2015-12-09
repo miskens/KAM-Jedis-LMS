@@ -11,21 +11,22 @@
     {
         sender = Request.RequestContext.RouteData.Values["sender"].ToString();
     }
-    int groupId = 0;
+    string groupId = "0";
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
-        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
-    } 
-    int courseId = 0;
-    
+        groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
+    }
+
+    string courseId = "0";
     if (Request.RequestContext.RouteData.Values["cId"] != null)
     {
-        courseId = Int32.Parse(Request.RequestContext.RouteData.Values["cId"].ToString());
+        courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
     }
-    var course = context.Courses.FirstOrDefault(c => c.Id == courseId);
+    int courseIdnum = Int32.Parse(courseId);
+    var course = context.Courses.FirstOrDefault(c => c.Id == courseIdnum);
 }
 
-<h2>Skapa ny aktivitet</h2>
+<h2>Skapa ny aktivitet i kurs: @course.Name</h2>
 
 
 @using (Html.BeginForm())
@@ -83,15 +84,6 @@
                 }
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(courseName => course.Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(courseName => course.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Spara" class="btn btn-default" />

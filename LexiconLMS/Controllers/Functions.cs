@@ -103,9 +103,11 @@ namespace LexiconLMS.Controllers
             return msg;
         }
 
-        public static string ParseDocumentOwnerEntity()
+        public static string ParseDocumentOwnerEntity(int id)
         {
             string entityName = string.Empty;
+
+
 
             return entityName;
         }

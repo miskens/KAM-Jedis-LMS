@@ -1,18 +1,16 @@
-﻿@using Microsoft.Ajax.Utilities
+﻿@using LexiconLMS.Models
+@using Microsoft.Ajax.Utilities
 @model IEnumerable<LexiconLMS.Models.Course>
 
 @{
+    ApplicationDbContext context = new ApplicationDbContext();
     string sender = string.Empty;
     if (Request.RequestContext.RouteData.Values["sender"] != null)
     {
         sender = Request.RequestContext.RouteData.Values["sender"].ToString();
     }
 
-    int groupId = 0;
-    if (Request.RequestContext.RouteData.Values["id"] != null)
-    {
-        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["id"].ToString());
-    }
+    string groupId = ViewData["groupId"].ToString();
 }
 <p>
     @Html.ActionLink("Lägg till ny", "Create", "Courses", new {sender = "g", gId = groupId}, null)
@@ -31,9 +29,13 @@
         <th>
             @Html.DisplayNameFor(model => model.EndDate)
         </th>
+        <th>
+            @Html.DisplayName("Dokument")
+        </th>
     </tr>
 
 @foreach (var item in Model) {
+    var documents = context.Documents.Where(d => d.CourseId == item.Id);
     <tr>
         <td>
             @Html.ActionLink((string)item.Name, "Details", "Courses", new { id = item.Id, sender = "g", gId = item.GroupId }, null)
@@ -46,6 +48,14 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @if (documents.Any())
+            {
+                <a href="@Url.Action("Index", "Group")">
+                    <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:23px;" />
+                </a>
+            }
         </td>
         <td>
             @Html.ActionLink("Ändra", "Edit", "Courses", new { id = item.Id, sender = "g", gId = item.GroupId }, null) |

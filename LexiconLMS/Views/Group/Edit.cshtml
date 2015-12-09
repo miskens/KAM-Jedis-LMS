@@ -11,10 +11,10 @@
         sender = Request.RequestContext.RouteData.Values["sender"].ToString();
     } 
     
-    int groupId = 0;
+    string groupId = "0";
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
-        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+        groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
     } 
 }
 
@@ -75,9 +75,9 @@
     {
         @Html.ActionLink("Till listan", "Index")
     }
-    @if (sender == "g" && groupId != 0)
+    @if (sender == "g" && groupId != "0")
     {
-        @Html.ActionLink("Tillbaka", "Details", "Group", new {id = groupId}, null)
+        @Html.ActionLink("Tillbaka", "Details", "Group", new {id = groupId, sender = "g"}, null)
     }
 
 </div>

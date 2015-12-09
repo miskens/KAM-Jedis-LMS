@@ -60,30 +60,30 @@ namespace LexiconLMS.Controllers
             return View(applicationUser);
         }
 
-        // GET: Users/Create
-        [Authorize(Roles = "lärare")]
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //// GET: Users/Create
+        //[Authorize(Roles = "lärare")]
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "lärare")]
-        public ActionResult Create([Bind(Include = "Id,FullName,Active,GroupId,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
-        {
-            if (ModelState.IsValid)
-            {
-                context.Users.Add(applicationUser);
-                context.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //// POST: Users/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles = "lärare")]
+        //public ActionResult Create([Bind(Include = "Id,FullName,Active,GroupId,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        context.Users.Add(applicationUser);
+        //        context.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            return View(applicationUser);
-        }
+        //    return View(applicationUser);
+        //}
 
         // GET: Users/Edit/5
         [Authorize(Roles = "lärare")]
@@ -120,6 +120,12 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                int groupId = 0;
+                if (Request.RequestContext.RouteData.Values["gId"] != null)
+                {
+                    groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+                }
+
                 var user = context.Users.Find(appUser.Id);
 
                 user.FullName = appUser.FullName;
@@ -131,7 +137,8 @@ namespace LexiconLMS.Controllers
                 context.Users.AddOrUpdate(u => u.Id,
                     user);
                 context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Group", new { id = groupId, sender = "g"}
+            );
             }
             return RedirectToAction("Index", "Users");
         }
