@@ -11,19 +11,50 @@ using System.IO;
 
 namespace LexiconLMS.Controllers
 {
-
+    [Authorize]
     public class DocumentsController : Controller
     {
         private ApplicationDbContext context = new ApplicationDbContext();
 
         // GET: Documents
-        public ActionResult Index() //int id
+        public ActionResult Index()
         {
-            //string owningEntity = Functions.ParseDocumentOwnerEntity(id);
+            IEnumerable<Document> documents = new List<Document>();
+            string groupId = "0";
+            if (Request.RequestContext.RouteData.Values["gId"] != null)
+            {
+                groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
+                documents = context.Documents.Where(d => d.GroupId.ToString() == groupId);
+            }
+            string courseId = "0";
+            if (Request.RequestContext.RouteData.Values["cId"] != null)
+            {
+                courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
+                documents = context.Documents.Where(d => d.CourseId.ToString() == courseId);
+            }
+            string activityId = "0";
+            if (Request.RequestContext.RouteData.Values["aId"] != null)
+            {
+                activityId = Request.RequestContext.RouteData.Values["aId"].ToString();
+                documents = context.Documents.Where(d => d.ActivityId.ToString() == activityId);
+            }
 
-            //var documents = context.Documents.Where(d => d.GroupId == id);
-
-            return View();
+            ViewData["groupId"] = groupId;
+            ViewData["courseId"] = courseId;
+            ViewData["activityId"] = activityId;
+            if (groupId != "0")
+            { 
+                return View("ListGroupDocuments", documents);
+            }
+            if (courseId != "0")
+            {
+                return RedirectToAction("ListCourseDocuments", documents);
+            }
+            if (activityId != "0")
+            {
+                return RedirectToAction("ListActivityDocuments", documents );
+            }
+            return RedirectToAction("ListAllDocuments", context.Documents);
         }
 
         // GET: Documents/Details/5
@@ -42,6 +73,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Documents/Create
+        [Authorize(Roles = "lärare")]
         public ActionResult Create()
         {
             return View();
@@ -52,11 +84,42 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles="lärare")]
         public ActionResult Create([Bind(Include = "Name, Description, GroupId, CourseId, ActivityId, UserId, UploadTime")] Document document, HttpPostedFileBase uploadFile)
         {
+            string sender = string.Empty;
+            if (Request.RequestContext.RouteData.Values["sender"] != null)
+            {
+                sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+            }
+
+            string groupId = "0";
+            if (Request.RequestContext.RouteData.Values["gId"] != null)
+            {
+                groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
+            }
+
+            string courseId = "0";
+            if (Request.RequestContext.RouteData.Values["cId"] != null)
+            {
+                courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
+            }
+
+            string activityId = "0";
+            if (Request.RequestContext.RouteData.Values["aId"] != null)
+            {
+                activityId = Request.RequestContext.RouteData.Values["aId"].ToString();
+            }
+
+             if (uploadFile.ContentLength == 0)
+            {
+                ModelState.AddModelError("", "Dokumentet är tomt, försök med ett annat.");
+                return View();
+            }
+
             if (ModelState.IsValid)
             {
-                if (uploadFile != null && uploadFile.ContentLength > 0)
+                if (uploadFile.ContentLength > 0)
                 {
                     //var fileName = Path.GetFileName(file.FileName);
                     
@@ -68,13 +131,11 @@ namespace LexiconLMS.Controllers
                     var uploadedDocument = new Document
                     {
                         Name = document.Name,
+                        OriginalFileName = uploadFile.FileName,
                         Description = document.Description,
                         UserId = document.UserId,
                         Uri = fileName,
-                        UploadTime = document.UploadTime,
-                        GroupId = document.GroupId,
-                        CourseId = document.CourseId,
-                        ActivityId = document.ActivityId
+                        UploadTime = DateTime.Now,
                     };
                     
                     // Set only the "important" value. ActivityId if the doc is connected to an activity,
@@ -96,16 +157,29 @@ namespace LexiconLMS.Controllers
                     uploadFile.SaveAs(path);
 
                     context.Documents.Add(uploadedDocument);  
+                    context.SaveChanges();
                 }
 
-                context.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (sender == "g")
+                { 
+                    return RedirectToAction("Index", new { gId = groupId });
+                }
+                if (sender == "c")
+                {
+                    return RedirectToAction("Index", new { cId = courseId });
+                }
+                if (sender == "a")
+                {
+                    return RedirectToAction("Index", new { aId = activityId });
+                }
             }
 
             return View(document);
         }
 
         // GET: Documents/Edit/5
+        [Authorize(Roles = "lärare")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -125,6 +199,7 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "lärare")]
         public ActionResult Edit([Bind(Include = "Id,Uri,Name,Description,UploadTime,GroupId,CourseId,UserId,ActivityId")] Document document)
         {
             if (ModelState.IsValid)
@@ -137,6 +212,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Documents/Delete/5
+        [Authorize(Roles = "lärare")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -154,12 +230,25 @@ namespace LexiconLMS.Controllers
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "lärare")]
         public ActionResult DeleteConfirmed(int id)
         {
             Document document = context.Documents.Find(id);
             context.Documents.Remove(document);
             context.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+
+        public FilePathResult GetFileFromDisk(int id)
+        {
+            Document document = context.Documents.Find(id);
+            string path = AppDomain.CurrentDomain.BaseDirectory + "Content/uploads/";
+            string fileName = document.Uri;
+            string originalFileName = document.OriginalFileName;
+            string mimeType = MimeMapping.GetMimeMapping(originalFileName);
+            
+            return File(path + fileName, mimeType, originalFileName);
         }
 
         protected override void Dispose(bool disposing)

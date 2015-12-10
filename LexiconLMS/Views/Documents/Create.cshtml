@@ -11,22 +11,22 @@
         sender = Request.RequestContext.RouteData.Values["sender"].ToString();
     }
     
-    int groupId = 0;
+    string groupId = "0";
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
-        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
-    }
-    
-    int courseId = 0;
-    if (Request.RequestContext.RouteData.Values["cId"] != null)
-    {
-        courseId = Int32.Parse(Request.RequestContext.RouteData.Values["cId"].ToString());
+        groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
     }
 
-    int activityId = 0;
+    string courseId = "0";
+    if (Request.RequestContext.RouteData.Values["cId"] != null)
+    {
+        courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
+    }
+
+    string activityId = "0";
     if (Request.RequestContext.RouteData.Values["aId"] != null)
     {
-        activityId = Int32.Parse(Request.RequestContext.RouteData.Values["aId"].ToString());
+        activityId = Request.RequestContext.RouteData.Values["aId"].ToString();
     }
     
     var uId = User.Identity.GetUserId();
@@ -89,7 +89,14 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka", "Index")
+    @if (sender == "g")
+    {
+        @Html.ActionLink("Tillbaka", "Index", new { gId = groupId }, null)
+    }
+    else
+    {
+        @Html.ActionLink("Tillbaka", "Index")
+    }
 </div>
 
 @section Scripts {

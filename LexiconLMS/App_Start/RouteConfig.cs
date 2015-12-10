@@ -21,8 +21,8 @@ namespace LexiconLMS
 
             routes.MapRoute(
             name: "RouteToReferrerAtCreate",
-            url: "{controller}/Create/{sender}/{gId}/{cId}",
-            defaults: new { controller = "Group", action = "Create", sender = UrlParameter.Optional, gId = UrlParameter.Optional, cId = UrlParameter.Optional }
+            url: "{controller}/Create/{sender}/{gId}/{cId}/{aId}",
+            defaults: new { controller = "Group", action = "Create", sender = UrlParameter.Optional, gId = UrlParameter.Optional, cId = UrlParameter.Optional, aId = UrlParameter.Optional }
             );
 
             routes.MapRoute(
@@ -50,27 +50,21 @@ namespace LexiconLMS
             );
 
             routes.MapRoute(
-            name: "RouteToSenderCourseActivities",
+            name: "RouteToSenderActivities",
             url: "Activities/{action}/{id}/{sender}/{gId}/{cId}",
             defaults: new { controller = "Activities", action = "Index", id = UrlParameter.Optional, sender = UrlParameter.Optional, gId = UrlParameter.Optional, cId = UrlParameter.Optional }
             );
 
             routes.MapRoute(
-            name: "RouteToSenderDocumentsgId",
-            url: "Documents/{action}/{gId}",
-            defaults: new { controller = "Documents", action = "Create", gId = UrlParameter.Optional, cId = UrlParameter.Optional, aId = UrlParameter.Optional }
+            name: "RouteToSenderDocuments",
+            url: "Documents/Index/{gId}/{cId}/{aId}",
+            defaults: new { controller = "Documents", action = "Index", gId = UrlParameter.Optional, cId = UrlParameter.Optional, aId = UrlParameter.Optional }
             );
 
             routes.MapRoute(
-            name: "RouteToSenderDocumentscId",
-            url: "Documents/{action}/{cId}",
-            defaults: new { controller = "Documents", action = "Create", gId = UrlParameter.Optional, cId = UrlParameter.Optional, aId = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
-            name: "RouteToSenderDocumentsaId",
-            url: "Documents/{action}/{aId}",
-            defaults: new { controller = "Documents", action = "Create", gId = UrlParameter.Optional, cId = UrlParameter.Optional, aId = UrlParameter.Optional }
+            name: "RouteToSenderDocumentsDetails",
+            url: "Documents/{action}/{id}/{gId}/{cId}/{aId}",
+            defaults: new { controller = "Documents", action = "Details", id = UrlParameter.Optional,  gId = UrlParameter.Optional, cId = UrlParameter.Optional, aId = UrlParameter.Optional }
             );
 
             routes.MapRoute(

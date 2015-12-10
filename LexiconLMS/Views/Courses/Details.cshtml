@@ -38,17 +38,22 @@
 </div>
 <br /><br />
 <p>
-    @if (sender == "s")
-    {
-        @Html.ActionLink("Tillbaka", "Index", "Home")
 
-        if (User.IsInRole("lärare"))
+    @* Lets create the link back ("tillbaka") *@
+    @switch (sender)
+    {
+        case "" : // coming from courses index page
+            {
+                @Html.ActionLink("Tillbaka", "Index", "Courses")
+                break;
+            }
+
+        case "s": // coming from the start page
         {
-            @Html.Raw(" | ")
-            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId = groupId })
+                @Html.ActionLink("Tillbaka", "Index", "Home")
+                break;
         }
-    }
-    @if (sender == "g")
+        case "g": // coming from the groups page
     {
         if (User.IsInRole("lärare"))
         {
@@ -60,12 +65,59 @@
             {         
                 @Html.ActionLink("Tillbaka", "Details", "Group")
             }
-        }
-        if (User.IsInRole("elev"))
-        {
-            @Html.ActionLink("Tillbaka", "Index", "Group")
-        }
+                }
+                else    // student
+                {
+                        @Html.ActionLink("Tillbaka", "Index", "Groups")
+                }
+
+                break;
+            }
+        default: // we're unsure of where we came from so go to the start page and don't offer anything else
+            {
+                @Html.ActionLink("Startsida", "Index", "Home")
+                break;
+            }            
     }
+
+   
+    @*Lets create links for teachers that want to edit the course  or add a document *@
+    @if (User.IsInRole("lärare"))
+    {
+        @Html.Raw(" | ")
+
+        @Html.ActionLink("Ändra", "Edit", new {id=Model.Id, sender = sender}, null)
+        
+        @Html.Raw(" | ")
+        
+        @Html.ActionLink("Lägg till kursdokument", "Create", "Documents", new { sender = sender, gId = groupId, cId = Model.Id }, null)
+
+        @*switch (sender)
+        {
+            case "": // coming originally from courses index page
+                {
+                    @Html.ActionLink("Ändra", "Edit", new {id = Model.Id, sender = sender})
+                    break;
+                }
+                case "s": // coming from the start page
+                {
+                    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId = groupId })
+                    break;
+                }
+                case "g" : // coming from groups page
+                {
+                    @Html.ActionLink("Ändra", "Edit", new {id = Model.Id, sender, gId = groupId })
+                    break;
+        }
+                default: //dunno where we came from, so lets go to start page after this...
+        {
+                    @Html.ActionLink("Ändra", "Edit", new { id=Model.Id, sender = sender, gId = groupId })
+                    break;
+        }
+        }*@
+    }
+
+
 </p>
 <br /><br />
 <div>
