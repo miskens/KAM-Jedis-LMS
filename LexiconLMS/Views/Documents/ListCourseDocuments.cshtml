@@ -1,23 +1,33 @@
-﻿@model IEnumerable<LexiconLMS.Models.Document>
+﻿@using LexiconLMS.Models
+@model IEnumerable<LexiconLMS.Models.Document>
 
 @{
-    ViewBag.Title = "Index";
+    ApplicationDbContext context = new ApplicationDbContext();
+    
+    ViewBag.Title = "ListCourseDocuments";
 
-    var groupId = ViewData["groupId"];
-    var courseId = ViewData["courseId"];
-    var activityId = ViewData["activityId"];
+    var sender = ViewData["sender"].ToString();
+    
+    var courseId = ViewData["courseId"].ToString();
+    var cId = Int32.Parse(courseId);
+    Course course = context.Courses.Find(cId);
+    
+    var groupId = ViewData["groupId"].ToString();
+    var gId = Int32.Parse(groupId);
+    Group group = context.Groups.Find(gId);
+    
 }
 
-<h2>Dokumentlista</h2>
+<h2>Dokument för @course.Name</h2>
 
 <p>
-    @Html.ActionLink("Ladda upp ett nytt dokument", "Create")
+    @Html.ActionLink("Tillbaka", "Details", "Group", new { id=  group.Id }, null)
+    @Html.ActionLink("Lägg till nytt dokument", "Create", new { sender = "g", gId = group.Id, cId = courseId })
 </p>
-
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.OriginalFileName)
+            @Html.DisplayNameFor(model => model.Uri)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -46,10 +56,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @*How get the correct file path? This is the file on disk...*@ 
-            <a href = @Path.Combine(Server.MapPath("~/Content/uploads"),item.Uri)>
-                @Html.DisplayFor(modelItem => item.OriginalFileName)
-            </a>
+            @Html.DisplayFor(modelItem => item.Uri)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)

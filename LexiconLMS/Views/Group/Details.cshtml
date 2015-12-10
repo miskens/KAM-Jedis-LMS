@@ -24,7 +24,7 @@
                     <h1>Grupp: @Html.DisplayFor(model => model.Name)
                         @if (documents.Any())
                         {
-                            <a href="@Url.Action("Index", "Group")">
+                            <a href="@Url.Action("Index", "Documents", new { gId = Model.Id }, null)">
                                 <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:30px;" />
                             </a>
 

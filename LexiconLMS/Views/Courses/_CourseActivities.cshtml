@@ -57,7 +57,7 @@
         <td>
             @if (documents.Any())
             {
-                <a href="@Url.Action("Index", "Group")">
+                <a href="@Url.Action("Index", "Documents", new { gId = groupId, cId = item.Id, aId = item.Id }, null)">
                     <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:23px;" />
                 </a>
             }
