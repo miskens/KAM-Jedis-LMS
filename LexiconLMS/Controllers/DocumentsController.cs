@@ -118,7 +118,10 @@ namespace LexiconLMS.Controllers
                 {
                     return RedirectToAction("Details", "Group", new { id = document.GroupId, sender=sender });
                 }
-                return RedirectToAction("Index");
+
+
+                // all that is left is documents created at a user...
+                return RedirectToAction("Details", "Users", new { id = document.UserId, sender = sender });
             }
 
             return View(document);
