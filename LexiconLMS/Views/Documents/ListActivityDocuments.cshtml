@@ -1,19 +1,14 @@
 ﻿@model IEnumerable<LexiconLMS.Models.Document>
 
 @{
-    ViewBag.Title = "Index";
-
-    var groupId = ViewData["groupId"];
-    var courseId = ViewData["courseId"];
-    var activityId = ViewData["activityId"];
+    ViewBag.Title = "ListActivityDocuments";
 }
 
-<h2>Dokumentlista</h2>
+<h2>ListActivityDocuments</h2>
 
 <p>
-    @Html.ActionLink("Ladda upp ett nytt dokument", "Create")
+    @Html.ActionLink("Create New", "Create")
 </p>
-
 <table class="table">
     <tr>
         <th>
