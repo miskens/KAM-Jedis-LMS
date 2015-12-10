@@ -23,7 +23,7 @@
 <p>
     @if (User.IsInRole("lärare"))
     {
-        @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { sender, gId = groupId, cId = courseId }, null)
+        @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { sender = sender, gId = groupId, cId = courseId }, null)
     }
     
     @*what?*@
@@ -53,7 +53,7 @@
     {
         <tr>
             <td>
-                @Html.ActionLink((string)item.Name, "Details", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
+                @Html.ActionLink((string)item.Name, "Details", "Activities", new { id = item.Id, sender = sender, gId = groupId, cId = item.CourseId }, null)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -67,13 +67,13 @@
             @if (User.IsInRole("lärare"))
             {
                 <td>
-                    @Html.ActionLink("Detaljer", "Details", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
+                    @Html.ActionLink("Detaljer", "Details", "Activities", new { id = item.Id, sender = sender, gId = groupId, cId = item.CourseId }, null)
                     @if (User.IsInRole("lärare"))
                     {
                         @Html.Raw(" | ")
-                        @Html.ActionLink("Ändra", "Edit", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
+                        @Html.ActionLink("Ändra", "Edit", "Activities", new { id = item.Id, sender = sender, gId = groupId, cId = item.CourseId }, null)
                         @Html.Raw(" | ")
-                        @Html.ActionLink("Radera", "Delete", "Activities", new { id = item.Id, sender = "g", gId = groupId, cId = item.CourseId }, null)
+                        @Html.ActionLink("Radera", "Delete", "Activities", new { id = item.Id, sender = sender, gId = groupId, cId = item.CourseId }, null)
                     }
                 </td>
             }

@@ -51,6 +51,12 @@ namespace LexiconLMS.Controllers
         //public ActionResult Create([Bind(Include = "Name, Description, GroupId, CourseId, ActivityId, UserId, UploadTime")] Document document, HttpPostedFileBase uploadFile)
         public ActionResult Create([Bind(Include = "Name, Description, GroupId, CourseId, ActivityId, UserId")] Document document, HttpPostedFileBase uploadFile)
         {
+            string sender = string.Empty;
+            if (Request.RequestContext.RouteData.Values["sender"] != null)
+            {
+                sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+            }
+
             if (ModelState.IsValid)
             {
                 if (uploadFile != null && uploadFile.ContentLength > 0)
@@ -95,6 +101,20 @@ namespace LexiconLMS.Controllers
                 }
                 
                 db.SaveChanges();
+
+                
+                if (document.ActivityId != 0)
+                {
+                    return RedirectToAction("Details", "Activities", new {id=document.ActivityId, sender=sender, gId = document.GroupId, cId = document.CourseId});
+                }
+                if (document.CourseId != 0)
+                {
+                    return RedirectToAction("Details", "Courses", new { id = document.CourseId, sender = sender, gId = document.GroupId });
+                }
+                if (document.GroupId != 0)
+                {
+                    return RedirectToAction("Details", "Group", new { id = document.GroupId, sender=sender });
+                }
                 return RedirectToAction("Index");
             }
 

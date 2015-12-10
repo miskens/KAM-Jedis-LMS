@@ -21,8 +21,8 @@ namespace LexiconLMS
 
             routes.MapRoute(
             name: "RouteToReferrerAtCreate",
-            url: "{controller}/Create/{sender}/{gId}/{cId}",
-            defaults: new { controller = "Group", action = "Create", sender = UrlParameter.Optional, gId = UrlParameter.Optional, cId = UrlParameter.Optional }
+            url: "{controller}/Create/{sender}/{gId}/{cId}/{aId}",
+            defaults: new { controller = "Group", action = "Create", sender = UrlParameter.Optional, gId = UrlParameter.Optional, cId = UrlParameter.Optional, aId = UrlParameter.Optional }
             );
 
             routes.MapRoute(
@@ -50,27 +50,9 @@ namespace LexiconLMS
             );
 
             routes.MapRoute(
-            name: "RouteToSenderCourseActivities",
+            name: "RouteToSenderActivities",
             url: "Activities/{action}/{id}/{sender}/{gId}/{cId}",
             defaults: new { controller = "Activities", action = "Index", id = UrlParameter.Optional, sender = UrlParameter.Optional, gId = UrlParameter.Optional, cId = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
-            name: "RouteToSenderGroupDocumentsCreate",
-            url: "Documents/Create/{gId}",
-            defaults: new { controller = "Documents", action = "Create", gId = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
-            name: "RouteToSenderCourseDocumentsCreate",
-            url: "Documents/Create/{cId}",
-            defaults: new { controller = "Documents", action = "Create", cId = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
-            name: "RouteToSenderActivityDocumentsCreate",
-            url: "Documents/Create/{aId}",
-            defaults: new { controller = "Documents", action = "Create", aId = UrlParameter.Optional }
             );
 
             routes.MapRoute(
