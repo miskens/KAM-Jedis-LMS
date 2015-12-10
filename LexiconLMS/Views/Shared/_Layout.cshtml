@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="position:absolute;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,38 +17,40 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img src="~/Content/Images/logo-lexicon.gif" style="padding-top: 15px; padding-bottom: 15px" />
+                <img src="~/Content/Images/logo-lexicon.gif" style="padding-top: 10px; padding-bottom: 10px" />
                 @* Fixa onclick för bilden ovan
-    @Html.ActionLink(" ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            *@
+                    @Html.ActionLink(" ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                *@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Startsida", "Index", "Home")</li>
-                    @*<li>@Html.ActionLink("Om", "About", "Home")</li>*@
                     <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
                     @if (User.IsInRole("lärare"))
                     {
                         <li>@Html.ActionLink("Kurser", "Index", "Courses")</li>
                         <li>@Html.ActionLink("Grupper", "Index", "Group")</li>
                         <li>@Html.ActionLink("Användare", "Index", "Users")</li>
-                        @*Add following link when the time comes... mwahaha
-                        <li>@Html.ActionLink("Dokument", "Index", "Documents")</li>*@
+                        //  Add following link when the time comes... mwahaha
+                        @*<li>@Html.ActionLink("Dokument", "Index", "Documents")</li>*@
                     }
                     @if (User.IsInRole("elev"))
                     {
                         <li>@Html.ActionLink("Din Grupp", "Index", "Group")</li>
-                        @*<li>@Html.ActionLink("Alla användare", "Index", "Users")</li>*@ //ska inte vara med för elever!!!
-                        @*Add following links when the time comes... mwahaha
-                        <li>@Html.ActionLink("Mina Kurser", "Index", "Courses")</li>
-                        <li>@Html.ActionLink("Uppgifter", "Index", "Activities")</li>*@
+                        //  Add following link when the time comes... mwahaha
+                        @*<li>@Html.ActionLink("Kurser", "Index", "Courses")</li>*@
+                        @*<li>@Html.ActionLink("Aktiviteter", "Index", "Activities")</li>*@
+                        @*<li>@Html.ActionLink("Dokument", "Index", "Documents")</li>*@
+                        //            -alla användare- ska inte vara med för elever!!!
+                        @*<li>@Html.ActionLink("Alla användare", "Index", "Users")</li>*@
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-            <nav role="navigation" class="bottomnav">
+    <div style="position:relative;">
+        <nav role="navigation" class="bottomnav">
             <ul class="bgcol-nav">
                 <li>
                     <a href="/">
@@ -60,6 +62,7 @@
                 <li>Proffsutbildningar och E-learning för dig som vill kunna</li>
             </ul>
         </nav>
+    </div>
     <div class="container body-content" style="padding-top:200px;">
         @RenderBody()
         <hr />
