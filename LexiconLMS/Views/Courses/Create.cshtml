@@ -13,16 +13,20 @@
         sender = Request.RequestContext.RouteData.Values["sender"].ToString();
     }
 
-    int groupId = 0;
+    string groupId = "0";
     var group = new Group();
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
-        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
-        group = context.Groups.FirstOrDefault(g => g.Id == groupId);
+        groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
     }
+    if (groupId != "undefined")
+    { 
+        int groupIdnum = Int32.Parse(groupId);
+        group = context.Groups.FirstOrDefault(g => g.Id == groupIdnum);
+}
 }
 
-<h2>Skapa ny kurs</h2>
+<h2>Skapa ny kurs för grupp: @group.Name</h2>
 
 
 @using (Html.BeginForm()) 
@@ -64,15 +68,6 @@
                 @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(groupName => group.Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(groupName => group.Name, new { @class = "text-danger", @readonly = "readonly" })
-                @Html.ValidationMessageFor(model => model.GroupId, "", new {@class = "text-danger"})
-            </div>
-        </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Skapa" class="btn btn-default" />

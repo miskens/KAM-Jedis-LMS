@@ -147,20 +147,20 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles="lärare")]
         public ActionResult Register()
         {
-            var rolesList = roleManager.Roles.ToList();
-            List<string> roles = new List<string>();
-            foreach (var role in rolesList)
-            {
-                roles.Add(role.Name);
-            }
-            var groupsList = context.Groups.ToList();
-            IDictionary<string, int> groups = new Dictionary<string, int>();
-            foreach (var group in groupsList)
-            {
-                groups.Add(group.Name, group.Id);
-            }
-            ViewBag.Groups = groups;
-            ViewBag.Roles = roles;
+            //var rolesList = roleManager.Roles.ToList();
+            //List<string> roles = new List<string>();
+            //foreach (var role in rolesList)
+            //{
+            //    roles.Add(role.Name);
+            //}
+            //var groupsList = context.Groups.ToList();
+            //IDictionary<string, int> groups = new Dictionary<string, int>();
+            //foreach (var group in groupsList)
+            //{
+            //    groups.Add(group.Name, group.Id);
+            //}
+            //ViewBag.Groups = groups;
+            //ViewBag.Roles = roles;
             
             return View();
         }
@@ -174,11 +174,27 @@ namespace LexiconLMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                string sender = string.Empty;
+                if (Request.RequestContext.RouteData.Values["sender"] != null)
+                {
+                    sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+                    if (sender == "g")
+                    {
+                        model.Role = "elev";
+                    }
+                    else
+                    {
+                        model.Role = "lärare";
+                    }
+                }
+
                 int groupId = 0;
                 if (Request.RequestContext.RouteData.Values["gId"] != null)
                 {
                     groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
                 }
+
+                model.GroupId = groupId;
 
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FullName = model.FullName, GroupId = model.GroupId};
                 var result = await UserManager.CreateAsync(user, model.Password);

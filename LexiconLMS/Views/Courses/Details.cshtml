@@ -14,10 +14,10 @@
     {
         sender = Request.RequestContext.RouteData.Values["sender"].ToString();
     }
-    int groupId = 0;
+    string groupId = "0";
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
-        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+        groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
     }
     ViewData["CourseId"] = Model.Id;
 }
@@ -49,22 +49,22 @@
             }
 
         case "s": // coming from the start page
-            {
+        {
                 @Html.ActionLink("Tillbaka", "Index", "Home")
                 break;
-            }
+        }
         case "g": // coming from the groups page
+    {
+        if (User.IsInRole("lärare"))
+        {
+            if (groupId != "0")
             {
-                if (User.IsInRole("lärare"))
-                {
-                    if (groupId != 0)
-                    {
-                        @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Tillbaka", "Details", "Group")
-                    }
+                @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
+            }
+            else
+            {         
+                @Html.ActionLink("Tillbaka", "Details", "Group")
+            }
                 }
                 else    // student
                 {
@@ -108,12 +108,12 @@
                 {
                     @Html.ActionLink("Ändra", "Edit", new {id = Model.Id, sender, gId = groupId })
                     break;
-                }
+        }
                 default: //dunno where we came from, so lets go to start page after this...
-                {
+        {
                     @Html.ActionLink("Ändra", "Edit", new { id=Model.Id, sender = sender, gId = groupId })
                     break;
-                }
+        }
         }*@
     }
 

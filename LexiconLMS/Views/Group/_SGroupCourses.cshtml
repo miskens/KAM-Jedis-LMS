@@ -1,6 +1,8 @@
-﻿@model IEnumerable<LexiconLMS.Models.Course>
+﻿@using LexiconLMS.Models
+@model IEnumerable<LexiconLMS.Models.Course>
 
 @{
+    ApplicationDbContext context = new ApplicationDbContext();
     ViewBag.Title = "_SGroupCourses";
 }
 
@@ -12,15 +14,27 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
+                @Html.DisplayName("Dokument")
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.StartDate)
             </th>
         </tr>
 
         @foreach (var item in Model)
         {
+            var documents = context.Documents.Where(d => d.CourseId == item.Id);
             <tr>
                 <td>
-                    @Html.ActionLink((string)item.Name, "Details", "Courses", new { id = item.Id, sender = "g", gId = item.GroupId}, null)
+                    @Html.ActionLink((string) item.Name, "Details", "Courses", new {id = item.Id, sender = "g", gId = item.GroupId}, null)
+                </td>
+                <td>
+                    @if (documents.Any())
+                    {
+                        <a href="@Url.Action("Index", "Group")">
+                            <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:23px;" />
+                        </a>
+                    }
                 </td>
                 <td class="sgc-table-td2">
                     @Html.DisplayFor(modelItem => item.StartDate)

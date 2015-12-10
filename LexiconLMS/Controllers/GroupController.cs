@@ -179,12 +179,12 @@ namespace LexiconLMS.Controllers
         // POST: Group/Delete/5
         [HttpPost]
         [Authorize(Roles = "lärare")]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Group group)
         {
             try
             {
-                var group = context.Groups
-                .Where(g => g.Id == id)
+                group = context.Groups
+                .Where(g => g.Id == group.Id)
                 .FirstOrDefault();
 
                 context.Groups.Remove(group);
@@ -197,15 +197,5 @@ namespace LexiconLMS.Controllers
                 return View();
             }
         }
-
-        //public ActionResult GroupmemberDetails(string id)
-        //{
-        //    ApplicationUser applicationUser = context.Users.Find(id);
-        //    if (applicationUser == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(applicationUser);
-        //}
     }
 }

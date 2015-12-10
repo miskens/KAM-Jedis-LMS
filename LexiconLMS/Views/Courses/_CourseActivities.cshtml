@@ -1,6 +1,9 @@
-﻿@model IEnumerable<LexiconLMS.Models.Activity>
+﻿
+@using LexiconLMS.Models
+@model IEnumerable<LexiconLMS.Models.Activity>
 
 @{
+    ApplicationDbContext context = new ApplicationDbContext();
     ViewBag.Title = "_CourseActivities";
 
     string sender = string.Empty;
@@ -9,10 +12,10 @@
         sender = Request.RequestContext.RouteData.Values["sender"].ToString();
     }
 
-    int groupId = 0;
+    string groupId = "0";
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
-        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+        groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
     }
 
     var courseId = ViewData["courseId"];
@@ -25,18 +28,13 @@
     {
         @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { sender = sender, gId = groupId, cId = courseId }, null)
     }
-    
-    @*what?*@
-    
-    @*else
-    {
-        @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { gId = groupId, cId = courseId }, null)
-    }*@
-</p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayName("Dokument")
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
@@ -51,9 +49,18 @@
 
     @foreach (var item in Model)
     {
+        var documents = context.Documents.Where(d => d.ActivityId == item.Id);   
         <tr>
             <td>
-                @Html.ActionLink((string)item.Name, "Details", "Activities", new { id = item.Id, sender = sender, gId = groupId, cId = item.CourseId }, null)
+            @Html.ActionLink((string) item.Name, "Details", "Activities", new {id = item.Id, sender = sender, gId = groupId, cId = item.CourseId}, null)
+        </td>
+        <td>
+            @if (documents.Any())
+            {
+                <a href="@Url.Action("Index", "Group")">
+                    <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:23px;" />
+                </a>
+            }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)

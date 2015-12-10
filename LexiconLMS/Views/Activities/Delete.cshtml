@@ -10,22 +10,22 @@
         sender = Request.RequestContext.RouteData.Values["sender"].ToString();
     }
 
-    int groupId = 0;
+    string groupId = "0";
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
-        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+        groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
     }
 
-    int courseId = 0;
-    if (Request.RequestContext.RouteData.Values["cId"] != null)
-    {
-        courseId = Int32.Parse(Request.RequestContext.RouteData.Values["cId"].ToString());
-    }
+    //string courseId = "0";
+    //if (Request.RequestContext.RouteData.Values["cId"] != null)
+    //{
+    //    courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
+    //}
 }
 
-<h2>Radera aktivitet</h2>
+<h2>Ta bort aktivitet</h2>
 
-<h3>Är du säker på att du vill radera den här aktiviteten?</h3>
+<h3>Är du säker?</h3>
 <div>
     
     <hr />

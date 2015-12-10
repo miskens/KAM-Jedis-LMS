@@ -9,10 +9,10 @@
     {
         sender = Request.RequestContext.RouteData.Values["sender"].ToString();
     }
-    int groupId = 0;
+    string groupId = "0";
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
-        groupId = Int32.Parse(Request.RequestContext.RouteData.Values["gId"].ToString());
+        groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
     }
 }
 
@@ -76,7 +76,7 @@
 
     @if (sender == "g")
     {
-        if (User.IsInRole("lärare") && groupId != 0)
+        if (User.IsInRole("lärare") && groupId != "0")
         {
             @Html.ActionLink("Till gruppdetaljer", "Details", "Group", new { id = groupId }, null)
         }

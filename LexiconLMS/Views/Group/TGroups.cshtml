@@ -42,8 +42,8 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.ActionLink("Ändra", "Edit", new {id = item.Id}) |
-                @Html.ActionLink("Radera", "Delete", new {id = item.Id}) 
+                @Html.ActionLink("Ändra", "Edit", "Group", new {id = item.Id}, null) |
+                @Html.ActionLink("Radera", "Delete", "Group", new { id = item.Id }, null)
             </td>
         </tr>
     }
