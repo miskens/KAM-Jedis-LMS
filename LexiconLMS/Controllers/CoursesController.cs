@@ -113,11 +113,34 @@ namespace LexiconLMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,GroupId")] Course model)
         {
+            string sender = "0";
+            if (Request.RequestContext.RouteData.Values["sender"] != null)
+            {
+                sender = Request.RequestContext.RouteData.Values["sender"].ToString();
+            }
+
             if (ModelState.IsValid)
             {
                 context.Entry(model).State = EntityState.Modified;
                 context.SaveChanges();
-                return RedirectToAction("Details", "Group", new { id = model.GroupId, sender = "g" });
+                switch (sender)
+                {
+                    case "g":
+                        {
+                            return RedirectToAction("Details", "Group", new { id = model.GroupId, sender });
+                            
+                        }
+                    case "c":
+                        {
+                            return RedirectToAction("Details", "Courses", new { id = model.GroupId, sender });
+                        }
+                    default:
+                        {
+                            // future: errorhandling (shouldn't come here)
+                            break;
+                        }
+                }
+                
             }
             return View();
         }

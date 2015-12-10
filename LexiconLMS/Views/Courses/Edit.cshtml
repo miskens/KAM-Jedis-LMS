@@ -82,7 +82,7 @@
 }
 @if (sender == "c")
 {
-    @Html.ActionLink("Tillbaka", "Index", "Courses", null)
+    @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.Id }, null)
 }
 </div>
 

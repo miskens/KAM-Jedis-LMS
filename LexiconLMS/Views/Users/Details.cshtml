@@ -1,4 +1,5 @@
-﻿@model LexiconLMS.Models.ApplicationUser
+﻿@using Microsoft.AspNet.Identity
+@model LexiconLMS.Models.ApplicationUser
 
 @{
     ViewBag.Title = "Detaljer";
@@ -17,6 +18,18 @@
 }
 
 <h2>@Html.DisplayFor(model => model.FullName)</h2>
+
+@if (User.Identity.GetUserId() == Model.Id )
+{ 
+    if (sender != string.Empty)
+    { 
+        @Html.ActionLink("Lägg upp ett dokument om mig själv", "Create", "Documents", new { sender = sender }, null)
+    }
+    else
+    {
+        @Html.ActionLink("Lägg upp ett dokument om mig själv", "Create", "Documents")
+    }
+}
 
 <div>
 

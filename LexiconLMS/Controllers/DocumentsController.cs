@@ -131,10 +131,11 @@ namespace LexiconLMS.Controllers
                     var uploadedDocument = new Document
                     {
                         Name = document.Name,
+                        OriginalFileName = uploadFile.FileName,
                         Description = document.Description,
                         UserId = document.UserId,
                         Uri = fileName,
-                        UploadTime = document.UploadTime,
+                        UploadTime = DateTime.Now,
                     };
                     
                     // Set only the "important" value. ActivityId if the doc is connected to an activity,
@@ -155,10 +156,10 @@ namespace LexiconLMS.Controllers
 
                     uploadFile.SaveAs(path);
 
-                    context.Documents.Add(uploadedDocument);
+                    context.Documents.Add(uploadedDocument);  
                     context.SaveChanges();
                 }
-                
+
 
                 if (sender == "g")
                 { 

@@ -52,19 +52,19 @@
             <ul class="bgcol-nav">
                 <li>
                     <a href="/">
-                        <strong>LEXICON</strong>
+                        <strong>LEXICON  IT-utbildning</strong>
                     </a>
                 </li>
             </ul>
             <ul class="bgcol2-nav">
-                <li>Du skulle bara veta</li>
+                <li>Proffsutbildningar och E-learning för dig som vill kunna</li>
             </ul>
         </nav>
     <div class="container body-content" style="padding-top:200px;">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - KAM Jedis (Kenneth, Anna, Mikael)</p>
+            <p>&copy; @DateTime.Now.Year - Lexicon LMS by @Html.Raw("@")group4.scrumteam("Anna Eklund, Kenneth Forsström, Michael Puusaari", "Kam Jedis", new { id = Scrum.Id })</p>
         </footer>
     </div>
 

@@ -23,7 +23,12 @@
 }
 
 <div>
-        <h4>@Model.Name ( @Model.StartDate.ToShortDateString() - @Model.EndDate.ToShortDateString())</h4>
+        <h3>Aktivitet: @Model.Name</h3>  
+        <h4>@Model.StartDate.ToShortDateString() -- @Model.EndDate.ToShortDateString()</h4>
+        @if (sender != string.Empty)
+        { 
+            @Html.ActionLink("Lägg till dokument för aktiviteten", "Create", "Documents", new { sender = sender, gId=groupId, cId = courseId, aId = Model.Id }, null)
+        }
     <hr />
     <dl class="dl-horizontal">
 
@@ -66,7 +71,7 @@
 <p>
     @if (sender == "c")
     {
-        @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.Id })
+        @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender=sender})
         if (User.IsInRole("lärare"))
         {
             @Html.Raw(" | ")
@@ -77,19 +82,20 @@
     }
     @if (sender == "g")
     {
+        @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender=sender, gId = groupId }, null)
         if (User.IsInRole("lärare"))
         {
             @Html.Raw(" | ")
-            @Html.ActionLink("Ändra", "Edit", "Activities", new { id = Model.Id, sender, groupId, cId = Model.Id }, null)
+            @Html.ActionLink("Ändra", "Edit", "Activities", new { id = Model.Id, sender=sender, gId = groupId, cId = Model.CourseId }, null)
             @Html.Raw(" | ")
-            @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = Model.Id, sender, groupId, courseId }, null)
+            @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = Model.Id, sender=sender, gId = groupId, cId = Model.CourseId }, null)
         }
-        @Html.ActionLink("Tillbaka", "Details", "Courses", new {id = Model.CourseId, sender, gId = groupId}, null)
+        
     }
     else
     {
         <div class="form-actions no-color">
-            @Html.ActionLink("Tillbaka till listan", "Details", "Courses", new {id = Model.CourseId, sender, groupId}, null)
+            @Html.ActionLink("Tillbaka", "Details", "Courses", new {id = Model.CourseId, sender=sender, gId = groupId}, null)
         </div>
     }
 </p>

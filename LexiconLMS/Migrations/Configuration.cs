@@ -94,7 +94,7 @@ namespace LexiconLMS.Migrations
 
             email = "adrian@xenotype.com";
             // same roles as previous
-            user = new ApplicationUser { FullName = "Adrian Locano", UserName = email, Email = email, Active = true };
+            user = new ApplicationUser { FullName = "Adrian Lozano", UserName = email, Email = email, Active = true };
             CreateUserSeedWithPasswordSecret(context, manager, email, user, roleManager, roles);
 
             email = "kenneth.forsstrom@hotmail.com";
@@ -197,9 +197,9 @@ namespace LexiconLMS.Migrations
 
 
             context.Documents.AddOrUpdate(d => d.Name,
-                new Document { Name = "Test av grupp", Uri = "SavedDocuments/test1grupp.txt", Description = "Testdokument för att testa kopplat till grupp. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 09, 30), GroupId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id },
-                new Document { Name = "Test av kurs", Uri = "SavedDocuments/test1kurs.txt", Description = "Testdokument för att testa kopplat till kurs. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 02), CourseId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id },
-                new Document { Name = "Test av aktivitet", Uri = "SavedDocuments/test1aktivitet.txt", Description = "Testdokument för att testa kopplat till aktivitet. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 05), ActivityId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id }
+                new Document { Name = "Test av grupp", Uri = "test1grupp.txt", Description = "Testdokument för att testa kopplat till grupp. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 09, 30), GroupId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id, OriginalFileName= "test1grupp.txt"},
+                new Document { Name = "Test av kurs", Uri = "test1kurs.txt", Description = "Testdokument för att testa kopplat till kurs. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 02), CourseId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id, OriginalFileName = "test1kurs.txt" },
+                new Document { Name = "Test av aktivitet", Uri = "test1aktivitet.txt", Description = "Testdokument för att testa kopplat till aktivitet. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 05), ActivityId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id, OriginalFileName = "test1aktivitet.txt" }
                 );
 
         }
