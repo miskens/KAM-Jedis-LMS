@@ -11,7 +11,7 @@ using System.IO;
 
 namespace LexiconLMS.Controllers
 {
-
+    [Authorize]
     public class DocumentsController : Controller
     {
         private ApplicationDbContext context = new ApplicationDbContext();
@@ -182,6 +182,18 @@ namespace LexiconLMS.Controllers
             context.Documents.Remove(document);
             context.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+
+        public FilePathResult GetFileFromDisk(int id)
+        {
+            Document document = context.Documents.Find(id);
+            string path = AppDomain.CurrentDomain.BaseDirectory + "Content/uploads/";
+            string fileName = document.Uri;
+            string originalFileName = document.OriginalFileName;
+            string mimeType = MimeMapping.GetMimeMapping(originalFileName);
+            
+            return File(path + fileName, mimeType, originalFileName);
         }
 
         protected override void Dispose(bool disposing)
