@@ -1,6 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
-
+    ViewBag.Title = "Startsida";
 }
 
 @if (!(User.Identity.IsAuthenticated))
@@ -8,7 +7,6 @@
     <div class="jumbotron">
         <h1>Lexicon LMS</h1>
         <h2>(Learning Managment System)</h2>
-        <h3>@*Av scrumteam KAM Jedis*@</h3>
         <p class="lead">Scrumteam "KAM Jedis"" bestående av Anna Eklund, Kenneth Forsström och Michael Puusaari</p>
         <p><a href="~/Account/Login" class="btn btn-primary btn-lg">Logga in</a></p>
     </div>
@@ -18,7 +16,12 @@ else
     <div class="row">
 
         <div class="welcome">
-            Välkommen @Html.ActionLink((string)ViewBag.FullName, "Details", "Users", new { id = ViewBag.UserId, sender="s" }, null)!
+            <p class="col-sm-3">
+                Välkommen   
+            </p>
+            <p class="col-sm-9">
+                @Html.ActionLink((string)ViewBag.FullName, "Details", "Users", new { id = ViewBag.UserId, sender = "s" }, new { @class = "Fullnamecolor" })!
+            </p>
         </div>
 
         @if (User.IsInRole("lärare"))
@@ -27,20 +30,20 @@ else
             <div class="col-md-4 highlight_background">
                 @if (ViewBag.HasActiveGroups)
                 {
-                <div class="groupheader">
-                    Aktuella grupper:
-                </div>
-                <br />
+                    <div class="groupheader">
+                        Aktuella grupper:
+                    </div>
+                    <br />
 
                     foreach (var group in ViewBag.ActiveGroups)
                     {
-                <div class="groupname">
-                        @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id, sender="s" }, null)
-                </div>
+                        <div class="groupname">
+                            @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id, sender = "s" }, null)
+                        </div>
 
-                <div class="groupdate">
-                    @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
-                </div>
+                        <div class="groupdate">
+                            @group.StartDate.Date.ToString("d") -- @group.EndDate.Date.ToString("d")
+                        </div>
 
                         int i = 0;
                         foreach (var course in ViewBag.Courses)
@@ -49,24 +52,24 @@ else
                             {
                                 if (i == 0)
                                 {
-                <div class="hascourses">
-                    <br />
-                    Ingående kurser:
-                </div>
+                                    <div class="hascourses">
+                                        <br />
+                                        Ingående kurser:
+                                    </div>
                                     i++;
                                 }
 
-                <div class="coursename">
-                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
-                </div>
+                                <div class="coursename">
+                                    @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender = "s" }, null)
+                                </div>
 
-                <div class="coursedate">
-                    @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
-                </div>
-                <br />
+                                <div class="coursedate">
+                                    @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
+                                </div>
+                                <br />
                             }
                         }
-                <hr />
+                        <hr />
                     }
                 }
             </div>
@@ -83,7 +86,7 @@ else
                         foreach (var group in ViewBag.FutureGroups)
                         {
                             <div class="groupname">
-                        @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id, sender="s" }, null)
+                                @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id, sender = "s" }, null)
                             </div>
 
                             <div class="groupdate">
@@ -105,7 +108,7 @@ else
                                     }
 
                                     <div class="coursename">
-                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
+                                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender = "s" }, null)
                                     </div>
 
                                     <div class="coursedate">
@@ -130,7 +133,7 @@ else
                             foreach (var group in ViewBag.FinishedGroups)
                             {
                                 <div class="groupname">
-                        @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id, sender = "s" }, null)
+                                    @Html.ActionLink((string)group.Name, "Details", "Group", new { id = group.Id, sender = "s" }, null)
                                 </div>
 
                                 <div class="groupdate">
@@ -152,7 +155,7 @@ else
                                         }
 
                                         <div class="coursename">
-                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
+                                            @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender = "s" }, null)
                                         </div>
 
                                         <div class="coursedate">
@@ -171,7 +174,7 @@ else
             // Group student is in, listed along with courses and activities
             <div class="col-md-4 highlight_background">
                 <div class="groupname">
-                    Grupp: @Html.ActionLink((string)ViewBag.Group, "Details", "Group", new { id = ViewBag.GroupId, sender ="s" }, null)
+                    Grupp: @Html.ActionLink((string)ViewBag.Group, "Details", "Group", new { id = ViewBag.GroupId, sender = "s" }, null)
                 </div>
                 <div class="groupdate">
                     @ViewBag.GroupStart.ToString("d") -- @ViewBag.GroupStart.ToString("d")
@@ -194,7 +197,7 @@ else
                     {
 
                         <div class="coursename">
-                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
+                            @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender = "s" }, null)
                         </div>
 
                         <div class="coursedate">
@@ -209,7 +212,7 @@ else
                                 if (activity.CourseId == course.Id)
                                 {
                                     <div class="activityname">
-                        @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s"}, null)
+                                        @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s" }, null)
                                     </div>
                                     <div class="activity">
                                         @activity.Description
@@ -233,7 +236,7 @@ else
                     foreach (var course in ViewBag.FutureCourses)
                     {
                         <div class="coursename">
-                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender = "s"}, null)
+                            @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender = "s" }, null)
                         </div>
                         <div class="coursedate">
                             @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
@@ -245,7 +248,7 @@ else
                             foreach (var activity in ViewBag.FutureActivities)
                             {
                                 <div class="activityname">
-                        @Html.ActionLink((string)activity.Name, "Details", "Activities", new {id=activity.Id, sender="s"},null)
+                                    @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s" }, null)
                                 </div>
                                 <div class="activity">
                                     @activity.Description
@@ -272,7 +275,7 @@ else
                     foreach (var course in ViewBag.FinishedCourses)
                     {
                         <div class="coursename">
-                        @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender ="s" }, null)
+                            @Html.ActionLink((string)course.Name, "Details", "Courses", new { id = course.Id, sender = "s" }, null)
                         </div>
                         <div class="coursedate">
                             @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
@@ -286,7 +289,7 @@ else
                                 if (activity.CourseId == course.Id)
                                 {
                                     <div class="activityname">
-                        @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s"}, null)
+                                        @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s" }, null)
                                     </div>
 
                                     <div class="activity">

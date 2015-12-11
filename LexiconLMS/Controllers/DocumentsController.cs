@@ -285,6 +285,22 @@ namespace LexiconLMS.Controllers
             return RedirectToAction("Index", "Documents", new { gId = groupId });
         }
 
+        public ActionResult download()
+        {
+            return View(context.Documents.ToList());
+        }
+
+
+        public FileResult GetFileFromDisk(string fileUri, string originalFileName)
+        {
+            var fileOnDisk = System.IO.Path.Combine(Server.MapPath("/Content/uploads/"), fileUri);
+            string mimeType = MimeMapping.GetMimeMapping(originalFileName);
+
+            return File(fileOnDisk, mimeType, originalFileName);
+
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

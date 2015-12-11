@@ -30,6 +30,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.OriginalFileName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Uri)
         </th>
         <th>
@@ -60,6 +63,8 @@
     <tr>
         <td>
             @Html.ActionLink((string)item.Uri, "Details", "Documents", new { id = item.Id, gId = groupId, cId = courseId, aId = activityId}, null)
+            @Html.ActionLink(item.OriginalFileName, "../Documents/GetFileFromDisk", new { fileUri = item.Uri, originalFileName = item.OriginalFileName })
+            @*@Html.DisplayFor(modelItem => item.Uri)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)

@@ -20,7 +20,7 @@ namespace LexiconLMS.Models
         [Display(Name = "Namn")]
         public string Name { get; set; }
 
-        [StringLength(250, ErrorMessage ="Var god förkorta din beskrivning till 250 tecken eller mindre.")]
+        [StringLength(500, ErrorMessage ="Var god förkorta din beskrivning till 500 tecken eller mindre.")]
         [Required]
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }

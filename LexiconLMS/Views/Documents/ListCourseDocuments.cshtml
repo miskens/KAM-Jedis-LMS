@@ -10,14 +10,14 @@
     var cId = Int32.Parse(courseId);
     Course course = context.Courses.Find(cId);
     ViewData["cId"] = course.Id;
-
+    
     var groupId = course.GroupId;
     Group group = context.Groups.Find(groupId);
     ViewData["gId"] = group.Id;
     
 }
 
-<h2>Dokument för @course.Name</h2>
+<h2>Dokument för kurs @course.Name</h2>
 
 <p>
     @Html.ActionLink("Tillbaka", "Details", "Group", new { id=  group.Id }, null)
@@ -56,6 +56,8 @@
     <tr>
         <td>
             @Html.ActionLink((string)item.Uri, "Details", "Documents", new { id = item.Id, gId = groupId, cId = courseId }, null)
+            @Html.ActionLink(item.OriginalFileName, "../Documents/GetFileFromDisk", new { fileUri = item.Uri, originalFileName = item.OriginalFileName })
+            @*@Html.DisplayFor(modelItem => item.Uri)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
