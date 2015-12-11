@@ -239,17 +239,21 @@ namespace LexiconLMS.Controllers
             return RedirectToAction("Index");
         }
 
-
-        public FilePathResult GetFileFromDisk(int id)
+        public ActionResult download()
         {
-            Document document = context.Documents.Find(id);
-            string path = AppDomain.CurrentDomain.BaseDirectory + "Content/uploads/";
-            string fileName = document.Uri;
-            string originalFileName = document.OriginalFileName;
-            string mimeType = MimeMapping.GetMimeMapping(originalFileName);
-            
-            return File(path + fileName, mimeType, originalFileName);
+            return View(context.Documents.ToList());
         }
+
+
+        public FileResult GetFileFromDisk(string fileUri, string originalFileName)
+        {
+            var fileOnDisk = System.IO.Path.Combine(Server.MapPath("/Content/uploads/"), fileUri);
+            string mimeType = MimeMapping.GetMimeMapping(originalFileName);
+
+            return File(fileOnDisk, mimeType, originalFileName);
+
+        }
+
 
         protected override void Dispose(bool disposing)
         {
