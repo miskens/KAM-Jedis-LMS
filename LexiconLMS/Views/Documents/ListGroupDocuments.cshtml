@@ -16,8 +16,7 @@
 
 <p>
     @Html.ActionLink("Tillbaka", "Details", "Group", new { id = group.Id }, null)
-    @Html.Raw(" | ")
-    @Html.ActionLink("Lägg till nytt dokument", "Create", new { id = 0, gId = group.Id})
+    @Html.ActionLink("Lägg till nytt dokument", "Create", new { sender = "g", gId = group.Id})
 </p>
 <table class="table">
     <tr>
@@ -51,7 +50,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.OriginalFileName, "../Documents/GetFileFromDisk", new { fileUri = item.Uri, originalFileName = item.OriginalFileName })
+            @Html.ActionLink(item.OriginalFileName, "../Documents/GetFileFromDisk", new {fileUri = item.Uri, originalFileName = item.OriginalFileName})
+        </td>
+        <td>
+            @Html.ActionLink((string)item.Uri, "Details", new { id = item.Id, gId = group.Id })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -76,7 +78,6 @@
         </td>
         <td>
             @Html.ActionLink("Ändra", "Edit", new { id=item.Id, gId = group.Id }) |
-            @Html.ActionLink("Detaljer", "Details", new { id=item.Id, gId = group.Id }) | 
             @Html.ActionLink("Ta bort", "Delete", new { id = item.Id, gId = group.Id })
         </td>
     </tr>

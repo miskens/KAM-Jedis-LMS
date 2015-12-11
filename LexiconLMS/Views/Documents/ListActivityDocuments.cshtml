@@ -1,18 +1,39 @@
-﻿@model IEnumerable<LexiconLMS.Models.Document>
+﻿@using LexiconLMS.Models
+@model IEnumerable<LexiconLMS.Models.Document>
 
 @{
+    ApplicationDbContext context = new ApplicationDbContext();
+
     ViewBag.Title = "ListActivityDocuments";
+
+    var activityId = ViewData["activityId"].ToString();
+    var aId = Int32.Parse(activityId);
+    Activity activity = context.Activities.Find(aId);
+    ViewData["aId"] = activity.Id;
+        
+    var courseId = ViewData["courseId"].ToString();
+    var cId = Int32.Parse(courseId);
+    Course course = context.Courses.Find(cId);
+    ViewData["cId"] = course.Id;
+
+    var groupId = course.GroupId;
+    Group group = context.Groups.Find(groupId);
+    ViewData["gId"] = group.Id;
 }
 
-<h2>Dokument för aktiviteter</h2>
+<h2>Document för @activity.Name</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = course.Id, sender = "g", gId = groupId }, null)
+    @Html.ActionLink("Lägg till nytt dokument", "Create", new {sender = "g", gId = groupId, cId = courseId, aId = activityId}, null)
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.OriginalFileName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Uri)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -41,6 +62,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.ActionLink((string)item.Uri, "Details", "Documents", new { id = item.Id, gId = groupId, cId = courseId, aId = activityId}, null)
             @Html.ActionLink(item.OriginalFileName, "../Documents/GetFileFromDisk", new { fileUri = item.Uri, originalFileName = item.OriginalFileName })
             @*@Html.DisplayFor(modelItem => item.Uri)*@
         </td>
@@ -66,9 +88,7 @@
             @Html.DisplayFor(modelItem => item.ActivityId)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Ta bort", "Delete", new { id=item.Id, gId = groupId, cId = courseId, aId = activityId }, null)
         </td>
     </tr>
 }

@@ -7,6 +7,18 @@
     {
         groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
     }
+
+    string courseId = "0";
+    if (Request.RequestContext.RouteData.Values["cId"] != null)
+    {
+        courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
+    }
+
+    string activityId = "0";
+    if (Request.RequestContext.RouteData.Values["aId"] != null)
+    {
+        activityId = Request.RequestContext.RouteData.Values["aId"].ToString();
+    }
 }
 
 <h2>Ändra</h2>
@@ -94,7 +106,7 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka", "Details", new {id = Model.Id, gId = groupId })
+    @Html.ActionLink("Tillbaka", "Details", new {id = Model.Id, gId = groupId, cId = courseId, aId = activityId })
 </div>
 
 @section Scripts {
