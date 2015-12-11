@@ -4,7 +4,7 @@
     ViewBag.Title = "ListActivityDocuments";
 }
 
-<h2>ListActivityDocuments</h2>
+<h2>Dokument för aktiviteter</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Uri)
+            @Html.DisplayNameFor(model => model.OriginalFileName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -41,7 +41,8 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Uri)
+            @Html.ActionLink(item.OriginalFileName, "../Documents/GetFileFromDisk", new { fileUri = item.Uri, originalFileName = item.OriginalFileName })
+            @*@Html.DisplayFor(modelItem => item.Uri)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
