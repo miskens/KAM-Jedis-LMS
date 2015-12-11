@@ -22,14 +22,14 @@ namespace LexiconLMS.Migrations
 
         protected override void Seed(LexiconLMS.Models.ApplicationDbContext context)
         {
-
-            string systemutvecklareDotNet = "Systemutvecklare.NET = C#, .Net, Applikationsutveckling, SQL, Test & testledning.  Syftet med utbildningen är att i första hand erbjuda påbyggnad- och vidareutbildning för personer med befintliga kunskaper inom Systemutveckling.";
+            string previousKnowledge = " Förkunskaper:  if (previousKnowledge == ”Högskoleutbildade inom IT eller övriga tekniska discipliner som bedöms lämpliga i den förberedande utbildningen” || ”Personer som har stort intresse, erfarenhet och kunskaper i programmering eller andra IT-relaterade områden och som har bedömts som lämpliga i den förberedande utbildningen 'Testmodul IT Påbyggnadsutbildning' utbildnings nr 104800 . Deltagare ska kunna behärska engelska på gymnasienivå eller ha motsvarande kunskaper då arbetsmarknaden krav ofta ställer krav på affärs/fackengelska inom IT området”)";
+            string systemutvecklareDotNet = "'Systemutvecklare.NET' innehåller C#, .Net, SQL, Applikationsutveckling, Test & testledning.  Syftet med utbildningen är att i första hand erbjuda påbyggnad- och vidareutbildning för personer med befintliga kunskaper inom Systemutveckling. ";
             string shortLorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
             string longLorem = shortLorem + " " + shortLorem + " " + shortLorem + " " + shortLorem;
 
          context.Groups.AddOrUpdate(g => g.Name,
-            new Group { Name = "nd15", Description = systemutvecklareDotNet, StartDate = new DateTime(2015, 09, 30), EndDate = new DateTime(2016, 02, 28) },
-            new Group { Name = "nf15", Description = "", StartDate = new DateTime(2015, 11, 23), EndDate = new DateTime(2016, 03, 12) },
+            new Group { Name = "nd15", Description = systemutvecklareDotNet + previousKnowledge, StartDate = new DateTime(2015, 09, 30), EndDate = new DateTime(2016, 02, 28) },
+            new Group { Name = "nf15", Description = systemutvecklareDotNet, StartDate = new DateTime(2015, 11, 23), EndDate = new DateTime(2016, 03, 12) },
             new Group { Name = ".Net3", Description = shortLorem, StartDate = new DateTime(2015, 03, 01), EndDate = new DateTime(2015, 06, 28) },
             new Group { Name = "Java", Description = shortLorem, StartDate = new DateTime(2015, 09, 30), EndDate = new DateTime(2016, 02, 28) },
             new Group { Name = "C#", Description = longLorem, StartDate = new DateTime(2015, 08, 31), EndDate = new DateTime(2015, 12, 18) },
@@ -65,6 +65,7 @@ namespace LexiconLMS.Migrations
                 new Course { Name = ".net grund", Description = "E-kurs med Scott Allen", StartDate = new DateTime(2015, 11, 30), EndDate = new DateTime(2016, 12, 10), GroupId = 2 },
                 new Course { Name = ".net grund", Description = "E-kurs med Scott Allen", StartDate = new DateTime(2015, 04, 01), EndDate = new DateTime(2016, 04, 30), GroupId = 3 },
                 new Course { Name = "Scrum", Description = "Utveckling av Lexicon LMS i tre parallella Scrumprojekt", StartDate = new DateTime(2015, 11, 27), EndDate = new DateTime(2015, 12, 18), GroupId = 1 },
+                new Course { Name = "Praktik", Description = longLorem, StartDate = new DateTime(2016, 01, 04), EndDate = new DateTime(2016, 01, 23), GroupId = 1 },
                 new Course { Name = "Hantlangarskötsel", Description = "Dina minioner välbefinnande är nödvändig för att framgångsrikt ta över världen.", StartDate = new DateTime(2015, 08, 03), EndDate = new DateTime(2015, 08, 30), GroupId = 11 },
                 new Course { Name = "Ondskefulla skratt a-z", Description = "Skrattar först som skrattar bäst som skattar mest.", StartDate = new DateTime(2015, 09, 01), EndDate = new DateTime(2015, 09, 15), GroupId = 11 },
                 new Course { Name = "Ondskefulla skratt 101", Description = "Skrattar sist som skrattar bäst.", StartDate = new DateTime(2015, 09, 16), EndDate = new DateTime(2015, 09, 30), GroupId = 11 },
