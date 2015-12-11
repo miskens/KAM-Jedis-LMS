@@ -29,15 +29,15 @@
         </th>
     </tr>
 
-@foreach (var item in groupMembers)
-{
-    <tr>
-        <td>
-            @Html.ActionLink((string)item.FullName, "Details", "Users", new { id = item.Id, sender = "g"}, null)
-        </td>
-        <td class="sgm-td2">
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-    </tr>
-}
+    @foreach (var item in groupMembers)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink((string) item.FullName, "Details", "Users", new {id = item.Id, sender = "g"}, null)
+            </td>
+            <td class="sgm-td2">
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+        </tr>
+    }
 </table>

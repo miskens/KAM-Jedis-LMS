@@ -106,7 +106,18 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka", "Details", new {id = Model.Id, gId = groupId, cId = courseId, aId = activityId })
+    @if (Model.ActivityId.HasValue)
+    {
+        @Html.ActionLink("Tillbaka", "Index", "Documents", new { gId = groupId, cId = courseId, aId = activityId }, null)
+    }
+    @if (Model.CourseId.HasValue)
+    {
+        @Html.ActionLink("Tillbaka", "Index", "Documents", new { gId = groupId, cId = courseId }, null)
+    }
+    @if (Model.GroupId.HasValue)
+    {
+        @Html.ActionLink("Tillbaka", "Index", "Documents", new { gId = groupId }, null)
+    }
 </div>
 
 @section Scripts {

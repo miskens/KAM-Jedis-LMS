@@ -1,13 +1,16 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using LexiconLMS.Models
+@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
+    ApplicationDbContext context = new ApplicationDbContext();
+    var user = context.Users.Find(User.Identity.GetUserId());
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hej " + (string)ViewBag.FullName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        <li> 
+            @Html.ActionLink("Hej " + user.FullName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage"})
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
     </ul>
@@ -16,7 +19,6 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        @*<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", Style = "color:lightgreen;" })</li>*@
         <li>@Html.ActionLink("Logga in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink"})</li>
 
     </ul>

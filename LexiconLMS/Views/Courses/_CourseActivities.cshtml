@@ -1,5 +1,4 @@
-﻿
-@using LexiconLMS.Models
+﻿@using LexiconLMS.Models
 @model IEnumerable<LexiconLMS.Models.Activity>
 
 @{
@@ -21,13 +20,15 @@
     var courseId = ViewData["courseId"];
 }
 
-<h2>Aktiviteter</h2>
-
-<p>
+<h2>
+    Aktiviteter
     @if (User.IsInRole("lärare"))
     {
-        @Html.ActionLink("Lägg till ny aktivitet", "Create", "Activities", new { sender = sender, gId = groupId, cId = courseId }, null)
+        <a href="@Url.Action("Create", "Activities", new { sender = sender, gId = groupId, cId = courseId }, null)">
+            <img src="@Url.Content("~/Content/Images/create.png")" style="width: 30px; height: 30px;" />
+        </a>
     }
+</h2>
 <table class="table">
     <tr>
         <th>
@@ -49,18 +50,18 @@
 
     @foreach (var item in Model)
     {
-        var documents = context.Documents.Where(d => d.ActivityId == item.Id);   
+        var documents = context.Documents.Where(d => d.ActivityId == item.Id);
         <tr>
             <td>
-            @Html.ActionLink((string) item.Name, "Details", "Activities", new {id = item.Id, sender = sender, gId = groupId, cId = item.CourseId}, null)
-        </td>
-        <td>
-            @if (documents.Any())
-            {
-                <a href="@Url.Action("Index", "Documents", new { gId = groupId, cId = courseId, aId = item.Id }, null)">
-                    <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:23px;" />
-                </a>
-            }
+                @Html.ActionLink((string)item.Name, "Details", "Activities", new { id = item.Id, sender = sender, gId = groupId, cId = item.CourseId }, null)
+            </td>
+            <td>
+                @if (documents.Any())
+                {
+                    <a href="@Url.Action("Index", "Documents", new { gId = groupId, cId = courseId, aId = item.Id }, null)">
+                        <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:23px;" />
+                    </a>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -74,14 +75,14 @@
             @if (User.IsInRole("lärare"))
             {
                 <td>
-                    @Html.ActionLink("Detaljer", "Details", "Activities", new { id = item.Id, sender = sender, gId = groupId, cId = item.CourseId }, null)
-                    @if (User.IsInRole("lärare"))
-                    {
-                        @Html.Raw(" | ")
-                        @Html.ActionLink("Ändra", "Edit", "Activities", new { id = item.Id, sender = sender, gId = groupId, cId = item.CourseId }, null)
-                        @Html.Raw(" | ")
-                        @Html.ActionLink("Radera", "Delete", "Activities", new { id = item.Id, sender = sender, gId = groupId, cId = item.CourseId }, null)
-                    }
+                    <a href="@Url.Action("Edit", "Activities", new {id = item.Id, sender = sender, gId = groupId, cId = item.CourseId}, null)">
+                        <img src="@Url.Content("~/Content/Images/edit.png")" style="width: 25px; height: 25px;" />
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Delete", "Activities", new {id = item.Id, sender = sender, gId = groupId, cId = item.CourseId}, null)">
+                        <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 15 px; height: 15px;" />
+                    </a>
                 </td>
             }
         </tr>

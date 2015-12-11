@@ -12,10 +12,15 @@
 
     string groupId = ViewData["groupId"].ToString();
 }
-<p>
-    @Html.ActionLink("Lägg till ny", "Create", "Courses", new {sender = "g", gId = groupId}, null)
-</p>
+<h3>Gruppens kurser</h3>
 <table class="table">
+    <tr>
+        <td>
+            <a href="@Url.Action("Create", "Courses", new { sender = "g", gId = groupId }, null)">
+                <img src="@Url.Content("~/Content/Images/create.png")" style="width:25px; height:25px;" />
+            </a>
+        </td>
+    </tr>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -32,36 +37,45 @@
         <th>
             @Html.DisplayName("Dokument")
         </th>
+        <th></th>
+        <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    var documents = context.Documents.Where(d => d.CourseId == item.Id);
-    <tr>
-        <td>
-            @Html.ActionLink((string)item.Name, "Details", "Courses", new { id = item.Id, sender = "g", gId = item.GroupId }, null)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @if (documents.Any())
-            {
-                <a href="@Url.Action("Index", "Documents", new { gId = groupId, cId = item.Id }, null)">
-                    <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:23px;" />
+    @foreach (var item in Model)
+    {
+        var documents = context.Documents.Where(d => d.CourseId == item.Id);
+        <tr>
+            <td>
+                @Html.ActionLink((string) item.Name, "Details", "Courses", new {id = item.Id, sender = "g", gId = item.GroupId}, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @if (documents.Any())
+                {
+                    <a href="@Url.Action("Index", "Documents", new {gId = groupId, cId = item.Id}, null)">
+                        <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width: 30px; height: 23px;"/>
+                    </a>
+                }
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "Courses", new {id = item.Id, sender = "g", gId = item.GroupId}, null)">
+                    <img src="@Url.Content("~/Content/Images/edit.png")" style="width: 20px; height: 20px;" />
                 </a>
-            }
-        </td>
-        <td>
-            @Html.ActionLink("Ändra", "Edit", "Courses", new { id = item.Id, sender = "g", gId = item.GroupId }, null) |
-            @Html.ActionLink("Ta bort", "Delete", "Courses", new { id = item.Id, sender = "g", gId = item.GroupId }, null)
-        </td>
-    </tr>
-}
+            </td>
+            <td>
+                <a href="@Url.Action("Delete", "Courses", new {id = item.Id, sender = "g", gId = item.GroupId}, null)">
+                    <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 15px; height: 15px;"/>
+                </a>
+            </td>
+        </tr>
+    }
 
 </table>

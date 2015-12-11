@@ -21,13 +21,16 @@
         <tr>
             <td class="sg-table-td1">
                 <div class="sg-td1-div1">
-                    <h1>Grupp: @Html.DisplayFor(model => model.Name)
+                    <h1>
+                        Grupp: @Html.DisplayFor(model => model.Name)
+                            <a href="@Url.Action("Edit", "Group", new {id = Model.Id, sender= "g", gId = Model.Id}, null)">
+                                <img src="@Url.Content("~/Content/Images/edit.png")" style="width: 30px; height: 30px;" />
+                            </a>
                         @if (documents.Any())
                         {
                             <a href="@Url.Action("Index", "Documents", new { gId = Model.Id }, null)">
                                 <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:30px;" />
                             </a>
-
                         }
                     </h1>
                     <h4>@Html.DisplayFor(m => m.StartDate) - @Html.DisplayFor(m => m.EndDate)</h4>
@@ -51,11 +54,6 @@
                     </dl>
                 </div>
                 <p>
-                    @if (User.IsInRole("lärare"))
-                    {     
-                        @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender = "g", gId = Model.Id }) 
-                        @Html.Raw(" | ") 
-                    }
                     @Html.ActionLink("Till grupper", "Index")
                     @if (User.IsInRole("lärare"))
                     {
@@ -63,7 +61,8 @@
                         @Html.ActionLink("Lägg till gruppdokument", "Create", "Documents", new { sender = "g", gId = Model.Id }, null)
                     }
                 </p>
-                <br /><br />
+                <br />
+                <br />
                 <div class="sg-td1-div2">
                     @Html.Partial("_TGroupMembers", groupMembers, ViewData)
                 </div>

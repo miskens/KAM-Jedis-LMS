@@ -21,13 +21,13 @@
 
 <p>
     @Html.ActionLink("Tillbaka", "Details", "Group", new { id=  group.Id }, null)
-    @Html.ActionLink("Lägg till nytt dokument", "Create", new { sender = "g", gId = group.Id, cId = courseId })
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Uri)
         </th>
+        <th></th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -38,16 +38,7 @@
             @Html.DisplayNameFor(model => model.UploadTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GroupId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseId)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ActivityId)
         </th>
         <th></th>
     </tr>
@@ -55,9 +46,12 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink((string)item.Uri, "Details", "Documents", new { id = item.Id, gId = groupId, cId = courseId }, null)
-            @Html.ActionLink(item.OriginalFileName, "../Documents/GetFileFromDisk", new { fileUri = item.Uri, originalFileName = item.OriginalFileName })
-            @*@Html.DisplayFor(modelItem => item.Uri)*@
+            @Html.ActionLink((string) item.Uri, "Details", "Documents", new {id = item.Id, gId = groupId, cId = courseId}, null)
+        </td>
+        <td>
+            <a href="@Url.Action("GetFileFromServer", "Documents", new {fileUri = item.Uri, originalFileName = item.OriginalFileName}, null)">
+                <img src="@Url.Content("~/Content/Images/download.png")" style="width: 15px; height: 15px;" />
+            </a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -69,22 +63,21 @@
             @Html.DisplayFor(modelItem => item.UploadTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.GroupId)
+            @{ var user = context.Users.Find(item.UserId);}
+            @Html.DisplayFor(modelItem => user.FullName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CourseId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActivityId)
-        </td>
-        <td>
-            @*@Html.ActionLink("Ändra", "Edit", "Documents", new { id = item.Id, gId = groupId, cId = courseId }, null) |*@
-            @Html.ActionLink("Ta bort", "Delete", "Documents", new { id = item.Id, gId = groupId, cId = courseId }, null)
+            <a href="@Url.Action("Delete", "Documents", new {id = item.Id, gId = group.Id, cId = courseId }, null)">
+                <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 15px; height: 15px;" />
+            </a>
         </td>
     </tr>
 }
-
+    <tr>
+        <td>
+            <a href="@Url.Action("Create", "Documents", new { sender = "g", gId = group.Id, cId = courseId }, null)">
+                <img src="@Url.Content("~/Content/Images/create.png")" style="width:25px; height:25px;" />
+            </a>
+        </td>
+    </tr>
 </table>

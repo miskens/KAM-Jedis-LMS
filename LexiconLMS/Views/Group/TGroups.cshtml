@@ -7,7 +7,9 @@
 <h2>Grupper:</h2>
 
 <p>
-    @Html.ActionLink("Skapa ny grupp", "Create")
+    <a href="@Url.Action("Create", "Group")">
+        <img src="@Url.Content("~/Content/Images/create.png")" style="width:25px; height:25px;" />
+    </a>
 </p>
 <table class="table">
     <tr>
@@ -42,8 +44,9 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.ActionLink("Ändra", "Edit", "Group", new {id = item.Id}, null) |
-                @Html.ActionLink("Radera", "Delete", "Group", new { id = item.Id }, null)
+                <a href="@Url.Action("Delete", "Group", new {id = item.Id}, null)">
+                    <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 15px; height: 15px;" />
+                </a>
             </td>
         </tr>
     }

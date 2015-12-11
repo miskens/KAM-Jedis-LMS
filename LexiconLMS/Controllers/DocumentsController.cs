@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using LexiconLMS.Models;
 using System.IO;
+using System.Web.Security;
 
 namespace LexiconLMS.Controllers
 {
@@ -54,7 +55,7 @@ namespace LexiconLMS.Controllers
             { 
                 return View("ListGroupDocuments", documents);
             }
-            return RedirectToAction("ListAllDocuments", context.Documents);
+            return View("ListAllDocuments", context.Documents);
         }
 
         // GET: Documents/Details/5
@@ -211,7 +212,8 @@ namespace LexiconLMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "lärare")]
-        public ActionResult Edit([Bind(Include = "Id,Uri,Name,Description,UploadTime,GroupId,CourseId,UserId,ActivityId")] Document document)
+        public ActionResult Edit(
+            [Bind(Include = "Id,Uri,Name,Description,UploadTime,GroupId,CourseId,UserId,ActivityId")] Document document)
         {
             string groupId = "0";
             if (Request.RequestContext.RouteData.Values["gId"] != null)
@@ -223,12 +225,30 @@ namespace LexiconLMS.Controllers
             {
                 courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
             }
+            string activityId = "0";
+            if (Request.RequestContext.RouteData.Values["aId"] != null)
+            {
+                activityId = Request.RequestContext.RouteData.Values["aId"].ToString();
+            }
 
             if (ModelState.IsValid)
             {
                 context.Entry(document).State = EntityState.Modified;
                 context.SaveChanges();
-                return RedirectToAction("Index", "Documents", new { gId = groupId, cId = courseId });
+
+                if (activityId != "0")
+                {
+                    return RedirectToAction("Index", "Documents", new {gId = groupId, cId = courseId, aId = activityId});
+                }
+                if (courseId != "0")
+                {
+                    return RedirectToAction("Index", "Documents", new {gId = groupId, cId = courseId});
+                }
+                if (groupId != "0")
+                {
+                    return RedirectToAction("Index", "Documents", new {gId = groupId});
+                }
+                return RedirectToAction("Index", "Documents");
             }
             return View(document);
         }
@@ -291,13 +311,14 @@ namespace LexiconLMS.Controllers
         }
 
 
-        public FileResult GetFileFromDisk(string fileUri, string originalFileName)
+        public FileResult GetFileFromServer(string fileUri, string originalFileName)
         {
-            var fileOnDisk = System.IO.Path.Combine(Server.MapPath("/Content/uploads/"), fileUri);
+            //string filePath = Server.MapPath("~/Content/uploads/");
+
+            var fileOnDisk = Path.Combine(Server.MapPath("~/Content/uploads/"), fileUri);
             string mimeType = MimeMapping.GetMimeMapping(originalFileName);
 
             return File(fileOnDisk, mimeType, originalFileName);
-
         }
 
 

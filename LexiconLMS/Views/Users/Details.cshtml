@@ -17,12 +17,22 @@
     }
 }
 
-<h2>@Html.DisplayFor(model => model.FullName)</h2>
-
-@if (User.Identity.GetUserId() == Model.Id )
-{ 
+<h2>
+    @Html.DisplayFor(model => model.FullName)
+    @if (User.IsInRole("lärare"))
+    {
+        if (sender != string.Empty)
+        {
+            <a href="@Url.Action("Edit", "Users", new {id = Model.Id, sender = sender, gId = groupId}, null)">
+                <img src="@Url.Content("~/Content/Images/edit.png")" style="width: 30px; height: 30px;" />
+            </a>
+        }
+    }
+</h2>
+@if (User.Identity.GetUserId() == Model.Id)
+{
     if (sender != string.Empty)
-    { 
+    {
         @Html.ActionLink("Lägg upp ett dokument om mig själv", "Create", "Documents", new { sender = sender }, null)
     }
     else
@@ -96,15 +106,6 @@
         if (User.IsInRole("elev"))
         {
             @Html.ActionLink("Till grupplistan", "Index", "Group")
-        }
-    }
-
-    @if (User.IsInRole("lärare"))
-    {
-        if (sender != string.Empty)
-        {
-            @Html.Raw(" | ")
-            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, sender, gId = groupId })
         }
     }
 </p>

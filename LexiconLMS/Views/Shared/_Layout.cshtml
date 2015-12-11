@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using LexiconLMS.Models
+@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -17,10 +19,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img src="~/Content/Images/logo-lexicon.gif" style="padding-top: 10px; padding-bottom: 10px" />
-                @* Fixa onclick för bilden ovan
-                    @Html.ActionLink(" ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                *@
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="@Url.Content("~/Content/Images/logo-lexicon.gif")" style="padding-top: 10px; padding-bottom: 10px" />
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -31,18 +32,13 @@
                         <li>@Html.ActionLink("Kurser", "Index", "Courses")</li>
                         <li>@Html.ActionLink("Grupper", "Index", "Group")</li>
                         <li>@Html.ActionLink("Användare", "Index", "Users")</li>
-                        //  Add following link when the time comes... mwahaha
-                        @*<li>@Html.ActionLink("Dokument", "Index", "Documents")</li>*@
+                        <li>@Html.ActionLink("Dokument", "Index", "Documents")</li>
                     }
                     @if (User.IsInRole("elev"))
                     {
                         <li>@Html.ActionLink("Din Grupp", "Index", "Group")</li>
-                        //  Add following link when the time comes... mwahaha
-                        @*<li>@Html.ActionLink("Kurser", "Index", "Courses")</li>*@
-                        @*<li>@Html.ActionLink("Aktiviteter", "Index", "Activities")</li>*@
+                        // Lägg till länk för att en elev ska kunna komma direkt till alla dokument som på något sätt har koppling till denne
                         @*<li>@Html.ActionLink("Dokument", "Index", "Documents")</li>*@
-                        //            -alla användare- ska inte vara med för elever!!!
-                        @*<li>@Html.ActionLink("Alla användare", "Index", "Users")</li>*@
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

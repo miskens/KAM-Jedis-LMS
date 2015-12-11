@@ -46,11 +46,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            
-            @Html.ActionLink(item.OriginalFileName, "../Documents/GetFileFromDisk", new { fileUri = item.Uri, originalFileName = item.OriginalFileName })
-            @*<a href = @Path.Combine(Server.MapPath("~/Content/uploads"),item.Uri)>
-                @Html.DisplayFor(modelItem => item.OriginalFileName)
-            </a>*@
+            @Html.ActionLink(item.OriginalFileName, "GetFileFromServer", "Documents", new { fileUri = item.Uri, originalFileName = item.OriginalFileName })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
