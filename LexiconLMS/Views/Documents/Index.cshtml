@@ -46,10 +46,11 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @*How get the correct file path? This is the file on disk...*@ 
-            <a href = @Path.Combine(Server.MapPath("~/Content/uploads"),item.Uri)>
+            
+            @Html.ActionLink(item.OriginalFileName, "../Documents/GetFileFromDisk", new { fileUri = item.Uri, originalFileName = item.OriginalFileName })
+            @*<a href = @Path.Combine(Server.MapPath("~/Content/uploads"),item.Uri)>
                 @Html.DisplayFor(modelItem => item.OriginalFileName)
-            </a>
+            </a>*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)

@@ -20,7 +20,8 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.OriginalFileName)
+            @Html.ActionLink(Model.OriginalFileName, "../Documents/GetFileFromDisk", new { fileUri = Model.Uri, originalFileName = Model.OriginalFileName })
+            @*@Html.DisplayNameFor(model => model.OriginalFileName)*@
         </dt>
 
         <dd>
