@@ -8,6 +8,7 @@ using System.Web;
 using LexiconLMS.Models;
 using System.Data.Entity;
 using System.IO;
+using System.Web.Mvc;
 
 namespace LexiconLMS.Controllers
 {
@@ -105,13 +106,6 @@ namespace LexiconLMS.Controllers
             return msg;
         }
 
-        //public static string ParseDocumentOwnerEntity(string[] values)
-        //{
-        //    string entityName = string.Empty;
-
-
-
-        //    return entityName;
-        //}
+        
     }
 }
