@@ -55,12 +55,12 @@ namespace LexiconLMS.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+                message == ManageMessageId.ChangePasswordSuccess ? "Ditt Lösenord har ändrats."
+                : message == ManageMessageId.SetPasswordSuccess ? "Ditt lösenord har satts."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
                 : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.AddPhoneSuccess ? "Ditt telefonnummer är satt."
+                : message == ManageMessageId.RemovePhoneSuccess ? "Ditt telefonnummer är borttaget."
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -280,7 +280,7 @@ namespace LexiconLMS.Controllers
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+                message == ManageMessageId.RemoveLoginSuccess ? "Det externa loginet är borttaget"
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
