@@ -64,6 +64,7 @@ namespace LexiconLMS.Migrations
                 new Course { Name = ".net grund", Description = "E-kurs med Scott Allen", StartDate = new DateTime(2015, 09, 30), EndDate = new DateTime(2015, 10, 15), GroupId = 1 },
                 new Course { Name = ".net grund", Description = "E-kurs med Scott Allen", StartDate = new DateTime(2015, 11, 30), EndDate = new DateTime(2016, 12, 10), GroupId = 2 },
                 new Course { Name = ".net grund", Description = "E-kurs med Scott Allen", StartDate = new DateTime(2015, 04, 01), EndDate = new DateTime(2016, 04, 30), GroupId = 3 },
+                new Course { Name = "Scrum", Description = "Utveckling av Lexicon LMS i tre parallella Scrumprojekt", StartDate = new DateTime(2015, 11, 27), EndDate = new DateTime(2015, 12, 18), GroupId = 1 },
                 new Course { Name = "Hantlangarskötsel", Description = "Dina minioner välbefinnande är nödvändig för att framgångsrikt ta över världen.", StartDate = new DateTime(2015, 08, 03), EndDate = new DateTime(2015, 08, 30), GroupId = 11 },
                 new Course { Name = "Ondskefulla skratt a-z", Description = "Skrattar först som skrattar bäst som skattar mest.", StartDate = new DateTime(2015, 09, 01), EndDate = new DateTime(2015, 09, 15), GroupId = 11 },
                 new Course { Name = "Ondskefulla skratt 101", Description = "Skrattar sist som skrattar bäst.", StartDate = new DateTime(2015, 09, 16), EndDate = new DateTime(2015, 09, 30), GroupId = 11 },
