@@ -6,17 +6,38 @@
     
     ViewBag.Title = "Details";
 
+    var documentName = "";
+    
     string groupId = "0";
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
         groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
-}
-    var groupIdnum = Int32.Parse(groupId);
-    Group group = context.Groups.Find(groupIdnum);
+        var groupIdnum = Int32.Parse(groupId);
+        Group group = context.Groups.Find(groupIdnum);
+        documentName = group.Name;
+    }
+
+    string courseId = "0";
+    if (Request.RequestContext.RouteData.Values["cId"] != null)
+    {
+        courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
+        var courseIdnum = Int32.Parse(courseId);
+        Course course = context.Courses.Find(courseIdnum);
+        documentName = course.Name;
+    }
+
+    string activityId = "0";
+    if (Request.RequestContext.RouteData.Values["aId"] != null)
+    {
+        activityId = Request.RequestContext.RouteData.Values["aId"].ToString();
+        var activityIdnum = Int32.Parse(activityId);
+        Activity activity = context.Activities.Find(activityIdnum);
+        documentName = activity.Name;
+    }
 }
 
 <div>
-    <h2>Dokument för @group.Name</h2>
+    <h2>Dokument för @documentName</h2>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -94,6 +115,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id, gId = groupId }) |
-    @Html.ActionLink("Tillbaka", "Index")
+    @Html.ActionLink("Ändra", "Edit", "Documents", new { id = Model.Id, gId = groupId, cId = courseId, aId = activityId }, null) |
+    @Html.ActionLink("Tillbaka", "Index", "Documents", new { gId = groupId, cId = courseId }, null)
 </p>

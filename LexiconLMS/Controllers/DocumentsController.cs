@@ -42,17 +42,17 @@ namespace LexiconLMS.Controllers
             ViewData["groupId"] = groupId;
             ViewData["courseId"] = courseId;
             ViewData["activityId"] = activityId;
-            if (groupId != "0")
-            { 
-                return View("ListGroupDocuments", documents);
+            if (activityId != "0")
+            {
+                return View("ListActivityDocuments", documents);
             }
             if (courseId != "0")
             {
-                return RedirectToAction("ListCourseDocuments", documents);
+                return View("ListCourseDocuments", documents);
             }
-            if (activityId != "0")
-            {
-                return RedirectToAction("ListActivityDocuments", documents );
+            if (groupId != "0")
+            { 
+                return View("ListGroupDocuments", documents);
             }
             return RedirectToAction("ListAllDocuments", context.Documents);
         }
@@ -162,8 +162,19 @@ namespace LexiconLMS.Controllers
 
 
                 if (sender == "g")
-                { 
-                    return RedirectToAction("Index", new { gId = groupId });
+                {
+                    if (activityId != "0")
+                    {
+                        return RedirectToAction("Index", new { gId = groupId, cId = courseId, aId = activityId });
+                    }
+                    if (courseId != "0")
+                    {
+                        return RedirectToAction("Index", new { gId = groupId, cId = courseId });
+                    }
+                    if (groupId != "0")
+                    { 
+                        return RedirectToAction("Index", new { gId = groupId });
+                    }
                 }
                 if (sender == "c")
                 {
@@ -202,11 +213,22 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "lärare")]
         public ActionResult Edit([Bind(Include = "Id,Uri,Name,Description,UploadTime,GroupId,CourseId,UserId,ActivityId")] Document document)
         {
+            string groupId = "0";
+            if (Request.RequestContext.RouteData.Values["gId"] != null)
+            {
+                groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
+            }
+            string courseId = "0";
+            if (Request.RequestContext.RouteData.Values["cId"] != null)
+            {
+                courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
+            }
+
             if (ModelState.IsValid)
             {
                 context.Entry(document).State = EntityState.Modified;
                 context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Documents", new { gId = groupId, cId = courseId });
             }
             return View(document);
         }
@@ -233,10 +255,34 @@ namespace LexiconLMS.Controllers
         [Authorize(Roles = "lärare")]
         public ActionResult DeleteConfirmed(int id)
         {
+            string groupId = "0";
+            if (Request.RequestContext.RouteData.Values["gId"] != null)
+            {
+                groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
+            }
+            string courseId = "0";
+            if (Request.RequestContext.RouteData.Values["cId"] != null)
+            {
+                courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
+            }
+            string activityId = "0";
+            if (Request.RequestContext.RouteData.Values["aId"] != null)
+            {
+                activityId = Request.RequestContext.RouteData.Values["aId"].ToString();
+            }
+
             Document document = context.Documents.Find(id);
             context.Documents.Remove(document);
             context.SaveChanges();
-            return RedirectToAction("Index");
+            if (activityId != "0")
+            { 
+                return RedirectToAction("Index", "Documents", new { gId = groupId, cId = courseId, aId = activityId });
+            }
+            if (courseId != "0")
+            {
+                return RedirectToAction("Index", "Documents", new { gId = groupId, cId = courseId });
+            }
+            return RedirectToAction("Index", "Documents", new { gId = groupId });
         }
 
         protected override void Dispose(bool disposing)

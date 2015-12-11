@@ -197,14 +197,11 @@ namespace LexiconLMS.Migrations
 
 
             context.Documents.AddOrUpdate(d => d.Name,
-                new Document { Name = "Test av grupp", Uri = "test1grupp.txt", Description = "Testdokument för att testa kopplat till grupp. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 09, 30), GroupId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id, OriginalFileName= "test1grupp.txt"},
-                new Document { Name = "Test av kurs", Uri = "test1kurs.txt", Description = "Testdokument för att testa kopplat till kurs. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 02), CourseId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id, OriginalFileName = "test1kurs.txt" },
-                new Document { Name = "Test av aktivitet", Uri = "test1aktivitet.txt", Description = "Testdokument för att testa kopplat till aktivitet. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 05), ActivityId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Locano").FirstOrDefault().Id, OriginalFileName = "test1aktivitet.txt" }
+                new Document { Name = "Test av grupp", Uri = "test1grupp.txt", Description = "Testdokument för att testa kopplat till grupp. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 09, 30), GroupId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Lozano").FirstOrDefault().Id, OriginalFileName= "test1grupp.txt"},
+                new Document { Name = "Test av kurs", Uri = "test1kurs.txt", Description = "Testdokument för att testa kopplat till kurs. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 02), CourseId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Lozano").FirstOrDefault().Id, OriginalFileName = "test1kurs.txt" },
+                new Document { Name = "Test av aktivitet", Uri = "test1aktivitet.txt", Description = "Testdokument för att testa kopplat till aktivitet. Helt klart ett test. Ett test är det. Nån som vill ha kaffe?", UploadTime = new DateTime(2015, 10, 05), ActivityId = 1, UserId = context.Users.Where(u => u.FullName == "Adrian Lozano").FirstOrDefault().Id, OriginalFileName = "test1aktivitet.txt" }
                 );
-
         }
-
-
 
         private static void CreateUserSeedWithPasswordSecret(ApplicationDbContext context, UserManager<ApplicationUser> manager, string email, ApplicationUser user, RoleManager<IdentityRole> roleManager, string[] roles)
         {

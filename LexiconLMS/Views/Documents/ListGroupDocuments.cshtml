@@ -15,7 +15,7 @@
 
 <p>
     @Html.ActionLink("Tillbaka", "Details", "Group", new { id = group.Id }, null)
-    @Html.ActionLink("Lägg till nytt dokument", "Create", new { id = 0, gId = group.Id})
+    @Html.ActionLink("Lägg till nytt dokument", "Create", new { sender = "g", gId = group.Id})
 </p>
 <table class="table">
     <tr>
