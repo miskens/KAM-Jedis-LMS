@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Startsida";
 }
 
 @if (!(User.Identity.IsAuthenticated))
@@ -20,7 +20,7 @@ else
                 Välkommen   
             </p>
             <p class="col-sm-9">
-                @Html.ActionLink((string)ViewBag.FullName, "Details", "Users", new { id = ViewBag.UserId, sender = "s" }, null)!
+                @Html.ActionLink((string)ViewBag.FullName, "Details", "Users", new { id = ViewBag.UserId, sender = "s" }, new { @class = "Fullnamecolor" })!
             </p>
         </div>
 
