@@ -124,7 +124,7 @@ namespace LexiconLMS.Controllers
                 if (uploadFile.ContentLength > 0)
                 {
                     //var fileName = Path.GetFileName(file.FileName);
-
+                    
                     var path = string.Empty;
                     string fileExtension = uploadFile.FileName.Split('.').Last();
                     var fileName = Path.GetRandomFileName() + '.' + fileExtension;
@@ -146,7 +146,7 @@ namespace LexiconLMS.Controllers
                         UploadTime = DateTime.Now,
                     };
                     
-                    // Set only the "important" value. ActivityId if the doc is connected to an activity,
+                    // Set only the "important" identification value. ActivityId if the doc is connected to an activity,
                     // else check if it is connected to a course and lastly check if it is connected to a group.
                     // userId (owner) is always set, regardless of it has a connection or not.
                     if (document.ActivityId.ToString() != "0")
@@ -192,6 +192,10 @@ namespace LexiconLMS.Controllers
                 {
                     return RedirectToAction("Index", new { aId = activityId });
                 }
+                if (sender == "s")      // from user details
+                {
+                    return RedirectToAction("Index", "Home");
+            }
             }
 
             return View(document);
@@ -220,7 +224,7 @@ namespace LexiconLMS.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "lärare")]
         public ActionResult Edit(
-            [Bind(Include = "Id,Uri,Name,Description,UploadTime,GroupId,CourseId,UserId,ActivityId")] Document document)
+            [Bind(Include = "Id,Uri,Name,Description,UploadTime,OriginalFileName, GroupId,CourseId,UserId,ActivityId")] Document document)
         {
             string groupId = "0";
             if (Request.RequestContext.RouteData.Values["gId"] != null)

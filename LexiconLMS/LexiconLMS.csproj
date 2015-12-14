@@ -172,9 +172,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201512111229297_init.cs" />
-    <Compile Include="Migrations\201512111229297_init.Designer.cs">
-      <DependentUpon>201512111229297_init.cs</DependentUpon>
+    <Compile Include="Migrations\201512141040056_virtualDocStuff.cs" />
+    <Compile Include="Migrations\201512141040056_virtualDocStuff.Designer.cs">
+      <DependentUpon>201512141040056_virtualDocStuff.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -311,8 +311,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512111229297_init.resx">
-      <DependentUpon>201512111229297_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512141040056_virtualDocStuff.resx">
+      <DependentUpon>201512141040056_virtualDocStuff.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

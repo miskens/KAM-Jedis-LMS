@@ -3,7 +3,7 @@ namespace LexiconLMS.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class init : DbMigration
+    public partial class virtualDocStuff : DbMigration
     {
         public override void Up()
         {
@@ -19,10 +19,13 @@ namespace LexiconLMS.Migrations
                         EndDate = c.DateTime(nullable: false),
                         CourseId = c.Int(nullable: false),
                         Deadline = c.DateTime(),
+                        Document_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
-                .Index(t => t.CourseId);
+                .ForeignKey("dbo.Documents", t => t.Document_Id)
+                .Index(t => t.CourseId)
+                .Index(t => t.Document_Id);
             
             CreateTable(
                 "dbo.Courses",
@@ -34,8 +37,11 @@ namespace LexiconLMS.Migrations
                         StartDate = c.DateTime(nullable: false),
                         EndDate = c.DateTime(nullable: false),
                         GroupId = c.Int(nullable: false),
+                        Document_Id = c.Int(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Documents", t => t.Document_Id)
+                .Index(t => t.Document_Id);
             
             CreateTable(
                 "dbo.Documents",
@@ -44,7 +50,7 @@ namespace LexiconLMS.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Uri = c.String(),
                         Name = c.String(nullable: false, maxLength: 50),
-                        Description = c.String(nullable: false, maxLength: 250),
+                        Description = c.String(nullable: false, maxLength: 500),
                         UploadTime = c.DateTime(nullable: false),
                         OriginalFileName = c.String(),
                         GroupId = c.Int(),
@@ -63,8 +69,11 @@ namespace LexiconLMS.Migrations
                         Description = c.String(),
                         StartDate = c.DateTime(nullable: false),
                         EndDate = c.DateTime(nullable: false),
+                        Document_Id = c.Int(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Documents", t => t.Document_Id)
+                .Index(t => t.Document_Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -86,11 +95,14 @@ namespace LexiconLMS.Migrations
                         TwoFactorEnabled = c.Boolean(nullable: false),
                         LockoutEndDateUtc = c.DateTime(),
                         LockoutEnabled = c.Boolean(nullable: false),
+                        Document_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Groups", t => t.GroupId)
+                .ForeignKey("dbo.Documents", t => t.Document_Id)
                 .Index(t => t.GroupId)
-                .Index(t => t.UserName, unique: true, name: "UserNameIndex");
+                .Index(t => t.UserName, unique: true, name: "UserNameIndex")
+                .Index(t => t.Document_Id);
             
             CreateTable(
                 "dbo.AspNetUserClaims",
@@ -145,18 +157,26 @@ namespace LexiconLMS.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.AspNetUsers", "Document_Id", "dbo.Documents");
+            DropForeignKey("dbo.Groups", "Document_Id", "dbo.Documents");
             DropForeignKey("dbo.AspNetUsers", "GroupId", "dbo.Groups");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Courses", "Document_Id", "dbo.Documents");
+            DropForeignKey("dbo.Activities", "Document_Id", "dbo.Documents");
             DropForeignKey("dbo.Activities", "CourseId", "dbo.Courses");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
+            DropIndex("dbo.AspNetUsers", new[] { "Document_Id" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUsers", new[] { "GroupId" });
+            DropIndex("dbo.Groups", new[] { "Document_Id" });
+            DropIndex("dbo.Courses", new[] { "Document_Id" });
+            DropIndex("dbo.Activities", new[] { "Document_Id" });
             DropIndex("dbo.Activities", new[] { "CourseId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");

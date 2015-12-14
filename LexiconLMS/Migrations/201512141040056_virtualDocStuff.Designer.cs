@@ -7,13 +7,13 @@ namespace LexiconLMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class init : IMigrationMetadata
+    public sealed partial class virtualDocStuff : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(virtualDocStuff));
         
         string IMigrationMetadata.Id
         {
-            get { return "201512111229297_init"; }
+            get { return "201512141040056_virtualDocStuff"; }
         }
         
         string IMigrationMetadata.Source
