@@ -1,6 +1,9 @@
-﻿@model LexiconLMS.Models.Course
+﻿@using LexiconLMS.Models
+@model LexiconLMS.Models.Course
 
 @{
+    ApplicationDbContext context = new ApplicationDbContext();
+    
     ViewBag.Title = "Ändra ";
 
     string sender = Request.RequestContext.RouteData.Values["sender"].ToString();
@@ -9,9 +12,12 @@
     {
         groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
     }
+
+    var groupName = context.Groups.Find(Model.GroupId).Name;
 }
 
-<h2>Ändra kursinformation</h2>
+<h2>Ändra kursinformation för kursen "@Model.Name"</h2>
+<h3>Grupp: @groupName</h3>
 
 
 @using (Html.BeginForm())
@@ -34,7 +40,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -55,13 +61,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.GroupId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GroupId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @Html.HiddenFor(model => model.GroupId)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

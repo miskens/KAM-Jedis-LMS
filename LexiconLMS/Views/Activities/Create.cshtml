@@ -24,10 +24,14 @@
     }
     int courseIdnum = Int32.Parse(courseId);
     var course = context.Courses.FirstOrDefault(c => c.Id == courseIdnum);
+
+    var courseStart = course.StartDate.ToShortDateString();
+    var courseEnd = course.EndDate.ToShortDateString();
 }
 
-<h2>Skapa ny aktivitet i kurs: @course.Name</h2>
-
+<h2>Skapa ny aktivitet</h2>
+<h3>Kurs: @course.Name</h3>
+<h4>(@courseStart -- @courseEnd)</h4>
 
 @using (Html.BeginForm())
 {

@@ -1,6 +1,9 @@
-﻿@model LexiconLMS.Models.Activity
+﻿@using LexiconLMS.Models
+@model LexiconLMS.Models.Activity
 
 @{
+    ApplicationDbContext context = new ApplicationDbContext();
+    
     ViewBag.Title = "Editera";
     
     string sender = string.Empty;
@@ -14,11 +17,10 @@
         groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
     }
 
-    //string courseId = "0";
-    //if (Request.RequestContext.RouteData.Values["cId"] != null)
-    //{
-    //    courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
-    //}
+    var course = context.Courses.Find(Model.CourseId);
+    var courseName = course.Name;
+    var courseEnd = course.EndDate.ToShortDateString();
+    var courseStart = course.StartDate.ToShortDateString();
 }
 
 @using (Html.BeginForm())
@@ -26,7 +28,10 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Ändra aktivitet</h4>
+        <h3>Ändra i aktiviteten "@Model.Name"</h3>
+        <h4>Kurs: @courseName</h4>
+        <h5>(@courseStart -- @courseEnd)</h5>
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -42,7 +47,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -71,13 +76,8 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CourseId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @Html.HiddenFor(model=>model.CourseId)
+        
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

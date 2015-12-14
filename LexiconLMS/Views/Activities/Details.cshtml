@@ -1,4 +1,5 @@
-﻿@model LexiconLMS.Models.Activity
+﻿@using Microsoft.AspNet.Identity
+@model LexiconLMS.Models.Activity
 
 @{
     ViewBag.Title = "Details";
@@ -27,7 +28,11 @@
         <h4>@Model.StartDate.ToShortDateString() -- @Model.EndDate.ToShortDateString()</h4>
         @if (sender != string.Empty)
         { 
-            @Html.ActionLink("Lägg till dokument för aktiviteten", "Create", "Documents", new { sender = sender, gId=groupId, cId = courseId, aId = Model.Id }, null)
+            if (User.IsInRole("lärare") || (User.IsInRole("elev") && (Model.Type.ToLower() == "inlämningsuppgift")))
+            { 
+                @Html.ActionLink("Lägg till dokument för aktiviteten", "Create", "Documents", new { sender = sender, gId=groupId, cId = courseId, aId = Model.Id }, null)
+            }
+
         }
     <hr />
     <dl class="dl-horizontal">
