@@ -15,15 +15,10 @@
 
     var documents = context.Documents.Where(d => d.GroupId == Model.Id);
 }
- <div class="sg-table-div">
+<class="sg-table-div">
     <table>
         <tr>
-            <td class="sg-table-td1 col-sm-8 col-lg-8">
-                <div class="sg-td1-div2">
-                    @Html.Partial("_SGroupMembers", groupMembers)
-                </div>
-                <br />
-                <br />
+            <td class="sg-table-td1">
                 <div class="sg-td1-div1">
                     <h1>
                         Grupp: @Html.DisplayFor(model => model.Name)
@@ -45,10 +40,15 @@
                         </dd>
                     </dl>
                 </div>
+                <br />
+                <br />
+                <div class="sg-td1-div2 ">
+                    @Html.Partial("_SGroupMembers", groupMembers)
+                </div>
             </td>
-            <td class="sg-table-td2 col-sm-4">
+            <td class="sg-table-td2">
                 @Html.Partial("_SGroupCourses", courses)
             </td>
         </tr>
     </table>
-</div>
+</>

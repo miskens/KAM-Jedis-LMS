@@ -35,7 +35,7 @@
             @Html.DisplayNameFor(model => model.EndDate)
         </th>
         <th>
-            @Html.DisplayName("Dokument")
+            
         </th>
         <th></th>
         <th></th>
@@ -43,13 +43,22 @@
 
     @foreach (var item in Model)
     {
+        var description = string.Empty;
+        if (item.Description.Length > 30)
+        {
+            description = item.Description.Substring(0, 20) + "...";
+        }
+        else
+        {
+            description = item.Description; 
+        }
         var documents = context.Documents.Where(d => d.CourseId == item.Id);
         <tr>
             <td>
                 @Html.ActionLink((string) item.Name, "Details", "Courses", new {id = item.Id, sender = "g", gId = item.GroupId}, null)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.Raw(description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
