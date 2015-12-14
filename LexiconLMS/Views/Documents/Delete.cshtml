@@ -29,19 +29,19 @@
     var groupName = string.Empty;
     if (groupId != "0")
     {
-        groupName = context.Groups.Find(Model.GroupId).Name;
+        groupName = context.Groups.Find(Int32.Parse(groupId)).Name;
     }
     
     var courseName = string.Empty;
     if (courseId != "0")
     {
-        courseName = context.Courses.Find(Model.CourseId).Name;
+        courseName = context.Courses.Find(Int32.Parse(courseId)).Name;
     }
     
     var activityName = string.Empty;
     if (activityId != "0")
     {
-        activityName = context.Activities.Find(Model.ActivityId).Name;
+        activityName = context.Activities.Find(Int32.Parse(activityId)).Name;
     } 
     
 }

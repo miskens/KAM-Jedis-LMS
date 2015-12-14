@@ -111,11 +111,20 @@ namespace LexiconLMS.Controllers
             return View();
         }
 
+        FileSystemWatcher watcher = new FileSystemWatcher();
         public void watch()
         {
-            FileSystemWatcher watcher = new FileSystemWatcher();
-            string path = @"C:\Users\User\Source\Repos\KAM-Jedis-LMS\LexiconLMS\Content\StudentAssignments";
-            watcher.Path = path;
+            string strWorkingDirectory = Directory.GetCurrentDirectory();
+
+            string fullSubFolderPath = strWorkingDirectory + "\\Content\\StudentAssignments";
+
+            if(!Directory.Exists(fullSubFolderPath))
+            { 
+                Directory.CreateDirectory(fullSubFolderPath);
+            }
+
+            watcher.Path = fullSubFolderPath;
+            watcher.Path = @"C:\Program Files (x86)\IIS Express\Content\StudentAssignments\";
             watcher.NotifyFilter = NotifyFilters.LastWrite;
             watcher.Created += new FileSystemEventHandler(watch_OnCreated);
             watcher.EnableRaisingEvents = true;
@@ -131,7 +140,7 @@ namespace LexiconLMS.Controllers
             SmtpClient client = Functions.ConfigureSmtpClient();
 
             MailMessage message = new MailMessage();
-            MailAddress receiver = new MailAddress("vitastjern@gmail.com");
+            MailAddress receiver = new MailAddress("miskens@hotmail.com");
             MailAddress sender = new MailAddress("LexiconLMS@lexicon.se");
 
             

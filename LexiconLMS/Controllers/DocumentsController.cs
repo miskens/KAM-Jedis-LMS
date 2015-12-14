@@ -119,6 +119,22 @@ namespace LexiconLMS.Controllers
                 return View();
             }
 
+             string strWorkingDirectory = Directory.GetCurrentDirectory();
+
+             string fullSubFolderPath = "";
+             if (User.IsInRole("lärare"))
+             {
+                 fullSubFolderPath = strWorkingDirectory + "\\Content\\uploads";
+             }
+             if (User.IsInRole("elev"))
+             { 
+                fullSubFolderPath = strWorkingDirectory + "\\Content\\StudentAssignments";
+             }
+             if (!Directory.Exists(fullSubFolderPath))
+             {
+                 Directory.CreateDirectory(fullSubFolderPath);
+             }
+
             if (ModelState.IsValid)
             {
                 if (uploadFile.ContentLength > 0)
@@ -130,11 +146,11 @@ namespace LexiconLMS.Controllers
                     var fileName = Path.GetRandomFileName() + '.' + fileExtension;
                     if (User.IsInRole("lärare"))
                     {
-                        path = Path.Combine(Server.MapPath("~/Content/uploads"), fileName);
+                        path = fullSubFolderPath + "\\" + fileName;
                     }
                     else
                     {
-                        path = Path.Combine(Server.MapPath("~/Content/StudentAssignments"), fileName);  
+                        path = fullSubFolderPath + "\\"+fileName;
                     }
                     var uploadedDocument = new Document
                     {
