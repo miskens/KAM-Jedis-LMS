@@ -1,4 +1,5 @@
-﻿@model IEnumerable<LexiconLMS.Models.Document>
+﻿@using LexiconLMS.Models
+@model IEnumerable<LexiconLMS.Models.Document>
 
 @{
     ViewBag.Title = "Index";
@@ -6,6 +7,8 @@
     var groupId = ViewData["groupId"];
     var courseId = ViewData["courseId"];
     var activityId = ViewData["activityId"];
+
+    ApplicationDbContext context = new ApplicationDbContext();
 }
 
 <h2>Dokumentlista</h2>
@@ -44,6 +47,22 @@
     </tr>
 
 @foreach (var item in Model) {
+    var groupName = string.Empty;
+    if (item.GroupId.HasValue)
+    {
+        groupName = context.Groups.Find(item.GroupId).Name;
+    }
+    var courseName = string.Empty;
+    if (item.CourseId.HasValue)
+    {
+        courseName = context.Courses.Find(item.CourseId).Name;
+    }
+    var activityName = string.Empty;
+    if (item.ActivityId.HasValue)
+    {
+        activityName = context.Activities.Find(item.ActivityId).Name;
+    }
+    var userName = context.Users.Find(item.UserId).FullName;
     <tr>
         <td>
             @Html.ActionLink(item.OriginalFileName, "GetFileFromServer", "Documents", new { fileUri = item.Uri, originalFileName = item.OriginalFileName })
@@ -58,16 +77,16 @@
             @Html.DisplayFor(modelItem => item.UploadTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.GroupId)
+            @groupName
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CourseId)
+            @courseName
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserId)
+            @userName
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ActivityId)
+            @activityName
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

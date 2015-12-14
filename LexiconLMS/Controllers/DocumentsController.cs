@@ -217,7 +217,7 @@ namespace LexiconLMS.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "lärare")]
         public ActionResult Edit(
-            [Bind(Include = "Id,Uri,Name,Description,UploadTime,GroupId,CourseId,UserId,ActivityId")] Document document)
+            [Bind(Include = "Id,Uri,Name,Description,UploadTime,OriginalFileName, GroupId,CourseId,UserId,ActivityId")] Document document)
         {
             string groupId = "0";
             if (Request.RequestContext.RouteData.Values["gId"] != null)

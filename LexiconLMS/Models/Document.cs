@@ -44,5 +44,11 @@ namespace LexiconLMS.Models
 
         [Display(Name = "Aktivitet")]
         public int? ActivityId { get; set; }
+
+        public virtual ICollection<Group> Groups { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Activity> Activities { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
+
     }
 }
