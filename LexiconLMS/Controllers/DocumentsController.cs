@@ -74,7 +74,7 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Documents/Create
-        [Authorize(Roles = "lärare")]
+        // [Authorize(Roles = "lärare")]  -- students are allowed to post replies to assignments and docs about themselves
         public ActionResult Create()
         {
             return View();
@@ -85,7 +85,7 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="lärare")]
+        //[Authorize(Roles="lärare")]   -- students are allowed to post replies to assignments and a doc about themselves...
         public ActionResult Create([Bind(Include = "Name, Description, GroupId, CourseId, ActivityId, UserId, UploadTime")] Document document, HttpPostedFileBase uploadFile)
         {
             string sender = string.Empty;
@@ -139,7 +139,7 @@ namespace LexiconLMS.Controllers
                         UploadTime = DateTime.Now,
                     };
                     
-                    // Set only the "important" value. ActivityId if the doc is connected to an activity,
+                    // Set only the "important" identification value. ActivityId if the doc is connected to an activity,
                     // else check if it is connected to a course and lastly check if it is connected to a group.
                     // userId (owner) is always set, regardless of it has a connection or not.
                     if (document.ActivityId.ToString() != "0")
@@ -184,6 +184,10 @@ namespace LexiconLMS.Controllers
                 if (sender == "a")
                 {
                     return RedirectToAction("Index", new { aId = activityId });
+                }
+                if (sender == "s")      // from user details
+                {
+                    return RedirectToAction("Index", "Home");
                 }
             }
 
