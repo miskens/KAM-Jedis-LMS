@@ -35,11 +35,12 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayName("Dokument")
+            @*@Html.DisplayName("Dokument")*@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
+       
         <th>
             @Html.DisplayNameFor(model => model.StartDate)
         </th>
@@ -75,6 +76,7 @@
             <td>
                 @Html.Raw(shortDescription)
             </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
