@@ -298,6 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\StudentAssignments\" />
     <Folder Include="Content\uploads\" />
     <Folder Include="Images\" />
     <Folder Include="Views\Document\" />
