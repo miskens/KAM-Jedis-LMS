@@ -32,6 +32,7 @@
             @Html.DisplayNameFor(model => model.OriginalFileName)
         </th>
         <th></th>
+        <th>Aktivitetstyp</th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -50,13 +51,14 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink((string) item.Uri, "Details", "Documents", new {id = item.Id, gId = groupId, cId = courseId, aId = activityId}, null)
+            @Html.ActionLink((string) item.Name, "Details", "Documents", new {id = item.Id, gId = groupId, cId = courseId, aId = activityId}, null)
         </td>
         <td>
             <a href="@Url.Action("GetFileFromServer", "Documents", new {fileUri = item.Uri, originalFileName = item.OriginalFileName}, null)">
                 <img src="@Url.Content("~/Content/Images/download.png")" style="width: 25px; height: 25px;" />
             </a>
         </td>
+        <td>@Html.Raw(activity.Type)</td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>

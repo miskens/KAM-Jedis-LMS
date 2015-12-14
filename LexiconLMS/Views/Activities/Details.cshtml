@@ -26,14 +26,16 @@
 <div>
         <h3>Aktivitet: @Model.Name</h3>  
         <h4>@Model.StartDate.ToShortDateString() -- @Model.EndDate.ToShortDateString()</h4>
-        @if (sender != string.Empty)
+    @if (sender != string.Empty && User.IsInRole("lärare"))
         { 
-            if (User.IsInRole("lärare") || (User.IsInRole("elev") && (Model.Type.ToLower() == "inlämningsuppgift")))
-            { 
-                @Html.ActionLink("Lägg till dokument för aktiviteten", "Create", "Documents", new { sender = sender, gId=groupId, cId = courseId, aId = Model.Id }, null)
-            }
-
+        <a href="@Url.Action("Create", "Documents", new { sender = sender, gId = groupId, cId = courseId, aId = Model.Id }, null)">
+            <img src="@Url.Content("~/Content/Images/create.png")" style="width: 30px; height: 30px;" />
+        </a>
         }
+    else
+    {
+        @Html.ActionLink("Skicka inlämningsuppgift", "Create", "Documents", new { sender = sender, gId = groupId, cId = courseId, aId = Model.Id }, null)
+    }
     <hr />
     <dl class="dl-horizontal">
 
@@ -76,7 +78,7 @@
 <p>
     @if (sender == "c")
     {
-        @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender=sender})
+        @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender = sender })
         if (User.IsInRole("lärare"))
         {
             @Html.Raw(" | ")
@@ -87,20 +89,22 @@
     }
     @if (sender == "g")
     {
-        @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender=sender, gId = groupId }, null)
+        @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender = sender, gId = groupId }, null)
         if (User.IsInRole("lärare"))
         {
-            @Html.Raw(" | ")
-            @Html.ActionLink("Ändra", "Edit", "Activities", new { id = Model.Id, sender=sender, gId = groupId, cId = Model.CourseId }, null)
-            @Html.Raw(" | ")
-            @Html.ActionLink("Ta bort", "Delete", "Activities", new { id = Model.Id, sender=sender, gId = groupId, cId = Model.CourseId }, null)
+            <a href="@Url.Action("Edit", "Activities", new { id = Model.Id, sender = sender, gId = groupId, cId = Model.CourseId }, null)">
+                <img src="@Url.Content("~/Content/Images/edit.png")" style="width: 30px; height: 30px;" />
+            </a>
+            <a href="@Url.Action("Delete", "Activities", new { id = Model.Id, sender = sender, gId = groupId, cId = Model.CourseId }, null)">
+                <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 30px; height: 30px;" />
+            </a>
         }
         
     }
     else
     {
         <div class="form-actions no-color">
-            @Html.ActionLink("Tillbaka", "Details", "Courses", new {id = Model.CourseId, sender=sender, gId = groupId}, null)
+            @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = Model.CourseId, sender = sender, gId = groupId }, null)
         </div>
     }
 </p>

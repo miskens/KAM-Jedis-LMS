@@ -8,22 +8,28 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.IO;
 
 namespace LexiconLMS.Controllers
 {
     public class HomeController : Controller
     {
+        string userId = "";
+
+        ApplicationDbContext context = new ApplicationDbContext();
         public ActionResult Index()
         {
+            watch();
             if (User.Identity.IsAuthenticated)
             {
-                var context = new ApplicationDbContext();
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
 
                 var currentUserId = User.Identity.GetUserId();
                 var user = userManager.Users.FirstOrDefault(u => u.Id == currentUserId);
                 ViewBag.FullName = user.FullName;
+
+                userId = user.Id;
                 ViewBag.UserId = user.Id;
 
                 if (User.IsInRole("elev"))
@@ -105,5 +111,43 @@ namespace LexiconLMS.Controllers
             return View();
         }
 
+        public void watch()
+        {
+            FileSystemWatcher watcher = new FileSystemWatcher();
+            string path = @"C:\Users\User\Source\Repos\KAM-Jedis-LMS\LexiconLMS\Content\StudentAssignments";
+            watcher.Path = path;
+            watcher.NotifyFilter = NotifyFilters.LastWrite;
+            watcher.Created += new FileSystemEventHandler(watch_OnCreated);
+            watcher.EnableRaisingEvents = true;
+            watcher.NotifyFilter =
+                NotifyFilters.Attributes |
+                NotifyFilters.CreationTime |
+                NotifyFilters.FileName |
+                NotifyFilters.LastWrite |
+                NotifyFilters.Size;
+        }
+        private void watch_OnCreated(object source, FileSystemEventArgs e)
+        {
+            SmtpClient client = Functions.ConfigureSmtpClient();
+
+            MailMessage message = new MailMessage();
+            MailAddress receiver = new MailAddress("vitastjern@gmail.com");
+            MailAddress sender = new MailAddress("LexiconLMS@lexicon.se");
+
+            
+            ApplicationUser user = context.Users.Find(userId);
+
+            var group = context.Groups.Find(user.GroupId);
+
+            message.Sender = sender;
+            message.To.Add(receiver);
+            message.IsBodyHtml = false;
+            message.Body = "Nya inlämningsuppgifter har lagts till av " + user.FullName + "." + Environment.NewLine + 
+                                "Grupp: " + group.Name;
+            message.From = sender;
+            message.Subject = "Inkomna inlämningsuppgifter";
+
+            client.Send(message);
+        }
     }
 }

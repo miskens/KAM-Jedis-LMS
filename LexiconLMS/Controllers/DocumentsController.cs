@@ -9,6 +9,9 @@ using System.Web.Mvc;
 using LexiconLMS.Models;
 using System.IO;
 using System.Web.Security;
+using System.Web.UI.WebControls;
+using System.Net.Mail;
+using Microsoft.AspNet.Identity;
 
 namespace LexiconLMS.Controllers
 {
@@ -74,7 +77,6 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Documents/Create
-        // [Authorize(Roles = "lärare")]  -- students are allowed to post replies to assignments and docs about themselves
         public ActionResult Create()
         {
             return View();
@@ -85,7 +87,6 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles="lärare")]   -- students are allowed to post replies to assignments and a doc about themselves...
         public ActionResult Create([Bind(Include = "Name, Description, GroupId, CourseId, ActivityId, UserId, UploadTime")] Document document, HttpPostedFileBase uploadFile)
         {
             string sender = string.Empty;
@@ -124,11 +125,17 @@ namespace LexiconLMS.Controllers
                 {
                     //var fileName = Path.GetFileName(file.FileName);
                     
-                    
+                    var path = string.Empty;
                     string fileExtension = uploadFile.FileName.Split('.').Last();
                     var fileName = Path.GetRandomFileName() + '.' + fileExtension;
-                    var path = Path.Combine(Server.MapPath("~/Content/uploads"), fileName);
-
+                    if (User.IsInRole("lärare"))
+                    {
+                        path = Path.Combine(Server.MapPath("~/Content/uploads"), fileName);
+                    }
+                    else
+                    {
+                        path = Path.Combine(Server.MapPath("~/Content/StudentAssignments"), fileName);  
+                    }
                     var uploadedDocument = new Document
                     {
                         Name = document.Name,
@@ -188,7 +195,7 @@ namespace LexiconLMS.Controllers
                 if (sender == "s")      // from user details
                 {
                     return RedirectToAction("Index", "Home");
-                }
+            }
             }
 
             return View(document);
