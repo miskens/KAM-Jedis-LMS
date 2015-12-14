@@ -9,6 +9,9 @@ using System.Web.Mvc;
 using LexiconLMS.Models;
 using System.IO;
 using System.Web.Security;
+using System.Web.UI.WebControls;
+using System.Net.Mail;
+using Microsoft.AspNet.Identity;
 
 namespace LexiconLMS.Controllers
 {
@@ -74,7 +77,6 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Documents/Create
-        [Authorize(Roles = "lärare")]
         public ActionResult Create()
         {
             return View();
@@ -85,7 +87,6 @@ namespace LexiconLMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="lärare")]
         public ActionResult Create([Bind(Include = "Name, Description, GroupId, CourseId, ActivityId, UserId, UploadTime")] Document document, HttpPostedFileBase uploadFile)
         {
             string sender = string.Empty;
@@ -118,17 +119,39 @@ namespace LexiconLMS.Controllers
                 return View();
             }
 
+             string strWorkingDirectory = Directory.GetCurrentDirectory();
+
+             string fullSubFolderPath = "";
+             if (User.IsInRole("lärare"))
+             {
+                 fullSubFolderPath = strWorkingDirectory + "\\Content\\uploads";
+             }
+             if (User.IsInRole("elev"))
+             { 
+                fullSubFolderPath = strWorkingDirectory + "\\Content\\StudentAssignments";
+             }
+             if (!Directory.Exists(fullSubFolderPath))
+             {
+                 Directory.CreateDirectory(fullSubFolderPath);
+             }
+
             if (ModelState.IsValid)
             {
                 if (uploadFile.ContentLength > 0)
                 {
                     //var fileName = Path.GetFileName(file.FileName);
                     
-                    
+                    var path = string.Empty;
                     string fileExtension = uploadFile.FileName.Split('.').Last();
                     var fileName = Path.GetRandomFileName() + '.' + fileExtension;
-                    var path = Path.Combine(Server.MapPath("~/Content/uploads"), fileName);
-
+                    if (User.IsInRole("lärare"))
+                    {
+                        path = fullSubFolderPath + "\\" + fileName;
+                    }
+                    else
+                    {
+                        path = fullSubFolderPath + "\\"+fileName;
+                    }
                     var uploadedDocument = new Document
                     {
                         Name = document.Name,
@@ -139,7 +162,7 @@ namespace LexiconLMS.Controllers
                         UploadTime = DateTime.Now,
                     };
                     
-                    // Set only the "important" value. ActivityId if the doc is connected to an activity,
+                    // Set only the "important" identification value. ActivityId if the doc is connected to an activity,
                     // else check if it is connected to a course and lastly check if it is connected to a group.
                     // userId (owner) is always set, regardless of it has a connection or not.
                     if (document.ActivityId.ToString() != "0")
@@ -185,6 +208,10 @@ namespace LexiconLMS.Controllers
                 {
                     return RedirectToAction("Index", new { aId = activityId });
                 }
+                if (sender == "s")      // from user details
+                {
+                    return RedirectToAction("Index", "Home");
+            }
             }
 
             return View(document);
@@ -213,7 +240,7 @@ namespace LexiconLMS.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "lärare")]
         public ActionResult Edit(
-            [Bind(Include = "Id,Uri,Name,Description,UploadTime,GroupId,CourseId,UserId,ActivityId")] Document document)
+            [Bind(Include = "Id,Uri,Name,Description,UploadTime,OriginalFileName, GroupId,CourseId,UserId,ActivityId")] Document document)
         {
             string groupId = "0";
             if (Request.RequestContext.RouteData.Values["gId"] != null)

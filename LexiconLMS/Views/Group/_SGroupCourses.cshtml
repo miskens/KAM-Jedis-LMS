@@ -16,6 +16,10 @@
             <th class="col-sm-3">
                 @Html.DisplayName("Dokument")
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
             <th class="col-sm-3">
                 @Html.DisplayNameFor(model => model.StartDate)
             </th>
@@ -23,6 +27,15 @@
 
         @foreach (var item in Model)
         {
+            var shortDescription = "";
+            if (item.Description.Length > 35)
+            {
+                shortDescription = item.Description.Substring(0, 35) + "...";
+            }
+            else
+            {
+                shortDescription = item.Description + "...";
+            }
             var documents = context.Documents.Where(d => d.CourseId == item.Id);
             <tr>
                 <td class="col-sm-6">
@@ -35,6 +48,9 @@
                             <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:23px;" />
                         </a>
                     }
+                </td>
+                <td>
+                    @Html.Raw(shortDescription)
                 </td>
                 <td class="sgc-table-td2 col-sm-3">
                     @Html.DisplayFor(modelItem => item.StartDate)

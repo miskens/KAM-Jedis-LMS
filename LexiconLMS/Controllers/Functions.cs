@@ -9,13 +9,14 @@ using LexiconLMS.Models;
 using System.Data.Entity;
 using System.IO;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace LexiconLMS.Controllers
 {
     public class Functions
     {
         private static ApplicationDbContext context = new ApplicationDbContext();
-
+        
         public static SmtpClient ConfigureSmtpClient()
         {
             SmtpClient client = new SmtpClient();
@@ -105,7 +106,5 @@ namespace LexiconLMS.Controllers
 
             return msg;
         }
-
-        
     }
 }

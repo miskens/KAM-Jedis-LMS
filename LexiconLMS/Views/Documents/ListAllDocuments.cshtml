@@ -1,15 +1,20 @@
-﻿@model IEnumerable<LexiconLMS.Models.Document>
+﻿@using LexiconLMS.Models
+@model IEnumerable<LexiconLMS.Models.Document>
 
 @{
+    ApplicationDbContext context = new ApplicationDbContext();
     ViewBag.Title = "ListAllDocuments";
+    
+    
+    
 }
 
-<h2>Alla dokument i hela världen</h2>
+<h2>Alla dokument</h2>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Uri)
+            @Html.DisplayNameFor(model => model.OriginalFileName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -19,9 +24,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UploadTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OriginalFileName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.GroupId)
@@ -39,9 +41,25 @@
     </tr>
 
 @foreach (var item in Model) {
+    var groupName = string.Empty;
+    if (item.GroupId.HasValue)
+    {
+        groupName = context.Groups.Find(item.GroupId).Name;
+    }
+    var courseName = string.Empty;
+    if (item.CourseId.HasValue)
+    {
+        courseName = context.Courses.Find(item.CourseId).Name;
+    }
+    var activityName = string.Empty;
+    if (item.ActivityId.HasValue)
+    {
+        activityName = context.Activities.Find(item.ActivityId).Name;
+    }
+    var userName = context.Users.Find(item.UserId).FullName;
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Uri)
+            @Html.DisplayFor(modelItem => item.OriginalFileName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -52,20 +70,17 @@
         <td>
             @Html.DisplayFor(modelItem => item.UploadTime)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OriginalFileName)
+        <td> 
+            @groupName
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.GroupId)
+            @courseName
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CourseId)
+            @userName
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActivityId)
+            @activityName
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

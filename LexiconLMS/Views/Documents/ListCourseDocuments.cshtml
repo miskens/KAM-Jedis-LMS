@@ -25,7 +25,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Uri)
+            @Html.DisplayNameFor(model => model.OriginalFileName)
         </th>
         <th></th>
         <th>
@@ -46,7 +46,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink((string) item.Uri, "Details", "Documents", new {id = item.Id, gId = groupId, cId = courseId}, null)
+            @Html.ActionLink((string) item.OriginalFileName, "Details", "Documents", new {id = item.Id, gId = groupId, cId = courseId}, null)
         </td>
         <td>
             <a href="@Url.Action("GetFileFromServer", "Documents", new {fileUri = item.Uri, originalFileName = item.OriginalFileName}, null)">

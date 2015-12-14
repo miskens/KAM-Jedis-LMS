@@ -43,14 +43,14 @@
 
     @foreach (var item in Model)
     {
-        var description = string.Empty;
+        var shortDescription = "";
         if (item.Description.Length > 30)
         {
-            description = item.Description.Substring(0, 20) + "...";
+            shortDescription = item.Description.Substring(0, 25) + "...";
         }
         else
         {
-            description = item.Description; 
+            shortDescription = item.Description; 
         }
         var documents = context.Documents.Where(d => d.CourseId == item.Id);
         <tr>
@@ -58,7 +58,7 @@
                 @Html.ActionLink((string) item.Name, "Details", "Courses", new {id = item.Id, sender = "g", gId = item.GroupId}, null)
             </td>
             <td>
-                @Html.Raw(description)
+                @Html.Raw(shortDescription)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)

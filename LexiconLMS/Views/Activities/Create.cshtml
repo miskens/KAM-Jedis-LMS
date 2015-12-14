@@ -24,10 +24,14 @@
     }
     int courseIdnum = Int32.Parse(courseId);
     var course = context.Courses.FirstOrDefault(c => c.Id == courseIdnum);
+
+    var courseStart = course.StartDate.ToShortDateString();
+    var courseEnd = course.EndDate.ToShortDateString();
 }
 
-<h2>Skapa ny aktivitet i kurs: @course.Name</h2>
-
+<h2>Skapa ny aktivitet</h2>
+<h3>Kurs: @course.Name</h3>
+<h4>(@courseStart -- @courseEnd)</h4>
 
 @using (Html.BeginForm())
 {
@@ -64,7 +68,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } }) kursens startdatum: @Html.Raw(course.StartDate.ToShortDateString())
                 @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -73,7 +77,7 @@
 
             @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } }) kursens slutdatum: @Html.Raw(course.EndDate.ToShortDateString())
                 @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                 @if (Model != null)
                 {
