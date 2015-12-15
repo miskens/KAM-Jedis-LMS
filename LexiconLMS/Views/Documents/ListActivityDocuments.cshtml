@@ -30,6 +30,13 @@
         group = context.Groups.Find(groupId);
         ViewData["gId"] = group.Id;
     }
+    var lateUsers = new List<ApplicationUser>();
+    var lateUsersInThisGroup = new List<ApplicationUser>();
+    foreach(var doc in Model)
+    {
+        lateUsers = context.Users.Where(u => u.Id != doc.UserId).ToList();
+        lateUsersInThisGroup = lateUsers.Where(u => u.GroupId == groupId).ToList();
+    }
 }
 
 <h2>Document för @activity.Name</h2>
@@ -42,16 +49,8 @@
         <th>
             @Html.DisplayNameFor(model => model.OriginalFileName)
         </th>
-        <th></th>
-        <th>Aktivitetstyp</th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UploadTime)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UserId)
@@ -108,3 +107,28 @@
         </tr>
     }
 </table>
+
+@if (User.IsInRole("lärare"))
+{
+    <h2>Inlämningsuppgift saknas från följande studenter:</h2>
+
+<table class="lateUsersTable">
+    <tr>
+        <th>
+            @Html.Raw("Namn")
+        </th>
+    </tr>
+
+    @foreach (var user in lateUsersInThisGroup)
+    {
+        if (user != null)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(user.FullName, "Details", "Users", new { id = user.Id, gId = groupId, cId = courseId, aId = activityId }, null)
+                </td>
+            </tr>
+        }
+    }
+</table>
+}

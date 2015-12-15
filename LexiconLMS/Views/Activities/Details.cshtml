@@ -38,7 +38,7 @@
             <img src="@Url.Content("~/Content/Images/create.png")" style="width: 30px; height: 30px;" />
         </a>
     }
-    @if ((activityId != null && activityId != "0" && User.IsInRole("elev") && Model.Type.ToLower() == "inlämningsuppgift") || User.IsInRole("lärare"))
+    @if ((activityId != null && activityId != "0" && User.IsInRole("elev") && Model.Type.ToLower() == "inlämningsuppgift"))
     {
         <h3> @Html.ActionLink("Skicka inlämningsuppgift", "Create", "Documents", new { sender = sender, gId = groupId, cId = courseId, aId = Model.Id }, null)</h3>
     }

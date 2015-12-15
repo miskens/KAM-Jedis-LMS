@@ -42,12 +42,8 @@
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
-       
         <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
+            @Html.DisplayNameFor(model => model.Deadline)
         </th>
     </tr>
 
@@ -84,13 +80,20 @@
             <td>
                 @Html.Raw(shortDescription)
             </td>
-            
             <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
+                @if (DateTime.Now > item.EndDate)
+                {
+                    <font style="color:red;">@Html.DisplayFor(modelItem => item.EndDate)</font>
+                }
+                else if (DateTime.Now > item.EndDate.AddDays(-2))
+                {
+                    <font style="color:orange;">@Html.DisplayFor(modelItem => item.EndDate)</font>
+                }
+                else
+                {
+                    <font style="color:blue;">@Html.DisplayFor(modelItem => item.EndDate)</font>
+                }
+</td>
             @if (User.IsInRole("lärare"))
             {
                 <td>
@@ -100,7 +103,7 @@
                 </td>
                 <td>
                     <a href="@Url.Action("Delete", "Activities", new {id = item.Id, sender = sender, gId = groupId, cId = item.CourseId}, null)">
-                        <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 15 px; height: 15px;" />
+                        <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 15px; height: 15px;" />
                     </a>
                 </td>
             }
