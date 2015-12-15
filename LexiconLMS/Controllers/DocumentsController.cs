@@ -322,7 +322,6 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Documents/Delete/5
-        [Authorize(Roles = "lärare")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -340,7 +339,6 @@ namespace LexiconLMS.Controllers
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "lärare")]
         public ActionResult DeleteConfirmed(int id)
         {
             string groupId = "0";

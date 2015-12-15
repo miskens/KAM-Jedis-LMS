@@ -1,13 +1,14 @@
 ﻿@using LexiconLMS.Models
+@using Microsoft.AspNet.Identity
 @model LexiconLMS.Models.Document
 
 @{
     ApplicationDbContext context = new ApplicationDbContext();
-    
+
     ViewBag.Title = "Details";
 
     var documentName = "";
-    
+
     string groupId = "0";
     if (Request.RequestContext.RouteData.Values["gId"] != null)
     {
@@ -43,7 +44,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.ActionLink(Model.OriginalFileName, "GetFileFromServer","Documents", new { fileUri = Model.Uri, originalFileName = Model.OriginalFileName })
+            @Html.ActionLink(Model.OriginalFileName, "GetFileFromServer", "Documents", new { fileUri = Model.Uri, originalFileName = Model.OriginalFileName })
         </dt>
         <dd>
             @Html.DisplayFor(model => model.OriginalFileName)
@@ -84,17 +85,26 @@
 <p>
     @if (Model.ActivityId.HasValue)
     {
-        @Html.ActionLink("Ändra", "Edit", "Documents", new { id = Model.Id, gId = groupId, cId = courseId, aId = activityId }, null) 
+        if (User.IsInRole("lärare") || (User.IsInRole("elev") && Model.UserId == User.Identity.GetUserId()))
+        {
+            @Html.ActionLink("Ändra", "Edit", "Documents", new { id = Model.Id, gId = groupId, cId = courseId, aId = activityId }, null)
+        }
         @Html.ActionLink("Tillbaka", "Index", "Documents", new { gId = groupId, cId = courseId, aId = activityId }, null)
     }
     @if (Model.CourseId.HasValue)
     {
-        @Html.ActionLink("Ändra", "Edit", "Documents", new { id = Model.Id, gId = groupId, cId = courseId }, null)
+        if (User.IsInRole("lärare") || (User.IsInRole("elev") && Model.UserId == User.Identity.GetUserId()))
+        {
+            @Html.ActionLink("Ändra", "Edit", "Documents", new { id = Model.Id, gId = groupId, cId = courseId }, null)
+        }
         @Html.ActionLink("Tillbaka", "Index", "Documents", new { gId = groupId, cId = courseId }, null)
     }
     @if (Model.GroupId.HasValue)
     {
-        @Html.ActionLink("Ändra", "Edit", "Documents", new { id = Model.Id, gId = groupId }, null)
+        if (User.IsInRole("lärare") || (User.IsInRole("elev") && Model.UserId == User.Identity.GetUserId()))
+        {
+            @Html.ActionLink("Ändra", "Edit", "Documents", new { id = Model.Id, gId = groupId }, null)
+        }
         @Html.ActionLink("Tillbaka", "Index", "Documents", new { gId = groupId }, null)
     }
 

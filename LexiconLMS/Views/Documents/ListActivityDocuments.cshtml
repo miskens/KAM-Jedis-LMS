@@ -1,4 +1,5 @@
 ﻿@using LexiconLMS.Models
+@using Microsoft.AspNet.Identity
 @model IEnumerable<LexiconLMS.Models.Document>
 
 @{
@@ -58,51 +59,52 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    if (item != null)
-    { 
-    <tr>
-        <td>
-            @Html.ActionLink((string) item.Name, "Details", "Documents", new {id = item.Id, gId = groupId, cId = courseId, aId = activityId}, null)
-        </td>
-        <td>
-            <a href="@Url.Action("GetFileFromServer", "Documents", new {fileUri = item.Uri, originalFileName = item.OriginalFileName, userId = item.UserId }, null)">
-                <img src="@Url.Content("~/Content/Images/download.png")" style="width: 25px; height: 25px;" />
-            </a>
-        </td>
-        <td>@Html.Raw(activity.Type)</td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UploadTime)
-        </td>
-        <td>
-            @{ var user = context.Users.Find(item.UserId);}
-            @Html.DisplayFor(modelItem => user.FullName)
-        </td>
-        @if (User.IsInRole("lärare"))
-        { 
-        <td>
-            <a href="@Url.Action("Delete", "Documents", new {id = item.Id, gId = group.Id, cId = courseId, aId = activityId }, null)">
-                <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 15px; height: 15px;" />
-            </a>
-        </td>
+    @foreach (var item in Model)
+    {
+        if (item != null)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink((string)item.Name, "Details", "Documents", new { id = item.Id, gId = groupId, cId = courseId, aId = activityId }, null)
+                </td>
+                <td>
+                    <a href="@Url.Action("GetFileFromServer", "Documents", new {fileUri = item.Uri, originalFileName = item.OriginalFileName, userId = item.UserId }, null)">
+                        <img src="@Url.Content("~/Content/Images/download.png")" style="width: 25px; height: 25px;" />
+                    </a>
+                </td>
+                <td>@Html.Raw(activity.Type)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UploadTime)
+                </td>
+                <td>
+                    @{ var user = context.Users.Find(item.UserId);}
+                    @Html.DisplayFor(modelItem => user.FullName)
+                </td>
+                @if (User.IsInRole("lärare") || (User.IsInRole("elev") && item.UserId == User.Identity.GetUserId()))
+                {
+                    <td>
+                        <a href="@Url.Action("Delete", "Documents", new {id = item.Id, gId = group.Id, cId = courseId, aId = activityId }, null)">
+                            <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 15px; height: 15px;" />
+                        </a>
+                    </td>
+                }
+            </tr>
         }
-    </tr>
     }
-}
     @if ((activityId != null && activityId != "0" && User.IsInRole("elev") && activity.Type.ToLower() == "inlämningsuppgift") || User.IsInRole("lärare"))
-    { 
-    <tr>
-        <td>
-            <a href="@Url.Action("Create", "Documents", new { sender = "g", gId = group.Id, cId = courseId, aId = activityId }, null)">
-                <img src="@Url.Content("~/Content/Images/create.png")" style="width:25px; height:25px;" />
-            </a>
-        </td>
-    </tr>
+    {
+        <tr>
+            <td>
+                <a href="@Url.Action("Create", "Documents", new { sender = "g", gId = group.Id, cId = courseId, aId = activityId }, null)">
+                    <img src="@Url.Content("~/Content/Images/create.png")" style="width:25px; height:25px;" />
+                </a>
+            </td>
+        </tr>
     }
 </table>

@@ -21,20 +21,26 @@
     {
         courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
     }
+
+    string activityId = "0";
+    if (Request.RequestContext.RouteData.Values["id"] != null)
+    {
+        activityId = Request.RequestContext.RouteData.Values["id"].ToString();
+    }
 }
 
 <div>
-        <h3>Aktivitet: @Model.Name</h3>  
-        <h4>@Model.StartDate.ToShortDateString() -- @Model.EndDate.ToShortDateString()</h4>
+    <h3>Aktivitet: @Model.Name</h3>
+    <h4>@Model.StartDate.ToShortDateString() -- @Model.EndDate.ToShortDateString()</h4>
     @if (sender != string.Empty && User.IsInRole("lärare"))
-        { 
+    {
         <a href="@Url.Action("Create", "Documents", new { sender = sender, gId = groupId, cId = courseId, aId = Model.Id }, null)">
             <img src="@Url.Content("~/Content/Images/create.png")" style="width: 30px; height: 30px;" />
         </a>
-        }
-    else if (Model.Type == "Inlämningsuppgift")
+    }
+    @if ((activityId != null && activityId != "0" && User.IsInRole("elev") && Model.Type.ToLower() == "inlämningsuppgift") || User.IsInRole("lärare"))
     {
-        @Html.ActionLink("Skicka inlämningsuppgift", "Create", "Documents", new { sender = sender, gId = groupId, cId = courseId, aId = Model.Id }, null)
+        <h3> @Html.ActionLink("Skicka inlämningsuppgift", "Create", "Documents", new { sender = sender, gId = groupId, cId = courseId, aId = Model.Id }, null)</h3>
     }
     <hr />
     <dl class="dl-horizontal">
@@ -99,7 +105,7 @@
                 <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 30px; height: 30px;" />
             </a>
         }
-        
+
     }
     else
     {

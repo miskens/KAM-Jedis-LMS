@@ -3,24 +3,39 @@
 
 @{
     ApplicationDbContext context = new ApplicationDbContext();
-    
+
     ViewBag.Title = "ListCourseDocuments";
 
+    var activityId = ViewData["activityId"].ToString();
+    Activity activity = new Activity();
+    if (activityId != null && activityId != "0")
+    {
+        var aId = Int32.Parse(activityId);
+        activity = context.Activities.Find(aId);
+        ViewData["aId"] = activity.Id;
+    }
     var courseId = ViewData["courseId"].ToString();
-    var cId = Int32.Parse(courseId);
-    Course course = context.Courses.Find(cId);
-    ViewData["cId"] = course.Id;
-    
+    Course course = new Course();
+    if (courseId != null && courseId != "0")
+    {
+        var cId = Int32.Parse(courseId);
+        course = context.Courses.Find(cId);
+        ViewData["cId"] = course.Id;
+    }
     var groupId = course.GroupId;
-    Group group = context.Groups.Find(groupId);
-    ViewData["gId"] = group.Id;
-    
+    Group group = new Group();
+    if (group.Id != null && group.Id.ToString() != "0")
+    {
+        group = context.Groups.Find(groupId);
+        ViewData["gId"] = group.Id;
+    }
+
 }
 
 <h2>Dokument för kurs @course.Name</h2>
 
 <p>
-    @Html.ActionLink("Tillbaka", "Details", "Group", new { id=  group.Id }, null)
+    @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
 </p>
 <table class="table">
     <tr>
@@ -43,41 +58,48 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink((string) item.OriginalFileName, "Details", "Documents", new {id = item.Id, gId = groupId, cId = courseId}, null)
-        </td>
-        <td>
-            <a href="@Url.Action("GetFileFromServer", "Documents", new {fileUri = item.Uri, originalFileName = item.OriginalFileName, userId = item.UserId}, null)">
-                <img src="@Url.Content("~/Content/Images/download.png")" style="width: 15px; height: 15px;" />
-            </a>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UploadTime)
-        </td>
-        <td>
-            @{ var user = context.Users.Find(item.UserId);}
-            @Html.DisplayFor(modelItem => user.FullName)
-        </td>
-        <td>
-            <a href="@Url.Action("Delete", "Documents", new {id = item.Id, gId = group.Id, cId = courseId }, null)">
-                <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 15px; height: 15px;" />
-            </a>
-        </td>
-    </tr>
-}
-    <tr>
-        <td>
-            <a href="@Url.Action("Create", "Documents", new { sender = "g", gId = group.Id, cId = courseId }, null)">
-                <img src="@Url.Content("~/Content/Images/create.png")" style="width:25px; height:25px;" />
-            </a>
-        </td>
-    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink((string)item.OriginalFileName, "Details", "Documents", new { id = item.Id, gId = groupId, cId = courseId }, null)
+            </td>
+            <td>
+                <a href="@Url.Action("GetFileFromServer", "Documents", new {fileUri = item.Uri, originalFileName = item.OriginalFileName, userId = item.UserId}, null)">
+                    <img src="@Url.Content("~/Content/Images/download.png")" style="width: 15px; height: 15px;" />
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UploadTime)
+            </td>
+            <td>
+                @{ var user = context.Users.Find(item.UserId);}
+                @Html.DisplayFor(modelItem => user.FullName)
+            </td>
+            @if (User.IsInRole("lärare"))
+            {
+                <td>
+                    <a href="@Url.Action("Delete", "Documents", new {id = item.Id, gId = group.Id, cId = courseId }, null)">
+                        <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 15px; height: 15px;" />
+                    </a>
+                </td>
+            }
+        </tr>
+    }
+    @if ((activityId != null && activityId != "0" && User.IsInRole("elev") && activity.Type.ToLower() == "inlämningsuppgift") || User.IsInRole("lärare"))
+    {
+        <tr>
+            <td>
+                <a href="@Url.Action("Create", "Documents", new { sender = "g", gId = group.Id, cId = courseId }, null)">
+                    <img src="@Url.Content("~/Content/Images/create.png")" style="width:25px; height:25px;" />
+                </a>
+            </td>
+        </tr>
+    }
 </table>
