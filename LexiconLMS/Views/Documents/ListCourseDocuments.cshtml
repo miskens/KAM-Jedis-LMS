@@ -16,7 +16,7 @@
     }
     var courseId = ViewData["courseId"].ToString();
     Course course = new Course();
-    if (courseId != null && activityId != "0")
+    if (courseId != null && courseId != "0")
     {
         var cId = Int32.Parse(courseId);
         course = context.Courses.Find(cId);
@@ -24,7 +24,7 @@
     }
     var groupId = course.GroupId;
     Group group = new Group();
-    if (group.Id != null && activityId != "0")
+    if (group.Id != null && group.Id.ToString() != "0")
     {
         group = context.Groups.Find(groupId);
         ViewData["gId"] = group.Id;
@@ -35,7 +35,7 @@
 <h2>Dokument för kurs @course.Name</h2>
 
 <p>
-    @Html.ActionLink("Tillbaka", "Details", "Group", new { id = group.Id }, null)
+    @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
 </p>
 <table class="table">
     <tr>

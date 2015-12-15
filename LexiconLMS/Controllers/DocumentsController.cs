@@ -89,7 +89,7 @@ namespace LexiconLMS.Controllers
             }
             else if (courseId != "0" && User.IsInRole("elev"))
             {
-                return View("ListActivityDocuments", ownAndTeacherDocuments.ToList());
+                return View("ListCourseDocuments", ownAndTeacherDocuments.ToList());
             }
             if (groupId != "0" && User.IsInRole("lärare"))
             {
@@ -97,7 +97,7 @@ namespace LexiconLMS.Controllers
             }
             else if (groupId != "0" && User.IsInRole("elev"))
             {
-                return View("ListActivityDocuments", ownAndTeacherDocuments.ToList());
+                return View("ListGroupDocuments", ownAndTeacherDocuments.ToList());
             }
             return View("ListAllDocuments", context.Documents);
         }
@@ -322,7 +322,6 @@ namespace LexiconLMS.Controllers
         }
 
         // GET: Documents/Delete/5
-        [Authorize(Roles = "lärare")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -340,7 +339,6 @@ namespace LexiconLMS.Controllers
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "lärare")]
         public ActionResult DeleteConfirmed(int id)
         {
             string groupId = "0";

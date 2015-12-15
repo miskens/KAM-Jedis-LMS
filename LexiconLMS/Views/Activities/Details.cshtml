@@ -40,7 +40,7 @@
     }
     @if ((activityId != null && activityId != "0" && User.IsInRole("elev") && Model.Type.ToLower() == "inlämningsuppgift") || User.IsInRole("lärare"))
     {
-        <h1> @Html.ActionLink("Skicka inlämningsuppgift", "Create", "Documents", new { sender = sender, gId = groupId, cId = courseId, aId = Model.Id }, null)</h1>
+        <h3> @Html.ActionLink("Skicka inlämningsuppgift", "Create", "Documents", new { sender = sender, gId = groupId, cId = courseId, aId = Model.Id }, null)</h3>
     }
     <hr />
     <dl class="dl-horizontal">

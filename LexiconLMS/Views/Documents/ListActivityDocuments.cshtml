@@ -1,4 +1,5 @@
 ﻿@using LexiconLMS.Models
+@using Microsoft.AspNet.Identity
 @model IEnumerable<LexiconLMS.Models.Document>
 
 @{
@@ -85,7 +86,7 @@
                     @{ var user = context.Users.Find(item.UserId);}
                     @Html.DisplayFor(modelItem => user.FullName)
                 </td>
-                @if (User.IsInRole("lärare"))
+                @if (User.IsInRole("lärare") || (User.IsInRole("elev") && item.UserId == User.Identity.GetUserId()))
                 {
                     <td>
                         <a href="@Url.Action("Delete", "Documents", new {id = item.Id, gId = group.Id, cId = courseId, aId = activityId }, null)">

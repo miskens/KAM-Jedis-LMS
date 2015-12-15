@@ -35,7 +35,9 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @*@Html.DisplayName("Dokument")*@
+        </th>
+        <th>
+            @*aktivitetstyp, ingen header*@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
@@ -71,6 +73,12 @@
                     <a href="@Url.Action("Index", "Documents", new { gId = groupId, cId = courseId, aId = item.Id }, null)">
                         <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:23px;" />
                     </a>
+                }
+            </td>
+            <td>
+                @if (item.Type.ToLower() == "inlämningsuppgift")
+                {
+                    <mark> @Html.DisplayFor(modelItem => item.Type) </mark>
                 }
             </td>
             <td>

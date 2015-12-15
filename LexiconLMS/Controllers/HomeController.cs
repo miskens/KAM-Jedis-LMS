@@ -147,6 +147,7 @@ namespace LexiconLMS.Controllers
                     Config.AppSettings.Settings["mailSender"];
 
             MailMessage message = new MailMessage();
+            message.IsBodyHtml = false;
             MailAddress sender = new MailAddress("LexiconLMS@lexicon.se");
             MailAddress receiver = new MailAddress("kenneth.forsstrom@hotmail.com");
             if(mailReceiver != null && mailSender != null)
@@ -164,14 +165,13 @@ namespace LexiconLMS.Controllers
             if (user != null && user.GroupId.HasValue)
             {
                 group = context.Groups.Find(user.GroupId);
+                if (user.GroupId.HasValue)
+                {
+                    message.Body = "Nya inlämningsuppgifter har lagts till av " + user.FullName + ".";
+                    message.Body += Environment.NewLine + "Grupp: " + group.Name;
+                }
             }
 
-            message.IsBodyHtml = false;
-            message.Body = "Nya inlämningsuppgifter har lagts till av " + user.FullName + ".";
-            if (user.GroupId.HasValue)
-            {
-                message.Body += Environment.NewLine + "Grupp: " + group.Name;
-            }
             message.Sender = sender;
             message.To.Add(receiver);
             message.From = sender;
