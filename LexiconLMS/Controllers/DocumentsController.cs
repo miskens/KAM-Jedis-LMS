@@ -12,6 +12,7 @@ using System.Web.Security;
 using System.Web.UI.WebControls;
 using System.Net.Mail;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LexiconLMS.Controllers
 {
@@ -24,6 +25,7 @@ namespace LexiconLMS.Controllers
         public ActionResult Index()
         {
             IEnumerable<Document> documents = new List<Document>();
+            List<Document> ownAndTeacherDocuments = new List<Document>();
             string groupId = "0";
             if (Request.RequestContext.RouteData.Values["gId"] != null)
             {
@@ -43,20 +45,59 @@ namespace LexiconLMS.Controllers
                 documents = context.Documents.Where(d => d.ActivityId.ToString() == activityId);
             }
 
+            if (User.IsInRole("elev"))
+            {
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                var userId = "";
+                if (User.Identity.GetUserId() != null && User.Identity.GetUserId() != string.Empty)
+                {
+                    
+                    foreach (var document in documents.ToList())
+                    {
+                        userId = document.UserId;
+                        if (userManager.IsInRole(userId, "lärare"))
+                        {
+                            ownAndTeacherDocuments.Add(document);
+                        }
+                    }
+                    foreach(var doc in documents.ToList())
+                    {
+                        userId = User.Identity.GetUserId();
+                        if (doc.UserId == userId)
+                        {
+                            ownAndTeacherDocuments.Add(doc); 
+                        }
+                    }
+                }
+            }
+
             ViewData["groupId"] = groupId;
             ViewData["courseId"] = courseId;
             ViewData["activityId"] = activityId;
-            if (activityId != "0")
+            if (activityId != "0" && User.IsInRole("lärare"))
             {
                 return View("ListActivityDocuments", documents);
             }
-            if (courseId != "0")
+            else if (activityId != "0" && User.IsInRole("elev"))
+            {
+                return View("ListActivityDocuments", ownAndTeacherDocuments.ToList());
+            }
+            if (courseId != "0" && User.IsInRole("lärare"))
             {
                 return View("ListCourseDocuments", documents);
             }
-            if (groupId != "0")
-            { 
+            else if (courseId != "0" && User.IsInRole("elev"))
+            {
+                return View("ListActivityDocuments", ownAndTeacherDocuments.ToList());
+            }
+            if (groupId != "0" && User.IsInRole("lärare"))
+            {
                 return View("ListGroupDocuments", documents);
+            }
+            else if (groupId != "0" && User.IsInRole("elev"))
+            {
+                return View("ListActivityDocuments", ownAndTeacherDocuments.ToList());
             }
             return View("ListAllDocuments", context.Documents);
         }
@@ -113,44 +154,44 @@ namespace LexiconLMS.Controllers
                 activityId = Request.RequestContext.RouteData.Values["aId"].ToString();
             }
 
-             if (uploadFile.ContentLength == 0)
+            if (uploadFile.ContentLength == 0)
             {
                 ModelState.AddModelError("", "Dokumentet är tomt, försök med ett annat.");
                 return View();
             }
 
-             string strWorkingDirectory = Directory.GetCurrentDirectory();
+            string workingDirectory = Directory.GetCurrentDirectory();
 
-             string fullSubFolderPath = "";
-             if (User.IsInRole("lärare"))
-             {
-                 fullSubFolderPath = strWorkingDirectory + "\\Content\\uploads";
-             }
-             if (User.IsInRole("elev"))
-             { 
-                fullSubFolderPath = strWorkingDirectory + "\\Content\\StudentAssignments";
-             }
-             if (!Directory.Exists(fullSubFolderPath))
-             {
-                 Directory.CreateDirectory(fullSubFolderPath);
-             }
+            string subFolderPath = "";
+            if (User.IsInRole("lärare"))
+            {
+                subFolderPath = workingDirectory + "\\Content\\uploads";
+            }
+            if (User.IsInRole("elev"))
+            {
+                subFolderPath = workingDirectory + "\\Content\\StudentAssignments";
+            }
+            if (!Directory.Exists(subFolderPath))
+            {
+                Directory.CreateDirectory(subFolderPath);
+            }
 
             if (ModelState.IsValid)
             {
                 if (uploadFile.ContentLength > 0)
                 {
                     //var fileName = Path.GetFileName(file.FileName);
-                    
+
                     var path = string.Empty;
                     string fileExtension = uploadFile.FileName.Split('.').Last();
                     var fileName = Path.GetRandomFileName() + '.' + fileExtension;
                     if (User.IsInRole("lärare"))
                     {
-                        path = fullSubFolderPath + "\\" + fileName;
+                        path = subFolderPath + "\\" + fileName;
                     }
                     else
                     {
-                        path = fullSubFolderPath + "\\"+fileName;
+                        path = subFolderPath + "\\" + fileName;
                     }
                     var uploadedDocument = new Document
                     {
@@ -161,7 +202,7 @@ namespace LexiconLMS.Controllers
                         Uri = fileName,
                         UploadTime = DateTime.Now,
                     };
-                    
+
                     // Set only the "important" identification value. ActivityId if the doc is connected to an activity,
                     // else check if it is connected to a course and lastly check if it is connected to a group.
                     // userId (owner) is always set, regardless of it has a connection or not.
@@ -174,13 +215,13 @@ namespace LexiconLMS.Controllers
                         uploadedDocument.CourseId = document.CourseId;
                     }
                     else if (document.GroupId.ToString() != "0")
-                    { 
-                        uploadedDocument.GroupId = document.GroupId; 
+                    {
+                        uploadedDocument.GroupId = document.GroupId;
                     }
 
                     uploadFile.SaveAs(path);
 
-                    context.Documents.Add(uploadedDocument);  
+                    context.Documents.Add(uploadedDocument);
                     context.SaveChanges();
                 }
 
@@ -196,7 +237,7 @@ namespace LexiconLMS.Controllers
                         return RedirectToAction("Index", new { gId = groupId, cId = courseId });
                     }
                     if (groupId != "0")
-                    { 
+                    {
                         return RedirectToAction("Index", new { gId = groupId });
                     }
                 }
@@ -211,7 +252,7 @@ namespace LexiconLMS.Controllers
                 if (sender == "s")      // from user details
                 {
                     return RedirectToAction("Index", "Home");
-            }
+                }
             }
 
             return View(document);
@@ -265,15 +306,15 @@ namespace LexiconLMS.Controllers
 
                 if (activityId != "0")
                 {
-                    return RedirectToAction("Index", "Documents", new {gId = groupId, cId = courseId, aId = activityId});
+                    return RedirectToAction("Index", "Documents", new { gId = groupId, cId = courseId, aId = activityId });
                 }
                 if (courseId != "0")
                 {
-                    return RedirectToAction("Index", "Documents", new {gId = groupId, cId = courseId});
+                    return RedirectToAction("Index", "Documents", new { gId = groupId, cId = courseId });
                 }
                 if (groupId != "0")
                 {
-                    return RedirectToAction("Index", "Documents", new {gId = groupId});
+                    return RedirectToAction("Index", "Documents", new { gId = groupId });
                 }
                 return RedirectToAction("Index", "Documents");
             }
@@ -322,7 +363,7 @@ namespace LexiconLMS.Controllers
             context.Documents.Remove(document);
             context.SaveChanges();
             if (activityId != "0")
-            { 
+            {
                 return RedirectToAction("Index", "Documents", new { gId = groupId, cId = courseId, aId = activityId });
             }
             if (courseId != "0")
@@ -338,14 +379,27 @@ namespace LexiconLMS.Controllers
         }
 
 
-        public FileResult GetFileFromServer(string fileUri, string originalFileName)
+        public FileResult GetFileFromServer(string fileUri, string originalFileName, string userId)
         {
-            //string filePath = Server.MapPath("~/Content/uploads/");
+            string workingDirectory = Directory.GetCurrentDirectory();
 
-            var fileOnDisk = Path.Combine(Server.MapPath("~/Content/uploads/"), fileUri);
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            string subFolderPath = string.Empty;
+            if(userManager.IsInRole(userId, "elev"))
+            { 
+                subFolderPath = workingDirectory + "\\Content\\StudentAssignments\\" + fileUri;
+            }
+            if (userManager.IsInRole(userId, "lärare"))
+            {
+                subFolderPath = workingDirectory + "\\Content\\uploads\\" + fileUri;
+            }
+
+            //var fileOnDisk = Path.Combine(Server.MapPath("~/Content/uploads/"), fileUri);
             string mimeType = MimeMapping.GetMimeMapping(originalFileName);
 
-            return File(fileOnDisk, mimeType, originalFileName);
+            return File(subFolderPath, mimeType, originalFileName);
         }
 
 

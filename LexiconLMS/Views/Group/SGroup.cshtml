@@ -15,7 +15,7 @@
 
     var documents = context.Documents.Where(d => d.GroupId == Model.Id);
 }
-<div class="sg-table-div">
+ <div class="sg-table-div">
     <table>
         <tr>
             @*<td class="sg-table-td1 col-sm-8 col-lg-8">
@@ -36,12 +36,12 @@
                         Grupp: @Html.DisplayFor(model => model.Name)
                         @if (documents.Any())
                         {
-                        <a href="@Url.Action("Index", "Documents", new { gId = Model.Id }, null)">
-                            <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:30px;" />
-                        </a>
+                            <a href="@Url.Action("Index", "Documents", new { gId = Model.Id }, null)">
+                                <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:25px; height:25px;" />
+                            </a>
                         }
-                    </h1>
-                    <h4>@Html.DisplayFor(m => m.StartDate) - @Html.DisplayFor(m => m.EndDate)</h4>
+                    </h3>
+                    <h4>@Html.DisplayFor(m => m.StartDate) -- @Html.DisplayFor(m => m.EndDate)</h4>
                     <hr />
                     <dl class="dl-horizontal">
                         <dt>

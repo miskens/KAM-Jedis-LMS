@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.IO;
+using System.Configuration;
 
 namespace LexiconLMS.Controllers
 {
@@ -42,9 +43,9 @@ namespace LexiconLMS.Controllers
                     ViewBag.GroupEnd = group.EndDate;
 
                     IEnumerable<Course> courses = (from c in context.Courses
-                                                  where c.GroupId == user.GroupId
-                                                  orderby c.StartDate ascending
-                                                  select c).ToList();
+                                                   where c.GroupId == user.GroupId
+                                                   orderby c.StartDate ascending
+                                                   select c).ToList();
 
                     ViewBag.ActiveCourses = courses.Where(c => c.StartDate <= DateTime.Today && c.EndDate >= DateTime.Today);
                     ViewBag.FutureCourses = courses.Where(c => c.StartDate > DateTime.Today);
@@ -54,12 +55,12 @@ namespace LexiconLMS.Controllers
                     ViewBag.HasFutureCourses = courses.Where(c => c.StartDate > DateTime.Today).Count() > 0;
                     ViewBag.HasFinishedCourses = courses.Where(c => c.EndDate < DateTime.Today).Count() > 0;
 
-                    
+
                     IEnumerable<Activity> activities = (from c in context.Courses
-                                                       from a in c.Activities
-                                                       where (c.GroupId == user.GroupId)
-                                                       orderby a.StartDate ascending
-                                                       select a).ToList();
+                                                        from a in c.Activities
+                                                        where (c.GroupId == user.GroupId)
+                                                        orderby a.StartDate ascending
+                                                        select a).ToList();
 
                     ViewBag.ActiveActivities = activities.Where(a => a.StartDate <= DateTime.Today && a.EndDate >= DateTime.Today);
                     ViewBag.FutureActivities = activities.Where(a => a.StartDate > DateTime.Today);
@@ -81,13 +82,13 @@ namespace LexiconLMS.Controllers
                     ViewBag.FutureGroups = groups.Where(g => g.StartDate > DateTime.Today);
                     ViewBag.FinishedGroups = groups.Where(g => g.EndDate < DateTime.Today);
 
-                    ViewBag.HasActiveGroups = groups.Where(g => g.StartDate <= DateTime.Today && 
+                    ViewBag.HasActiveGroups = groups.Where(g => g.StartDate <= DateTime.Today &&
                                                                 g.EndDate >= DateTime.Today).Count() > 0;
                     ViewBag.HasFutureGroups = groups.Where(g => g.StartDate > DateTime.Today).Count() > 0;
                     ViewBag.HasFinishedGroups = groups.Where(g => g.EndDate < DateTime.Today).Count() > 0;
 
-                    
-                    
+
+
                     var courses = context.Courses.ToList();
                     ViewBag.Courses = courses;
                 }
@@ -118,13 +119,12 @@ namespace LexiconLMS.Controllers
 
             string fullSubFolderPath = strWorkingDirectory + "\\Content\\StudentAssignments";
 
-            if(!Directory.Exists(fullSubFolderPath))
-            { 
+            if (!Directory.Exists(fullSubFolderPath))
+            {
                 Directory.CreateDirectory(fullSubFolderPath);
             }
 
             watcher.Path = fullSubFolderPath;
-            watcher.Path = @"C:\Program Files (x86)\IIS Express\Content\StudentAssignments\";
             watcher.NotifyFilter = NotifyFilters.LastWrite;
             watcher.Created += new FileSystemEventHandler(watch_OnCreated);
             watcher.EnableRaisingEvents = true;
@@ -139,20 +139,41 @@ namespace LexiconLMS.Controllers
         {
             SmtpClient client = Functions.ConfigureSmtpClient();
 
+            System.Configuration.Configuration Config =
+                System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(null);
+            System.Configuration.KeyValueConfigurationElement mailReceiver =
+                    Config.AppSettings.Settings["mailReceiver"];
+            System.Configuration.KeyValueConfigurationElement mailSender =
+                    Config.AppSettings.Settings["mailSender"];
+
             MailMessage message = new MailMessage();
-            MailAddress receiver = new MailAddress("miskens@hotmail.com");
             MailAddress sender = new MailAddress("LexiconLMS@lexicon.se");
+            MailAddress receiver = new MailAddress("kenneth.forsstrom@hotmail.com");
+            if(mailReceiver != null && mailSender != null)
+            { 
+                receiver = new MailAddress(mailReceiver.Value);
+                sender = new MailAddress(mailSender.Value);
+            }
+            ApplicationUser user = new ApplicationUser();
+            if(userId != null || userId != string.Empty)
+            { 
+                user = context.Users.Find(userId);
+            }
+            var group = new Group();
 
-            
-            ApplicationUser user = context.Users.Find(userId);
+            if (user != null && user.GroupId.HasValue)
+            {
+                group = context.Groups.Find(user.GroupId);
+            }
 
-            var group = context.Groups.Find(user.GroupId);
-
+            message.IsBodyHtml = false;
+            message.Body = "Nya inlämningsuppgifter har lagts till av " + user.FullName + ".";
+            if (user.GroupId.HasValue)
+            {
+                message.Body += Environment.NewLine + "Grupp: " + group.Name;
+            }
             message.Sender = sender;
             message.To.Add(receiver);
-            message.IsBodyHtml = false;
-            message.Body = "Nya inlämningsuppgifter har lagts till av " + user.FullName + "." + Environment.NewLine + 
-                                "Grupp: " + group.Name;
             message.From = sender;
             message.Subject = "Inkomna inlämningsuppgifter";
 

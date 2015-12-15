@@ -17,7 +17,7 @@
     var groupMembers = context.Users.Where(u => u.GroupId == user.GroupId);
 }
 
-<h2>Dina gruppmedlemmar</h2>
+<h3>Gruppmedlemmar i @context.Groups.Find(user.GroupId).Name</h3>
 
 <table class="table">
     <tr>
