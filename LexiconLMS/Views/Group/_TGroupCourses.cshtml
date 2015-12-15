@@ -35,7 +35,7 @@
             @Html.DisplayNameFor(model => model.EndDate)
         </th>
         <th>
-            @Html.DisplayName("Dokument")
+            
         </th>
         <th></th>
         <th></th>
@@ -44,13 +44,13 @@
     @foreach (var item in Model)
     {
         var shortDescription = "";
-        if (item.Description.Length > 35)
+        if (item.Description.Length > 30)
         {
-            shortDescription = item.Description.Substring(0, 35) + "...";
+            shortDescription = item.Description.Substring(0, 25) + "...";
         }
         else
         {
-            shortDescription = item.Description + "...";
+            shortDescription = item.Description; 
         }
         var documents = context.Documents.Where(d => d.CourseId == item.Id);
         <tr>

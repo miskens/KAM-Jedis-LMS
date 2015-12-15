@@ -172,9 +172,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201512141040056_virtualDocStuff.cs" />
-    <Compile Include="Migrations\201512141040056_virtualDocStuff.Designer.cs">
-      <DependentUpon>201512141040056_virtualDocStuff.cs</DependentUpon>
+    <Compile Include="Migrations\201512150835074_lastupdates.cs" />
+    <Compile Include="Migrations\201512150835074_lastupdates.Designer.cs">
+      <DependentUpon>201512150835074_lastupdates.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -304,6 +304,7 @@
     <Content Include="Views\Documents\ListCourseDocuments.cshtml" />
     <Content Include="Views\Documents\ListActivityDocuments.cshtml" />
     <Content Include="Views\Documents\ListAllDocuments.cshtml" />
+    <Content Include="Views\Group\SGroup - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -320,8 +321,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512141040056_virtualDocStuff.resx">
-      <DependentUpon>201512141040056_virtualDocStuff.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512150835074_lastupdates.resx">
+      <DependentUpon>201512150835074_lastupdates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

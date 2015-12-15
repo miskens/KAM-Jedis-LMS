@@ -17,14 +17,14 @@
     var groupMembers = context.Users.Where(u => u.GroupId == user.GroupId);
 }
 
-<h2>Dina gruppmedlemmar</h2>
+<h3>Gruppmedlemmar i @context.Groups.Find(user.GroupId).Name</h3>
 
 <table class="table">
     <tr>
-        <th>
+        <th class=" col-sm-5">
             @Html.Raw("Namn")
         </th>
-        <th>
+        <th class="col-sm-7">
             @Html.Raw("E-postaddress")
         </th>
     </tr>
@@ -32,10 +32,10 @@
     @foreach (var item in groupMembers)
     {
         <tr>
-            <td>
-                @Html.ActionLink((string) item.FullName, "Details", "Users", new {id = item.Id, sender = "g"}, null)
+            <td class=" col-sm-5">
+                @Html.ActionLink((string)item.FullName, "Details", "Users", new { id = item.Id, sender = "g" }, null)
             </td>
-            <td class="sgm-td2">
+            <td class="sgm-td2 col-sm-7">
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
         </tr>

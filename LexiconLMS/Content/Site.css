@@ -68,6 +68,7 @@ textarea {
     background-color:rgb(212, 250, 212);
 }
 
+.coursedescription,
 .activity {
     font-style:italic;
 }
@@ -99,10 +100,12 @@ textarea {
     font-style:italic;
 }
 
+.hasactivities,
 .hascourses {
     font-weight:600;
 }
 
+.activitydate,
 .coursedate {
     font-size:smaller;
 }
@@ -126,8 +129,9 @@ textarea {
 }
 
 .sg-table-td1 {
+    margin-top: 0px;
     padding-right: 100px; 
-    width: 70%;
+    /*width: 70%;*/
 }
 .sg-td1-div1 {
     padding-bottom: 20px;
@@ -144,7 +148,7 @@ textarea {
     border-left-style: solid; 
     border-left-width: thin; 
     border-left-color: red; 
-    width: 40%;
+    /*width: 40%;*/
 }
 .sgm-td2 {
     width: 20%;
