@@ -6,16 +6,35 @@
     ApplicationDbContext context = new ApplicationDbContext();
     ViewBag.Title = "ListGroupDocuments";
 
-    var groupId = ViewData["groupId"].ToString();
-    var gId = Int32.Parse(groupId);
-    Group group = context.Groups.Find(gId);
-    ViewData["gId"] = group.Id;
+    var activityId = ViewData["activityId"].ToString();
+    Activity activity = new Activity();
+    if (activityId != null && activityId != "0")
+    {
+        var aId = Int32.Parse(activityId);
+        activity = context.Activities.Find(aId);
+        ViewData["aId"] = activity.Id;
+    }
+    var courseId = ViewData["courseId"].ToString();
+    Course course = new Course();
+    if (courseId != null && activityId != "0")
+    {
+        var cId = Int32.Parse(courseId);
+        course = context.Courses.Find(cId);
+        ViewData["cId"] = course.Id;
+    }
+    var groupId = course.GroupId;
+    Group group = new Group();
+    if (group.Id != null && activityId != "0")
+    {
+        group = context.Groups.Find(groupId);
+        ViewData["gId"] = group.Id;
+    }
 }
 
 <h2>Dokument för grupp @group.Name</h2>
 
 <p>
-    @Html.ActionLink("Tillbaka", "Details", "Group", new {id = group.Id}, null)
+    @Html.ActionLink("Tillbaka", "Details", "Group", new { id = group.Id }, null)
 </p>
 <table class="table">
     <tr>
@@ -42,11 +61,11 @@
     {
         <tr>
             <td>
-                @Html.ActionLink((string) item.OriginalFileName, "Details", new {id = item.Id, gId = group.Id})
+                @Html.ActionLink((string)item.OriginalFileName, "Details", new { id = item.Id, gId = group.Id })
             </td>
             <td>
                 <a href="@Url.Action("GetFileFromServer", "Documents", new {fileUri = item.Uri, originalFileName = item.OriginalFileName, userId = item.UserId }, null)">
-                    <img src="@Url.Content("~/Content/Images/download.png")" style="width: 20px; height: 20px;"/>
+                    <img src="@Url.Content("~/Content/Images/download.png")" style="width: 20px; height: 20px;" />
                 </a>
             </td>
             <td>
@@ -62,25 +81,29 @@
                 @{ var user = context.Users.Find(item.UserId);}
                 @Html.DisplayFor(modelItem => user.FullName)
             </td>
+            @if (User.IsInRole("lärare"))
+            {
+                <td>
+                    <a href="@Url.Action("Edit", "Documents", new {id = item.Id, gId = group.Id}, null)">
+                        <img src="@Url.Content("~/Content/Images/edit.png")" style="width: 20px; height: 20px;" />
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Delete", "Documents", new {id = item.Id, gId = group.Id}, null)">
+                        <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 15px; height: 15px;" />
+                    </a>
+                </td>
+            }
+        </tr>
+    }
+    @if ((activityId != null && activityId != "0" && User.IsInRole("elev") && activity.Type.ToLower() == "inlämningsuppgift") || User.IsInRole("lärare"))
+    {
+        <tr>
             <td>
-                <a href="@Url.Action("Edit", "Documents", new {id = item.Id, gId = group.Id}, null)">
-                    <img src="@Url.Content("~/Content/Images/edit.png")" style="width: 20px; height: 20px;" />
-                </a>
-            </td>
-            <td>
-                <a href="@Url.Action("Delete", "Documents", new {id = item.Id, gId = group.Id}, null)">
-                    <img src="@Url.Content("~/Content/Images/delete.png")" style="width: 15px; height: 15px;"/>
+                <a href="@Url.Action("Create", "Documents", new { sender = "g", gId = group.Id }, null)">
+                    <img src="@Url.Content("~/Content/Images/create.png")" style="width:25px; height:25px;" />
                 </a>
             </td>
         </tr>
     }
-    <tr>
-        <td>
-            <a href="@Url.Action("Create", "Documents", new { sender = "g", gId = group.Id }, null)">
-                <img src="@Url.Content("~/Content/Images/create.png")" style="width:25px; height:25px;" />
-            </a>
-        </td>
-    </tr>
-
 </table>
-
