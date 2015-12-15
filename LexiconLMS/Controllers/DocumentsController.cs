@@ -89,7 +89,7 @@ namespace LexiconLMS.Controllers
             }
             else if (courseId != "0" && User.IsInRole("elev"))
             {
-                return View("ListActivityDocuments", ownAndTeacherDocuments.ToList());
+                return View("ListCourseDocuments", ownAndTeacherDocuments.ToList());
             }
             if (groupId != "0" && User.IsInRole("lärare"))
             {
@@ -97,7 +97,7 @@ namespace LexiconLMS.Controllers
             }
             else if (groupId != "0" && User.IsInRole("elev"))
             {
-                return View("ListActivityDocuments", ownAndTeacherDocuments.ToList());
+                return View("ListGroupDocuments", ownAndTeacherDocuments.ToList());
             }
             return View("ListAllDocuments", context.Documents);
         }

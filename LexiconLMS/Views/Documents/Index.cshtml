@@ -8,6 +8,28 @@
     var courseId = ViewData["courseId"];
     var activityId = ViewData["activityId"];
 
+    if (groupId == null || groupId == "0")
+    {
+        if (Request.RequestContext.RouteData.Values["gId"] != null)
+        {
+            groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
+        } 
+    }
+    if (courseId == null || courseId == "0")
+    {
+        if (Request.RequestContext.RouteData.Values["cId"] != null)
+        {
+            courseId = Request.RequestContext.RouteData.Values["cId"].ToString();
+        }
+    }
+    if (activityId == null || activityId == "0")
+    {
+        if (Request.RequestContext.RouteData.Values["aId"] != null)
+        {
+            activityId = Request.RequestContext.RouteData.Values["aId"].ToString();
+        }
+    }
+
     ApplicationDbContext context = new ApplicationDbContext();
 }
 
