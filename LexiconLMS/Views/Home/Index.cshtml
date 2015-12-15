@@ -1,5 +1,8 @@
-﻿@{
+﻿@using LexiconLMS.Models
+
+@{
     ViewBag.Title = "Startsida";
+    ApplicationDbContext context = new ApplicationDbContext();
 }
 
 @if (!(User.Identity.IsAuthenticated))
@@ -174,7 +177,7 @@ else
         {
             // Group student is in, listed along with courses and activities
 
-            <div class="col-sm-4 col-md-5 col-lg-6 col-md-push-2 col-lg-push-3">
+            <div class="col-sm-5 col-md-5 col-lg-6 col-md-push-2 col-lg-push-3 highlight_background">
                 @if (ViewBag.HasActiveCourses)
                 {
                     <div class="hascourses">
@@ -208,8 +211,11 @@ else
                                     <div class="activityname">
                                         @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s" }, null)
                                     </div>
+                                    var group = context.Groups.Find(course.GroupId);
+                                    var courseName = context.Courses.Find(activity.CourseId).Name;
                                     <div class="activitydate">
-                                        @activity.StartDate.Date.ToString("d") -- @activity.EndDate.Date.ToString("d")
+                                        @activity.StartDate.Date.ToString("d") -- @activity.EndDate.Date.ToString("d"),
+                                        (Kurs: @Html.ActionLink((string)courseName, "Details", "Courses", new { id = activity.CourseId, sender = "s", gId = group.Id }, null))
                                     </div>
                                     <div class="activity">
                                         @activity.Description
@@ -252,8 +258,11 @@ else
                                 <div class="activityname">
                                     @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s" }, null)
                                 </div>
+                                var group = context.Groups.Find(course.GroupId);
+                                var courseName = context.Courses.Find(activity.CourseId).Name;
                                 <div class="activitydate">
-                                    @activity.StartDate.Date.ToString("d") -- @activity.EndDate.Date.ToString("d")
+                                    @activity.StartDate.Date.ToString("d") -- @activity.EndDate.Date.ToString("d"),
+                                    (Kurs: @Html.ActionLink((string)courseName, "Details", "Courses", new { id = activity.CourseId, sender = "s", gId = group.Id }, null))
                                 </div>
                                 <div class="activity">
                                     @activity.Description
@@ -284,9 +293,9 @@ else
                         <div class="coursedate">
                             @course.StartDate.Date.ToString("d") -- @course.EndDate.Date.ToString("d")
                         </div>
-    <div class="coursedescription">
-        @course.Description
-    </div>
+                        <div class="coursedescription">
+                            @course.Description
+                        </div>
                         <br />
 
                         if (ViewBag.HasFinishedActivities)
@@ -301,8 +310,11 @@ else
                                     <div class="activityname">
                                         @Html.ActionLink((string)activity.Name, "Details", "Activities", new { id = activity.Id, sender = "s" }, null)
                                     </div>
+                                    var group = context.Groups.Find(course.GroupId);
+                                    var courseName = context.Courses.Find(activity.CourseId).Name;
                                     <div class="activitydate">
-                                        @activity.StartDate.Date.ToString("d") -- @activity.EndDate.Date.ToString("d")
+                                        @activity.StartDate.Date.ToString("d") -- @activity.EndDate.Date.ToString("d"),
+                                        (Kurs: @Html.ActionLink((string)courseName, "Details", "Courses", new { id = activity.CourseId, sender = "s", gId = group.Id }, null))
                                     </div>
                                     <div class="activity">
                                         @activity.Description
@@ -316,7 +328,7 @@ else
                 }
             </div>
 
-            <div class="col-sm-4 col-md-2 col-lg-3 col-md-pull-10 col-lg-pull-9 highlight_background">
+            <div class="col-sm-3 col-md-2 col-lg-3 col-md-pull-10 col-lg-pull-9 ">
                 <div class="groupname">
                     Grupp: @Html.ActionLink((string)ViewBag.Group, "Details", "Group", new { id = ViewBag.GroupId, sender = "s" }, null)
                 </div>
