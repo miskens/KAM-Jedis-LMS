@@ -18,14 +18,21 @@
  <div class="sg-table-div">
     <table>
         <tr>
-            <td class="sg-table-td1 col-sm-8 col-lg-8">
-                <div class="sg-td1-div2">
+            @*<td class="sg-table-td1 col-sm-8 col-lg-8">
+                     *@<td/>
+                <td class="col-sm-8">
+                @*<div class="sg-td1-div2">
+                    </div>*@
+                <div>
                     @Html.Partial("_SGroupMembers", groupMembers)
                 </div>
                 <br />
                 <br />
-                <div class="sg-td1-div1">
-                    <h3>
+                @*<div class="sg-td1-div1">
+                    </div>*@
+                    <div>
+
+                    <h1>
                         Grupp: @Html.DisplayFor(model => model.Name)
                         @if (documents.Any())
                         {
@@ -46,7 +53,9 @@
                     </dl>
                 </div>
             </td>
-            <td class="sg-table-td2 col-sm-4">
+            @*<td class="sg-table-td2 col-sm-4">
+                    *@<td/>
+            <td class="= col-sm-4">
                 @Html.Partial("_SGroupCourses", courses)
             </td>
         </tr>

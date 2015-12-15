@@ -10,17 +10,16 @@
 <div class="sgc-div1">
     <table class="table">
         <tr>
-            <th class="col-sm-6">
+            <th class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th class="col-sm-3">
+            <th class="col-sm-2">
                 @Html.DisplayName("Dokument")
             </th>
-            <th>
+            <th class="col-sm-6">
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
-            <th class="col-sm-3">
+            <th class="col-sm-2">
                 @Html.DisplayNameFor(model => model.StartDate)
             </th>
         </tr>
@@ -38,10 +37,10 @@
             }
             var documents = context.Documents.Where(d => d.CourseId == item.Id);
             <tr>
-                <td class="col-sm-6">
-                    @Html.ActionLink((string) item.Name, "Details", "Courses", new {id = item.Id, sender = "g", gId = item.GroupId}, null)
+                <td class="col-sm-2">
+                    @Html.ActionLink((string)item.Name, "Details", "Courses", new { id = item.Id, sender = "g", gId = item.GroupId }, null)
                 </td>
-                <td class="col-sm-3">
+                <td class="col-sm-2">
                     @if (documents.Any())
                     {
                         <a href="@Url.Action("Index", "Documents", new { gId = item.GroupId, cId = item.Id }, null)">
@@ -49,10 +48,11 @@
                         </a>
                     }
                 </td>
-                <td>
+                <td class="col-sm-6">
                     @Html.Raw(shortDescription)
                 </td>
-                <td class="sgc-table-td2 col-sm-3">
+                
+                <td class="col-sm-2">
                     @Html.DisplayFor(modelItem => item.StartDate)
                 </td>
             </tr>
