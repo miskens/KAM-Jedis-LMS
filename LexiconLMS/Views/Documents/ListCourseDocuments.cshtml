@@ -49,7 +49,7 @@
             @Html.ActionLink((string) item.OriginalFileName, "Details", "Documents", new {id = item.Id, gId = groupId, cId = courseId}, null)
         </td>
         <td>
-            <a href="@Url.Action("GetFileFromServer", "Documents", new {fileUri = item.Uri, originalFileName = item.OriginalFileName}, null)">
+            <a href="@Url.Action("GetFileFromServer", "Documents", new {fileUri = item.Uri, originalFileName = item.OriginalFileName, userId = item.UserId}, null)">
                 <img src="@Url.Content("~/Content/Images/download.png")" style="width: 15px; height: 15px;" />
             </a>
         </td>
