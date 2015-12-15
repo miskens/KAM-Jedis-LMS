@@ -87,11 +87,11 @@ namespace LexiconLMS.Migrations
                 new Activity { Name = "Lexicon LMS", Description = "Skapa produktbacklogg med ägaren, planera upp sprintbackloggar", Type = "inlämningsuppgift", StartDate = new DateTime(2015, 12, 02), EndDate = new DateTime(2015, 12, 02), CourseId = 22 },
                 new Activity { Name = "Sprint övning", Description = "Sprint 'Review' och 'Retrospective' mm", Type = "rapportering", StartDate = new DateTime(2015, 12, 09), EndDate = new DateTime(2015, 12, 09), CourseId = 22 },
                 new Activity { Name = "Scrum projekt", Description = "'Köra' veckovisa sprintar för att skapa Lexicons LMS, göra demostrationer och återblickar samt förbättringar", Type = "inlämningsuppgift", StartDate = new DateTime(2015, 12, 01), EndDate = new DateTime(2015, 12, 17), CourseId = 22 },
-                new Activity { Name = "Scrum avslutning", Description = "Slutdemonstration av produkten inför 'productowners && users'", Type = "rapportering", StartDate = new DateTime(2015, 12, 18), EndDate = new DateTime(2015, 12, 18), CourseId = 22 },
+                new Activity { Name = "Scrum Postgame", Description = "Slutdemonstration av produkten inför 'productowners && users' samt överlämning av dokument", Type = "inlämningsuppgift", StartDate = new DateTime(2015, 12, 18), EndDate = new DateTime(2015, 12, 18), CourseId = 22 },
                 new Activity { Name = "C# för den allvetande", Description = shortLorem, Type = "inlämningsuppgift", StartDate = new DateTime(2015, 11, 11), EndDate = new DateTime(2015, 11, 19), CourseId = 13 }
                 );
             context.SaveChanges();
-
+            
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
 

@@ -164,6 +164,12 @@ textarea {
     color:red;
 }
 
+.leftBorder{
+    border-left-color:red;
+    border-left-style:solid;
+    border-left-width:1px;
+}
+
 .lateUsersTable{
     width:50%;
 }

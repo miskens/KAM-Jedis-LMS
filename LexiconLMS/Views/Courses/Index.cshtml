@@ -30,12 +30,21 @@
     </tr>
 
 @foreach (var item in Model) {
+    var shortDescription = "";
+    if (item.Description.Length > 123)
+    {
+        shortDescription = item.Description.Substring(0, 102) + " ....";
+    }
+    else
+    {
+        shortDescription = item.Description;
+    }
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @Html.Raw(shortDescription)
         </td>
         <td>
             @item.StartDate.ToShortDateString()

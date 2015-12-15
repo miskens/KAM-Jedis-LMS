@@ -6,15 +6,15 @@
     ViewBag.Title = "_SGroupCourses";
 }
 
-<h4>Kurser</h4>
-<div class="sgc-div1">
+<h3>Kurser</h3>
+<div>
     <table class="table">
         <tr>
             <th class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th class="col-sm-2">
-                @Html.DisplayName("Dokument")
+                @Html.DisplayName(" ")
             </th>
             <th class="col-sm-6">
                 @Html.DisplayNameFor(model => model.Description)
@@ -51,7 +51,7 @@
                 <td class="col-sm-6">
                     @Html.Raw(shortDescription)
                 </td>
-                
+
                 <td class="col-sm-2">
                     @Html.DisplayFor(modelItem => item.StartDate)
                 </td>
