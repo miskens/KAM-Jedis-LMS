@@ -89,13 +89,20 @@
 }
 
 <div>
-    @if (sender == "g")
+    @if (@User.IsInRole("elev"))
     {
-        @Html.ActionLink("Tillbaka", "Index", new { gId = groupId, cId = courseId }, null)
+        @Html.ActionLink("Tillbaka", "Details", "Users", new { id = User.Identity.GetUserId(), sender = sender }, null)
     }
     else
-    {
-        @Html.ActionLink("Tillbaka", "Index")
+    { 
+        if (sender == "g")
+        {
+            @Html.ActionLink("Tillbaka", "Index", new { gId = groupId, cId = courseId }, null)
+        }
+        else
+        {
+            @Html.ActionLink("Tillbaka", "Index")
+        }
     }
 </div>
 
