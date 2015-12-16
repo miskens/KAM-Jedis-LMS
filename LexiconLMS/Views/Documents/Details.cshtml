@@ -44,7 +44,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.ActionLink(Model.OriginalFileName, "GetFileFromServer", "Documents", new { fileUri = Model.Uri, originalFileName = Model.OriginalFileName })
+            @Html.DisplayNameFor(model => model.OriginalFileName)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.OriginalFileName)
