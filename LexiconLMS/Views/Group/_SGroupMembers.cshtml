@@ -14,30 +14,33 @@
     var currentUserId = User.Identity.GetUserId();
     var user = userManager.Users.FirstOrDefault(u => u.Id == currentUserId);
 
-    var groupMembers = context.Users.Where(u => u.GroupId == user.GroupId);
+    var groupMembers = context.Users.Where(u => u.GroupId == user.GroupId && u.Active == true);
 }
 
-<h3>Gruppmedlemmar i @context.Groups.Find(user.GroupId).Name</h3>
+<div ng-app="">
+    <h3><a href="" ng-click="showme=true">Gruppmedlemmar i @context.Groups.Find(user.GroupId).Name</a></h3>
 
-<table class="table">
-    <tr>
-        <th class=" col-sm-5">
-            @Html.Raw("Namn")
-        </th>
-        <th class="col-sm-7">
-            @Html.Raw("E-postaddress")
-        </th>
-    </tr>
 
-    @foreach (var item in groupMembers)
-    {
+    <table class="table" >
         <tr>
-            <td class=" col-sm-5">
-                @Html.ActionLink((string)item.FullName, "Details", "Users", new { id = item.Id, sender = "g" }, null)
-            </td>
-            <td class="col-sm-7">
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
+            <th class=" col-sm-5">
+                @Html.Raw("Namn")
+            </th>
+            <th class="col-sm-7">
+                @Html.Raw("E-postaddress")
+            </th>
         </tr>
-    }
-</table>
+
+        @foreach (var item in groupMembers)
+        {
+            <tr>
+                <td class=" col-sm-5">
+                    @Html.ActionLink((string)item.FullName, "Details", "Users", new { id = item.Id, sender = "g" }, null)
+                </td>
+                <td class="col-sm-7">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+            </tr>
+        }
+    </table>
+</div>

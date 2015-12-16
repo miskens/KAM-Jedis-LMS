@@ -14,62 +14,65 @@
     ViewData["groupId"] = Model.Id.ToString();
 
     var documents = context.Documents.Where(d => d.GroupId == Model.Id);
+
+    var desc = string.Empty;
+    if (Model.Description.Length > 100)
+    {
+        desc = Model.Description.Substring(0, 100) + "...";
+    }
+    else
+    {
+        desc = Model.Description;
+    }
 }
 
-<div class="sg-table-div">
-    <table>
-        <tr>
-            <td class="sg-table-td1">
-                <div class="sg-td1-div1">
-                    <h1>
-                        Grupp: @Html.DisplayFor(model => model.Name)
-                            <a href="@Url.Action("Edit", "Group", new {id = Model.Id, sender= "g", gId = Model.Id}, null)">
-                                <img src="@Url.Content("~/Content/Images/edit.png")" style="width: 30px; height: 30px;" />
-                            </a>
-                        @if (documents.Any())
-                        {
-                            <a href="@Url.Action("Index", "Documents", new { gId = Model.Id }, null)">
-                                <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:30px;" />
-                            </a>
-                        }
-                    </h1>
-                    <h4>@Html.DisplayFor(m => m.StartDate) - @Html.DisplayFor(m => m.EndDate)</h4>
-                    <hr />
-                    <dl class="dl-horizontal">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Name)
-                        </dt>
+<div class="groupDiv">
+    <h1>
+        Grupp: @Html.DisplayFor(model => model.Name)
+        <a href="@Url.Action("Edit", "Group", new {id = Model.Id, sender= "g", gId = Model.Id}, null)">
+            <img src="@Url.Content("~/Content/Images/edit.png")" style="width: 30px; height: 30px;" />
+        </a>
+        @if (documents.Any())
+        {
+            <a href="@Url.Action("Index", "Documents", new { gId = Model.Id }, null)">
+                <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:30px; height:30px;" />
+            </a>
+        }
+    </h1>
+    <h4>@Html.DisplayFor(m => m.StartDate) - @Html.DisplayFor(m => m.EndDate)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.Name)
-                        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
 
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Description)
-                        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.Description)
-                        </dd>
-                    </dl>
-                </div>
-                <p>
-                    @Html.ActionLink("Till grupper", "Index")
-                    @if (User.IsInRole("lärare"))
-                    {
-                        @Html.Raw(" | ")
-                        @Html.ActionLink("Lägg till gruppdokument", "Create", "Documents", new { sender = "g", gId = Model.Id }, null)
-                    }
-                </p>
-                <br />
-                <br />
-                <div class="sg-td1-div2">
-                    @Html.Partial("_TGroupMembers", groupMembers, ViewData)
-                </div>
-            </td>
-            <td class="sg-table-td2">
-                @Html.Partial("_TGroupCourses", courses, ViewData)
-            </td>
-        </tr>
-    </table>
+        <dd>
+            @Html.Raw(desc)
+        </dd>
+    </dl>
+    <p>
+        @Html.ActionLink("Till grupper", "Index")
+        @if (User.IsInRole("lärare"))
+        {
+            @Html.Raw(" | ")
+            @Html.ActionLink("Lägg till gruppdokument", "Create", "Documents", new { sender = "g", gId = Model.Id }, null)
+        }
+    </p>
+</div>
+<br />
+<div class="col-sm-12 groupPartialsDiv">
+    <div class=" col-sm-7 groupcoursesDiv">
+        @Html.Partial("_TGroupCourses", courses)
+    </div>
+    <div class="col-sm-5 groupmembersDiv">
+        @Html.Partial("_TGroupMembers", groupMembers)
+    </div>
 </div>

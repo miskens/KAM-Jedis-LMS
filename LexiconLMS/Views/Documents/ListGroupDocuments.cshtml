@@ -22,8 +22,12 @@
         course = context.Courses.Find(cId);
         ViewData["cId"] = course.Id;
     }
-    var groupId = course.GroupId;
+    var groupId = string.Empty;
     Group group = new Group();
+    if (Request.RequestContext.RouteData.Values["gId"] != null)
+    {
+        groupId = Request.RequestContext.RouteData.Values["gId"].ToString();
+    }
     if (group.Id != null && activityId != "0")
     {
         group = context.Groups.Find(groupId);
@@ -34,7 +38,7 @@
 <h2>Dokument för grupp @group.Name</h2>
 
 <p>
-    @Html.ActionLink("Tillbaka", "Details", "Group", new { id = group.Id }, null)
+    @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
 </p>
 <table class="table">
     <tr>
@@ -61,7 +65,7 @@
     {
         <tr>
             <td>
-                @Html.ActionLink((string)item.OriginalFileName, "Details", new { id = item.Id, gId = group.Id })
+                @Html.ActionLink((string)item.OriginalFileName, "Details", new { id = item.Id, gId = groupId })
             </td>
             <td>
                 <a href="@Url.Action("GetFileFromServer", "Documents", new {fileUri = item.Uri, originalFileName = item.OriginalFileName, userId = item.UserId }, null)">

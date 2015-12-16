@@ -173,3 +173,28 @@ textarea {
 .lateUsersTable{
     width:50%;
 }
+
+.body-content{
+    /*margin:0;*/
+    background-image: url("images/mittgradljus.png");
+    background-size: contain;
+}
+
+.groupDiv{
+    border-bottom-color:red;
+    border-bottom-width:thin; 
+    border-bottom-style:solid; 
+    padding-bottom:60px;
+}
+
+.groupmembersDiv{
+    position:relative;
+}
+
+.groupcoursesDiv{
+    position:relative;
+}
+
+.groupPartialsDiv{
+    padding-top:30px;
+}

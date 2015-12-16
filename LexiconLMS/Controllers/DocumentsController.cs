@@ -52,7 +52,7 @@ namespace LexiconLMS.Controllers
                 var userId = "";
                 if (User.Identity.GetUserId() != null && User.Identity.GetUserId() != string.Empty)
                 {
-                    
+
                     foreach (var document in documents.ToList())
                     {
                         userId = document.UserId;
@@ -61,12 +61,12 @@ namespace LexiconLMS.Controllers
                             ownAndTeacherDocuments.Add(document);
                         }
                     }
-                    foreach(var doc in documents.ToList())
+                    foreach (var doc in documents.ToList())
                     {
                         userId = User.Identity.GetUserId();
                         if (doc.UserId == userId)
                         {
-                            ownAndTeacherDocuments.Add(doc); 
+                            ownAndTeacherDocuments.Add(doc);
                         }
                     }
                 }
@@ -383,20 +383,23 @@ namespace LexiconLMS.Controllers
 
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
+            string mimeType = string.Empty;
 
             string subFolderPath = string.Empty;
-            if(userManager.IsInRole(userId, "elev"))
-            { 
-                subFolderPath = workingDirectory + "\\Content\\StudentAssignments\\" + fileUri;
-            }
-            if (userManager.IsInRole(userId, "lärare"))
+            if (userId != null && originalFileName != null)
             {
-                subFolderPath = workingDirectory + "\\Content\\uploads\\" + fileUri;
+                if (userManager.IsInRole(userId, "elev"))
+                {
+                    subFolderPath = workingDirectory + "\\Content\\StudentAssignments\\" + fileUri;
+                }
+                if (userManager.IsInRole(userId, "lärare"))
+                {
+                    subFolderPath = workingDirectory + "\\Content\\uploads\\" + fileUri;
+                }
+                mimeType = MimeMapping.GetMimeMapping(originalFileName);
             }
-
             //var fileOnDisk = Path.Combine(Server.MapPath("~/Content/uploads/"), fileUri);
-            string mimeType = MimeMapping.GetMimeMapping(originalFileName);
-
+            
             return File(subFolderPath, mimeType, originalFileName);
         }
 

@@ -34,8 +34,7 @@
     var lateUsersInThisGroup = new List<ApplicationUser>();
     foreach(var doc in Model)
     {
-        lateUsers = context.Users.Where(u => u.Id != doc.UserId).ToList();
-        lateUsersInThisGroup = lateUsers.Where(u => u.GroupId == groupId).ToList();
+        lateUsers = context.Users.Where(u => u.Id != doc.UserId && u.Active == true && u.GroupId == groupId).ToList();
     }
 }
 
@@ -119,7 +118,7 @@
         </th>
     </tr>
 
-    @foreach (var user in lateUsersInThisGroup)
+    @foreach (var user in lateUsers)
     {
         if (user != null)
         {

@@ -14,10 +14,19 @@
     var courses = context.Courses.Where(c => c.GroupId == Model.Id);
 
     var documents = context.Documents.Where(d => d.GroupId == Model.Id);
+    var desc = string.Empty;
+    if (Model.Description.Length > 100)
+    {
+        desc = Model.Description.Substring(0, 100) + "...";
+    }
+    else
+    {
+        desc = Model.Description;
+    }
 }
-<div>
+<div class="groupDiv">
     <h2>
-        Grupp:  @Html.DisplayFor(model => model.Name)
+        Grupp: @Html.ActionLink((string)Model.Name, "Group")
         @if (documents.Any())
         {
             <a href="@Url.Action("Index", "Documents", new { gId = Model.Id }, null)">
@@ -33,16 +42,16 @@
             @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            @Html.Raw(desc)
         </dd>
     </dl>
-    <br />
 </div>
-<div>
-    <div class="col-sm-7">
+<br />
+<div class="col-sm-12 groupPartialsDiv">
+    <div class=" col-sm-7 groupcoursesDiv">
         @Html.Partial("_SGroupCourses", courses)
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-5 groupmembersDiv">
         @Html.Partial("_SGroupMembers", groupMembers)
     </div>
 </div>
