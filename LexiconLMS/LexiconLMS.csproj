@@ -172,11 +172,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201512161617121_init.cs" />
-    <Compile Include="Migrations\201512161617121_init.Designer.cs">
-      <DependentUpon>201512161617121_init.cs</DependentUpon>
+    <Compile Include="Migrations\Configuration.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\Document.cs" />
@@ -193,6 +191,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap - Copy.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\create.png" />
@@ -239,6 +238,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ProjectDocuments\LexiconLMS WIREFRAME.pdf" />
     <Content Include="ProjectDocuments\Lexicon LMS Entitets.pdf" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1102,11 +1102,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512161617121_init.resx">
-      <DependentUpon>201512161617121_init.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
