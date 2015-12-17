@@ -28,10 +28,12 @@ namespace LexiconLMS.Controllers
 
                 var currentUserId = User.Identity.GetUserId();
                 var user = userManager.Users.FirstOrDefault(u => u.Id == currentUserId);
-                ViewBag.FullName = user.FullName;
-
-                userId = user.Id;
-                ViewBag.UserId = user.Id;
+                if (user.FullName != null)
+                { 
+                    ViewBag.FullName = user.FullName;
+                }
+                userId = User.Identity.GetUserId();
+                ViewBag.UserId = userId;
 
                 if (User.IsInRole("elev"))
                 {
@@ -94,6 +96,7 @@ namespace LexiconLMS.Controllers
                 }
             }
 
+
             return View();
 
         }
@@ -150,14 +153,14 @@ namespace LexiconLMS.Controllers
             message.IsBodyHtml = false;
             MailAddress sender = new MailAddress("LexiconLMS@lexicon.se");
             MailAddress receiver = new MailAddress("kenneth.forsstrom@hotmail.com");
-            if(mailReceiver != null && mailSender != null)
-            { 
+            if (mailReceiver != null && mailSender != null)
+            {
                 receiver = new MailAddress(mailReceiver.Value);
                 sender = new MailAddress(mailSender.Value);
             }
             ApplicationUser user = new ApplicationUser();
-            if(userId != null || userId != string.Empty)
-            { 
+            if (userId != null || userId != string.Empty)
+            {
                 user = context.Users.Find(userId);
             }
             var group = new Group();

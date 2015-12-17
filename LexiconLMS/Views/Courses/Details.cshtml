@@ -9,6 +9,8 @@
 
     var activities = context.Activities.Where(a => a.CourseId == Model.Id);
 
+    var documents = context.Documents.Where(d => d.CourseId == Model.Id);
+    
     string sender = string.Empty;
     if (Request.RequestContext.RouteData.Values["sender"] != null)
     {
@@ -21,7 +23,15 @@
     }
     ViewData["CourseId"] = Model.Id;
 }
-<h2>@Model.Name</h2>
+<h2>
+    Kurs: @Model.Name
+    @if (documents.Any())
+    {
+        <a href="@Url.Action("Index", "Documents", new { gId = Model.Id }, null)">
+            <img src="@Url.Content("~/Content/Images/doc_icon.png")" style="width:25px; height:25px;" />
+        </a>
+    }
+</h2>
 <h4>( @Model.EndDate.ToShortDateString() - @Model.EndDate.ToShortDateString() )</h4>
 
 <div>

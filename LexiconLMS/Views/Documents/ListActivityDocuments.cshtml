@@ -30,11 +30,14 @@
         group = context.Groups.Find(groupId);
         ViewData["gId"] = group.Id;
     }
-    var lateUsers = new List<ApplicationUser>();
-    var lateUsersInThisGroup = new List<ApplicationUser>();
-    foreach(var doc in Model)
+    //var lateUser = new ApplicationUser();
+    var lateAssignments = context.Users.Where(u => u.GroupId == groupId).ToList();
+    ApplicationUser user = new ApplicationUser();
+
+    var assignmentSent = false;
+    foreach (var doc in Model)
     {
-        lateUsers = context.Users.Where(u => u.Id != doc.UserId && u.Active == true && u.GroupId == groupId).ToList();
+        lateAssignments.Remove(context.Users.Find(doc.UserId));
     }
 }
 
@@ -46,13 +49,20 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.OriginalFileName)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
+        <th></th> @* kolumn utan text för downloadknapp *@
         <th>
-            @Html.DisplayNameFor(model => model.UserId)
+            @Html.Raw("Typ av aktivitet")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadTime)
+        </th>
+        <th>
+            @Html.Raw("Dokumentets ägare")
         </th>
         <th></th>
     </tr>
@@ -61,6 +71,15 @@
     {
         if (item != null)
         {
+            var desc = string.Empty;
+            if (item.Description.Length > 50)
+            {
+                desc = item.Description.Substring(0, 50) + "...";
+            }
+            else
+            {
+                desc = item.Description;
+            }
             <tr>
                 <td>
                     @Html.ActionLink((string)item.Name, "Details", "Documents", new { id = item.Id, gId = groupId, cId = courseId, aId = activityId }, null)
@@ -72,17 +91,14 @@
                 </td>
                 <td>@Html.Raw(activity.Type)</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    @Html.Raw(desc)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.UploadTime)
                 </td>
                 <td>
-                    @{ var user = context.Users.Find(item.UserId);}
-                    @Html.DisplayFor(modelItem => user.FullName)
+                    @{ var docuser = context.Users.Find(item.UserId); }
+                    @Html.DisplayFor(modelItem => docuser.FullName)
                 </td>
                 @if (User.IsInRole("lärare") || (User.IsInRole("elev") && item.UserId == User.Identity.GetUserId()))
                 {
@@ -95,7 +111,19 @@
             </tr>
         }
     }
-    @if ((activityId != null && activityId != "0" && User.IsInRole("elev") && activity.Type.ToLower() == "inlämningsuppgift") || User.IsInRole("lärare"))
+    @foreach (var doc in Model)
+    {
+        if (assignmentSent)
+        {
+            break;
+        }
+            if (doc.UserId == User.Identity.GetUserId())
+            {
+                assignmentSent = true;
+            }
+    }
+
+    @if ((activityId != null && activityId != "0" && User.IsInRole("elev") && activity.Type.ToLower() == "inlämningsuppgift" && !assignmentSent) || User.IsInRole("lärare"))
     {
         <tr>
             <td>
@@ -105,29 +133,37 @@
             </td>
         </tr>
     }
+    else if (activity.Type.ToLower() == "inlämningsuppgift")
+    {
+        <tr>
+            <td>
+                <h4 style="color:green">Du har redan skickat in uppgiften, Gratulerar!</h4>
+            </td>
+        </tr>
+    }
 </table>
 
-@if (User.IsInRole("lärare"))
+@if (User.IsInRole("lärare") && activity.Type.ToLower() == "inlämningsuppgift")
 {
     <h2>Inlämningsuppgift saknas från följande studenter:</h2>
 
-<table class="lateUsersTable">
-    <tr>
-        <th>
-            @Html.Raw("Namn")
-        </th>
-    </tr>
+    <table class="lateUsersTable">
+        <tr>
+            <th>
+                @Html.Raw("Namn")
+            </th>
+        </tr>
 
-    @foreach (var user in lateUsers)
-    {
-        if (user != null)
+        @foreach (var lateuser in lateAssignments)
         {
-            <tr>
-                <td>
-                    @Html.ActionLink(user.FullName, "Details", "Users", new { id = user.Id, gId = groupId, cId = courseId, aId = activityId }, null)
-                </td>
-            </tr>
+            if (user != null)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(lateuser.FullName, "Details", "Users", new { id = lateuser.Id, gId = groupId, cId = courseId, aId = activityId }, null)
+                    </td>
+                </tr>
+            }
         }
-    }
-</table>
+    </table>
 }

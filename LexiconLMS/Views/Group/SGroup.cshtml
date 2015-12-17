@@ -23,6 +23,12 @@
     {
         desc = Model.Description;
     }
+
+    var userId = User.Identity.GetUserId();
+
+    var allUserDocuments = context.Documents.Where(d => d.UserId == userId);
+    var activity = new Activity();
+    var assignmentActivities = context.Activities.Where(a => a.Type.ToLower() == "inlämningsuppgift");
 }
 <div class="groupDiv">
     <h2>
@@ -45,6 +51,30 @@
             @Html.Raw(desc)
         </dd>
     </dl>
+    <br />
+    <br />
+    <h4>Dina personliga dokument:</h4>
+    @if (allUserDocuments.Count() > 0)
+    {
+        foreach (var doc in allUserDocuments.ToList())
+        {
+            if (@context.Activities.Find(doc.ActivityId) != null)
+            {
+                <h5 style="color:green;"> @Html.Raw("Aktivitet:") @context.Activities.Find(doc.ActivityId).Name.ToString();</h5>
+                <h5 style="color:green;"> @Html.Raw("Dokument skickat:") @Html.Raw(@doc.Name.ToString())</h5>
+            }
+            <br />
+        }
+    }
+    <h4>Alla inlämningsaktiviteter:</h4>
+    @if (assignmentActivities.Count() > 0)
+    {
+        foreach (var assActivity in assignmentActivities.ToList())
+        {
+            @Html.Raw(@assActivity.Name.ToString())
+            <br />
+        }
+    }
 </div>
 <br />
 <div class="col-sm-12 groupPartialsDiv">

@@ -35,7 +35,7 @@
 <h2>Dokument för kurs @course.Name</h2>
 
 <p>
-    @Html.ActionLink("Tillbaka", "Details", "Group", new { id = groupId }, null)
+    @Html.ActionLink("Tillbaka", "Details", "Courses", new { id = course.Id, gId = groupId }, null)
 </p>
 <table class="table">
     <tr>
